@@ -114,7 +114,7 @@ if ($conn && !mysqli_connect_error()) {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
             <div class="flex items-center space-x-6">
                 <span class="flex items-center gap-2 font-medium">
-                    <i class="fa-solid fa-clock text-amber-400"></i> Senin - Jumat: 08.00 - 16.00 WIB
+                    <i class="fa-solid fa-clock text-amber-400"></i> <?= tr('Senin - Jumat: 08.00 - 16.00 WIB') ?>
                 </span>
                 <span class="flex items-center gap-2">
                     <i class="fa-solid fa-phone text-amber-400"></i> <?= htmlspecialchars($APP_PROFIL['telepon'] ?? '(0276) 321-456') ?>
@@ -124,12 +124,8 @@ if ($conn && !mysqli_connect_error()) {
                 </span>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="dokumen.php" class="hover:text-white transition-colors" title="JDIH & Regulasi">
-                    <i class="fa-solid fa-scale-balanced mr-1 text-amber-300"></i> <?= t('pustaka_hukum', 'JDIH Desa') ?>
-                </a>
-                <span class="text-emerald-700">|</span>
-                <a href="login.php" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-0.5 rounded-full text-xs font-semibold shadow transition-all duration-200 flex items-center gap-1.5 transform hover:scale-105">
-                    <i class="fa-solid fa-user-shield"></i> Portal Admin
+                <a href="dokumen.php" class="hover:text-white transition-colors font-medium" title="JDIH & Regulasi">
+                    <i class="fa-solid fa-scale-balanced mr-1 text-amber-300"></i> <?= tr('JDIH Desa') ?>
                 </a>
             </div>
         </div>
@@ -306,12 +302,8 @@ if ($conn && !mysqli_connect_error()) {
                 <a href="infografis.php" class="block px-3 py-2 font-semibold"><?= t('infografis_keuangan', 'Infografis Keuangan') ?></a>
                 <a href="dokumen.php" class="block px-3 py-2 font-semibold"><?= t('regulasi_aset', 'Regulasi & Aset Desa') ?></a>
             <?php endif; ?>
-            
             <div class="pt-4 border-t border-slate-200 flex justify-between items-center">
                 <span class="text-xs text-slate-500">Pemerintah <?= htmlspecialchars($APP_PROFIL['nama_desa'] ?? 'Desa Klego') ?></span>
-                <a href="login.php" class="bg-amber-600 text-white text-xs font-bold px-4 py-1.5 rounded-full">
-                    <i class="fa-solid fa-lock mr-1"></i> Portal Admin
-                </a>
             </div>
         </div>
     </header>

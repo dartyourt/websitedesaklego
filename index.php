@@ -35,18 +35,18 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-semibold tracking-wide shadow-inner backdrop-blur-md">
                 <i class="fa-solid fa-square-poll-vertical text-amber-400 animate-pulse"></i>
-                <span>Transparansi Pembendaharaan Negara & Regulasi Desa</span>
+                <span><?= tr('Transparansi Pembendaharaan Negara & Regulasi Desa') ?></span>
             </div>
 
             <h1 class="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.15]">
-                Portal Resmi Pemerintahan <br class="hidden sm:inline">
+                <?= tr('Portal Resmi Pemerintahan') ?> <br class="hidden sm:inline">
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-200 to-yellow-400">
                     <?= htmlspecialchars($APP_PROFIL['nama_desa'] ?? 'Desa Klego') ?>
                 </span>
             </h1>
 
             <p class="text-base sm:text-lg text-emerald-100 font-normal leading-relaxed max-w-2xl">
-                Mewujudkan pelayanan publik terpadu yang cepat, pengungkapan data aset dan anggaran (APBDes) yang akuntabel, serta kemudahan unduh regulasi hukum bagi seluruh warga masyarakat.
+                <?= tr('Mewujudkan pelayanan publik terpadu yang cepat, pengungkapan data aset dan anggaran (APBDes) yang akuntabel, serta kemudahan unduh regulasi hukum bagi seluruh warga masyarakat.') ?>
             </p>
 
             <!-- CALL TO ACTION BUTTONS -->
@@ -54,21 +54,21 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <a href="dokumen.php" 
                    class="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-7 py-3.5 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-2.5">
                     <i class="fa-solid fa-book-open"></i>
-                    <span>Pustaka Hukum (JDIH)</span>
+                    <span><?= tr('Pustaka Hukum (JDIH)') ?></span>
                 </a>
                 <a href="infografis.php" 
                    class="bg-emerald-900/80 hover:bg-emerald-800 text-emerald-100 border border-emerald-600/60 font-semibold px-6 py-3.5 rounded-xl shadow-md hover:text-white transition-all duration-200 flex items-center gap-2">
                     <i class="fa-solid fa-chart-pie text-amber-400"></i>
-                    <span>Infografis Keuangan</span>
+                    <span><?= tr('Infografis Keuangan') ?></span>
                 </a>
             </div>
 
             <div class="pt-6 flex items-center justify-center lg:justify-start gap-6 text-xs text-emerald-200/80">
                 <span class="flex items-center gap-1.5">
-                    <i class="fa-solid fa-circle-check text-emerald-400"></i> Perdes APBDes 2026 Tersedia
+                    <i class="fa-solid fa-circle-check text-emerald-400"></i> <?= tr('Perdes APBDes 2026 Tersedia') ?>
                 </span>
                 <span class="flex items-center gap-1.5">
-                    <i class="fa-solid fa-circle-check text-emerald-400"></i> Laporan SILPA 2025 Terbuka
+                    <i class="fa-solid fa-circle-check text-emerald-400"></i> <?= tr('Laporan SILPA 2025 Terbuka') ?>
                 </span>
             </div>
 
@@ -80,10 +80,10 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 <section class="py-12 bg-white border-b border-slate-200 shadow-sm relative -mt-8 z-20 max-w-7xl mx-auto rounded-3xl mx-4 sm:mx-auto px-6 shadow-xl">
     <div class="text-center mb-8">
         <span class="text-xs font-mono font-bold uppercase tracking-widest text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
-            Statistik Warga & Wilayah
+            <?= tr('Statistik Warga & Wilayah') ?>
         </span>
         <h2 class="font-heading font-bold text-2xl sm:text-3xl text-slate-900 mt-2">
-            Demografi & Angka Penting <?= htmlspecialchars($APP_PROFIL['nama_desa'] ?? 'Desa Klego') ?>
+            <?= tr('Demografi & Angka Penting') ?> <?= htmlspecialchars($APP_PROFIL['nama_desa'] ?? 'Desa Klego') ?>
         </h2>
     </div>
 
@@ -95,7 +95,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <p class="text-2xl font-bold text-slate-900"><?= number_format($statPenduduk, 0, ',', '.') ?></p>
-                <p class="text-xs text-slate-500 font-medium">Total Penduduk</p>
+                <p class="text-xs text-slate-500 font-medium"><?= tr('Total Penduduk') ?></p>
             </div>
         </div>
 
@@ -106,7 +106,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <p class="text-2xl font-bold text-slate-900"><?= number_format($statKK, 0, ',', '.') ?></p>
-                <p class="text-xs text-slate-500 font-medium">Kepala Keluarga (KK)</p>
+                <p class="text-xs text-slate-500 font-medium"><?= tr('Kepala Keluarga (KK)') ?></p>
             </div>
         </div>
 
@@ -117,7 +117,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <p class="text-2xl font-bold text-slate-900"><?= number_format($statLaki, 0, ',', '.') ?></p>
-                <p class="text-xs text-slate-500 font-medium">Laki-laki</p>
+                <p class="text-xs text-slate-500 font-medium"><?= tr('Laki-laki') ?></p>
             </div>
         </div>
 
@@ -128,7 +128,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <p class="text-2xl font-bold text-slate-900"><?= number_format($statPerempuan, 0, ',', '.') ?></p>
-                <p class="text-xs text-slate-500 font-medium">Perempuan</p>
+                <p class="text-xs text-slate-500 font-medium"><?= tr('Perempuan') ?></p>
             </div>
         </div>
 
@@ -139,7 +139,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <p class="text-2xl font-bold text-slate-900">312 Ha</p>
-                <p class="text-xs text-slate-500 font-medium">Lahan & Pertanian</p>
+                <p class="text-xs text-slate-500 font-medium"><?= tr('Lahan & Pertanian') ?></p>
             </div>
         </div>
 
@@ -149,8 +149,8 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <i class="fa-solid fa-map-pin"></i>
             </div>
             <div>
-                <p class="text-2xl font-bold text-slate-900">5 Dusun</p>
-                <p class="text-xs text-slate-500 font-medium">Klego, Ponggok, Soka, dst.</p>
+                <p class="text-2xl font-bold text-slate-900"><?= tr('5 Dusun') ?></p>
+                <p class="text-xs text-slate-500 font-medium"><?= tr('Klego, Ponggok, Soka, dst.') ?></p>
             </div>
         </div>
 
@@ -160,8 +160,8 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <i class="fa-solid fa-sitemap"></i>
             </div>
             <div>
-                <p class="text-2xl font-bold text-slate-900">6 RW / 18 RT</p>
-                <p class="text-xs text-slate-500 font-medium">Pembagian Wilayah</p>
+                <p class="text-2xl font-bold text-slate-900"><?= tr('6 RW / 18 RT') ?></p>
+                <p class="text-xs text-slate-500 font-medium"><?= tr('Pembagian Wilayah') ?></p>
             </div>
         </div>
 
@@ -172,7 +172,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <p class="text-xl sm:text-2xl font-black text-amber-300">Rp 1,25 M</p>
-                <p class="text-xs text-emerald-100 font-medium">Total APBDes 2026</p>
+                <p class="text-xs text-emerald-100 font-medium"><?= tr('Total APBDes 2026') ?></p>
             </div>
         </div>
     </div>
@@ -182,13 +182,13 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6">
     <div class="text-center max-w-3xl mx-auto mb-16">
         <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 bg-emerald-100/80 px-3 py-1.5 rounded-full border border-emerald-300">
-            Keterbukaan Informasi & Pembendaharaan
+            <?= tr('Keterbukaan Informasi & Pembendaharaan') ?>
         </span>
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-900 mt-3">
-            Pusat Data Regulasi, Aset & Perencanaan
+            <?= tr('Pusat Data Regulasi, Aset & Perencanaan') ?>
         </h2>
         <p class="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
-            Mewujudkan pemerintahan Desa Klego yang bersih dan terbuka. Seluruh berkas Peraturan Desa, Buku Bantu Aset, Laporan SILPA, dan RPJM Desa dapat diperiksa serta diunduh secara bebas oleh masyarakat.
+            <?= tr('Mewujudkan pemerintahan Desa Klego yang bersih dan terbuka. Seluruh berkas Peraturan Desa, Buku Bantu Aset, Laporan SILPA, dan RPJM Desa dapat diperiksa serta diunduh secara bebas oleh masyarakat.') ?>
         </p>
     </div>
 
@@ -201,17 +201,17 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <div class="w-14 h-14 rounded-2xl bg-emerald-700 text-white flex items-center justify-center text-2xl mb-6 shadow-md">
                     <i class="fa-solid fa-gavel"></i>
                 </div>
-                <span class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full">11 Dokumen Tersedia</span>
+                <span class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full"><?= tr('11 Dokumen Tersedia') ?></span>
                 <h3 class="font-heading font-bold text-xl text-slate-900 mt-4 mb-3">
-                    Peraturan & Produk Legislasi Desa
+                    <?= tr('Peraturan & Produk Legislasi Desa') ?>
                 </h3>
                 <p class="text-sm text-slate-600 leading-relaxed mb-6">
-                    Pusat informasi produk hukum Desa Klego untuk mendukung transparansi pemerintahan dan memudahkan akses masyarakat terhadap regulasi yang berlaku. Meliputi Perdes APBDes 2026, Perkades APBDes, Keputusan Kepala Desa, dan produk hukum lainnya yang diperbarui secara berkala.
+                    <?= tr('Pusat informasi produk hukum Desa Klego untuk mendukung transparansi pemerintahan dan memudahkan akses masyarakat terhadap regulasi yang berlaku. Meliputi Perdes APBDes 2026, Perkades APBDes, Keputusan Kepala Desa, dan produk hukum lainnya yang diperbarui secara berkala.') ?>
                 </p>
             </div>
             <div class="pt-6 border-t border-slate-100 mt-2">
                 <a href="dokumen.php?kategori=Peraturan+%26+Produk+Legislasi+Desa" class="w-full bg-slate-900 hover:bg-emerald-800 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow">
-                    <span>Lihat & Unduh Regulasi</span>
+                    <span><?= tr('Lihat & Unduh Regulasi') ?></span>
                     <i class="fa-solid fa-arrow-right text-amber-400"></i>
                 </a>
             </div>
@@ -224,17 +224,17 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <div class="w-14 h-14 rounded-2xl bg-amber-600 text-white flex items-center justify-center text-2xl mb-6 shadow-md">
                     <i class="fa-solid fa-boxes-stacked"></i>
                 </div>
-                <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full">9 Laporan Resmi</span>
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full"><?= tr('9 Laporan Resmi') ?></span>
                 <h3 class="font-heading font-bold text-xl text-slate-900 mt-4 mb-3">
-                    Data Aset & Pembendaharaan Desa
+                    <?= tr('Data Aset & Pembendaharaan Desa') ?>
                 </h3>
                 <p class="text-sm text-slate-600 leading-relaxed mb-6">
-                    Pusat informasi yang memuat berbagai data penyelenggaraan pemerintahan Desa Klego sebagai wujud transparansi dan pelayanan publik. Melalui halaman ini, masyarakat dapat mengakses data seperti inventaris aset desa, buku bantu, stock opname, laporan SILPA 2025, serta CaLK 2025.
+                    <?= tr('Pusat informasi yang memuat berbagai data penyelenggaraan pemerintahan Desa Klego sebagai wujud transparansi dan pelayanan publik. Melalui halaman ini, masyarakat dapat mengakses data seperti inventaris aset desa, buku bantu, stock opname, laporan SILPA 2025, serta CaLK 2025.') ?>
                 </p>
             </div>
             <div class="pt-6 border-t border-slate-100 mt-2">
                 <a href="dokumen.php?kategori=Inventarisasi+Aset+%26+Informasi" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow">
-                    <span>Buka Inventaris & SILPA</span>
+                    <span><?= tr('Buka Inventaris & SILPA') ?></span>
                     <i class="fa-solid fa-arrow-right text-amber-300"></i>
                 </a>
             </div>
@@ -247,17 +247,17 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <div class="w-14 h-14 rounded-2xl bg-blue-800 text-white flex items-center justify-center text-2xl mb-6 shadow-md">
                     <i class="fa-solid fa-map-location-dot"></i>
                 </div>
-                <span class="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">Perencanaan 6 Tahun</span>
+                <span class="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full"><?= tr('Perencanaan 6 Tahun') ?></span>
                 <h3 class="font-heading font-bold text-xl text-slate-900 mt-4 mb-3">
-                    RPJM Desa (Rencana Pembangunan)
+                    <?= tr('RPJM Desa (Rencana Pembangunan)') ?>
                 </h3>
                 <p class="text-sm text-slate-600 leading-relaxed mb-6">
-                    RPJM Desa merupakan dokumen perencanaan pembangunan desa untuk jangka waktu 6 (enam) tahun yang menjadi pedoman dalam penyelenggaraan pemerintahan, pelaksanaan pembangunan, dan pemberdayaan masyarakat. Disusun sebagai dasar terarah dan berkelanjutan.
+                    <?= tr('RPJM Desa merupakan dokumen perencanaan pembangunan desa untuk jangka waktu 6 (enam) tahun yang menjadi pedoman dalam penyelenggaraan pemerintahan, pelaksanaan pembangunan, dan pemberdayaan masyarakat. Disusun sebagai dasar terarah dan berkelanjutan.') ?>
                 </p>
             </div>
             <div class="pt-6 border-t border-slate-100 mt-2">
                 <a href="dokumen.php?kategori=Rencana+Pembangunan+Jangka+Menengah+%28RPJM%29" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow">
-                    <span>Unduh Naskah RPJM</span>
+                    <span><?= tr('Unduh Naskah RPJM') ?></span>
                     <i class="fa-solid fa-arrow-right text-amber-400"></i>
                 </a>
             </div>
@@ -273,35 +273,35 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             
             <div class="lg:col-span-5 space-y-6">
                 <span class="text-xs font-mono font-bold uppercase tracking-widest text-amber-400 bg-amber-400/10 px-3 py-1.5 rounded-full border border-amber-500/30">
-                    Statistik & Keuangan Desa
+                    <?= tr('Statistik & Keuangan Desa') ?>
                 </span>
                 <h2 class="font-heading font-extrabold text-3xl sm:text-4xl leading-tight text-white">
-                    Transparansi Pengelolaan Pembendaharaan Negara & Dana Desa
+                    <?= tr('Transparansi Pengelolaan Pembendaharaan Negara & Dana Desa') ?>
                 </h2>
                 <p class="text-emerald-100/80 text-sm sm:text-base leading-relaxed">
-                    Kami menjunjung tinggi prinsip akuntabilitas dalam penggunaan Anggaran Pendapatan dan Belanja Desa (APBDes) 2026 maupun pertanggungjawaban SILPA 2025.
+                    <?= tr('Kami menjunjung tinggi prinsip akuntabilitas dalam penggunaan Anggaran Pendapatan dan Belanja Desa (APBDes) 2026 maupun pertanggungjawaban SILPA 2025.') ?>
                 </p>
                 
                 <div class="space-y-3 pt-2">
                     <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 flex justify-between items-center">
                         <div>
-                            <p class="text-xs text-emerald-200 font-medium">Dana Desa (APBN)</p>
+                            <p class="text-xs text-emerald-200 font-medium"><?= tr('Dana Desa (APBN)') ?></p>
                             <p class="text-lg font-bold text-white">Rp 875.000.000</p>
                         </div>
-                        <span class="bg-emerald-600 text-white text-xs px-2.5 py-1 rounded-full font-bold">70% APBDes</span>
+                        <span class="bg-emerald-600 text-white text-xs px-2.5 py-1 rounded-full font-bold"><?= tr('70% APBDes') ?></span>
                     </div>
                     <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 flex justify-between items-center">
                         <div>
-                            <p class="text-xs text-amber-200 font-medium">SILPA Akhir Tahun 2025</p>
+                            <p class="text-xs text-amber-200 font-medium"><?= tr('SILPA Akhir Tahun 2025') ?></p>
                             <p class="text-lg font-bold text-white">Rp 98.450.000</p>
                         </div>
-                        <span class="bg-amber-500 text-slate-900 text-xs px-2.5 py-1 rounded-full font-black">Audit Ok</span>
+                        <span class="bg-amber-500 text-slate-900 text-xs px-2.5 py-1 rounded-full font-black"><?= tr('Audit Ok') ?></span>
                     </div>
                 </div>
 
                 <div class="pt-4">
                     <a href="infografis.php" class="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-200 transform hover:scale-105">
-                        <span>Buka Dasbor Infografis Lengkap</span>
+                        <span><?= tr('Buka Dasbor Infografis Lengkap') ?></span>
                         <i class="fa-solid fa-chart-line"></i>
                     </a>
                 </div>
@@ -312,10 +312,10 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl text-slate-800 border border-slate-100">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 pb-4 border-b border-slate-100">
                         <div>
-                            <h3 class="font-heading font-bold text-lg text-slate-900">Distribusi Anggaran Belanja APBDes 2026</h3>
-                            <p class="text-xs text-slate-500">Berdasarkan Perdes No. 01 Tahun 2026 Desa Klego</p>
+                            <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Distribusi Anggaran Belanja APBDes 2026') ?></h3>
+                            <p class="text-xs text-slate-500"><?= tr('Berdasarkan Perdes No. 01 Tahun 2026 Desa Klego') ?></p>
                         </div>
-                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300">TA 2026</span>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300"><?= tr('TA 2026') ?></span>
                     </div>
                     
                     <div class="h-64 sm:h-72 w-full">
@@ -324,12 +324,12 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 
                     <div class="mt-6 pt-4 border-t border-slate-100 grid grid-cols-2 gap-4 text-center text-xs">
                         <div>
-                            <span class="text-slate-400 block mb-0.5">Fokus Pembangunan</span>
-                            <span class="font-bold text-slate-800 text-sm">Infrastruktur & Jalan (54.4%)</span>
+                            <span class="text-slate-400 block mb-0.5"><?= tr('Fokus Pembangunan') ?></span>
+                            <span class="font-bold text-slate-800 text-sm"><?= tr('Infrastruktur & Jalan (54.4%)') ?></span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block mb-0.5">Fokus Pemberdayaan</span>
-                            <span class="font-bold text-emerald-700 text-sm">Pelatihan UMKM (25.6%)</span>
+                            <span class="text-slate-400 block mb-0.5"><?= tr('Fokus Pemberdayaan') ?></span>
+                            <span class="font-bold text-emerald-700 text-sm"><?= tr('Pelatihan UMKM (25.6%)') ?></span>
                         </div>
                     </div>
                 </div>
@@ -347,9 +347,9 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Pembangunan Infrastruktur', 'Penyelenggaraan Pemdes', 'Pemberdayaan UMKM', 'Pembinaan Masyarakat'],
+                labels: ['<?= tr("Pembangunan Infrastruktur") ?>', '<?= tr("Penyelenggaraan Pemdes") ?>', '<?= tr("Pemberdayaan UMKM") ?>', '<?= tr("Pembinaan Masyarakat") ?>'],
                 datasets: [{
-                    label: 'Alokasi Belanja (Juta Rp)',
+                    label: '<?= tr("Alokasi Belanja (Juta Rp)") ?>',
                     data: [680, 355, 320, 120],
                     backgroundColor: [
                         '#165f36',
@@ -395,13 +395,13 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="text-center max-w-3xl mx-auto mb-14">
             <span class="text-xs font-mono font-bold uppercase tracking-widest text-amber-700 bg-amber-100/80 px-3 py-1 rounded-full border border-amber-300">
-                Keunggulan & Potensi Lokal
+                <?= tr('Keunggulan & Potensi Lokal') ?>
             </span>
             <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-900 mt-3">
-                Potensi Agraris & Kekuatan UMKM Warga
+                <?= tr('Potensi Agraris & Kekuatan UMKM Warga') ?>
             </h2>
             <p class="text-slate-600 text-sm sm:text-base mt-2">
-                Desa Klego dianugerahi lahan pertanian subur dan komunitas pengrajin UMKM yang aktif menggerakkan roda ekonomi desa.
+                <?= tr('Desa Klego dianugerahi lahan pertanian subur dan komunitas pengrajin UMKM yang aktif menggerakkan roda ekonomi desa.') ?>
             </p>
         </div>
 
@@ -411,12 +411,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl mb-4">
                     <i class="fa-solid fa-wheat-awn"></i>
                 </div>
-                <h3 class="font-heading font-bold text-lg text-slate-900">Pertanian Produktif</h3>
+                <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Pertanian Produktif') ?></h3>
                 <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-                    Lahan produktif seluas 312 Ha dengan komoditas utama padi, jagung, dan kedelai berkualitas tinggi dari Boyolali.
+                    <?= tr('Lahan produktif seluas 312 Ha dengan komoditas utama padi, jagung, dan kedelai berkualitas tinggi dari Boyolali.') ?>
                 </p>
                 <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <span class="text-xs font-bold text-emerald-700">312 Ha Lahan</span>
+                    <span class="text-xs font-bold text-emerald-700"><?= tr('312 Ha Lahan') ?></span>
                     <i class="fa-solid fa-seedling text-amber-500"></i>
                 </div>
             </div>
@@ -426,12 +426,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl mb-4">
                     <i class="fa-solid fa-store"></i>
                 </div>
-                <h3 class="font-heading font-bold text-lg text-slate-900">87 UMKM Aktif</h3>
+                <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('87 UMKM Aktif') ?></h3>
                 <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-                    Berkembangnya usaha masyarakat bidang kerajinan anyaman bambu, batik tulis lokal, dan olahan pangan tradisional.
+                    <?= tr('Berkembangnya usaha masyarakat bidang kerajinan anyaman bambu, batik tulis lokal, dan olahan pangan tradisional.') ?>
                 </p>
                 <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <span class="text-xs font-bold text-amber-700">Kerajinan & Pangan</span>
+                    <span class="text-xs font-bold text-amber-700"><?= tr('Kerajinan & Pangan') ?></span>
                     <i class="fa-solid fa-hand-holding-dollar text-emerald-600"></i>
                 </div>
             </div>
@@ -441,12 +441,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center text-xl mb-4">
                     <i class="fa-solid fa-sitemap"></i>
                 </div>
-                <h3 class="font-heading font-bold text-lg text-slate-900">Kelembagaan Solid</h3>
+                <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Kelembagaan Solid') ?></h3>
                 <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-                    Didukung 12 lembaga kemasyarakatan yang aktif: BPD, LKMD, PKK, Karang Taruna, dan Gapoktan yang tanggap.
+                    <?= tr('Didukung 12 lembaga kemasyarakatan yang aktif: BPD, LKMD, PKK, Karang Taruna, dan Gapoktan yang tanggap.') ?>
                 </p>
                 <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <span class="text-xs font-bold text-teal-700">12 Lembaga Aktif</span>
+                    <span class="text-xs font-bold text-teal-700"><?= tr('12 Lembaga Aktif') ?></span>
                     <i class="fa-solid fa-people-group text-blue-500"></i>
                 </div>
             </div>
@@ -456,12 +456,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-800 flex items-center justify-center text-xl mb-4">
                     <i class="fa-solid fa-road-bridge"></i>
                 </div>
-                <h3 class="font-heading font-bold text-lg text-slate-900">Infrastruktur Maju</h3>
+                <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Infrastruktur Maju') ?></h3>
                 <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-                    Pemerataan perbaikan jalan antar dusun, drainase pertanian, dan penerangan jalan umum dengan pengawasan warga.
+                    <?= tr('Pemerataan perbaikan jalan antar dusun, drainase pertanian, dan penerangan jalan umum dengan pengawasan warga.') ?>
                 </p>
                 <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <span class="text-xs font-bold text-indigo-700">Sesuai RPJMDes</span>
+                    <span class="text-xs font-bold text-indigo-700"><?= tr('Sesuai RPJMDes') ?></span>
                     <i class="fa-solid fa-check-double text-emerald-600"></i>
                 </div>
             </div>
@@ -475,14 +475,14 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
         <div>
             <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 bg-emerald-100/80 px-3 py-1 rounded-full">
-                Informasi & Kegiatan Warga
+                <?= tr('Informasi & Kegiatan Warga') ?>
             </span>
             <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-900 mt-3">
-                Berita Terkini & Agenda Desa
+                <?= tr('Berita Terkini & Agenda Desa') ?>
             </h2>
         </div>
         <a href="berita.php" class="text-emerald-700 hover:text-emerald-900 text-sm font-bold flex items-center gap-1.5 transition-colors">
-            <span>Lihat Semua Berita</span>
+            <span><?= tr('Lihat Semua Berita') ?></span>
             <i class="fa-solid fa-arrow-right"></i>
         </a>
     </div>
@@ -508,7 +508,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <i class="fa-regular fa-newspaper"></i>
                                 </div>
                             <?php endif; ?>
-                            <span class="absolute top-2 left-2 bg-amber-500 text-slate-900 font-bold text-[10px] px-2.5 py-0.5 rounded-full">Berita</span>
+                            <span class="absolute top-2 left-2 bg-amber-500 text-slate-900 font-bold text-[10px] px-2.5 py-0.5 rounded-full"><?= tr('Berita') ?></span>
                         </div>
                         <div class="flex-1">
                             <span class="text-xs text-slate-400 flex items-center gap-1.5 mb-2">
@@ -522,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <?= htmlspecialchars(strip_tags($b['isi'])) ?>
                             </p>
                             <a href="detail-berita.php?id=<?= $b['id'] ?>" class="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
-                                <span><?= t('baca_selengkapnya', 'Baca Selengkapnya') ?></span>
+                                <span><?= tr('Baca Selengkapnya') ?></span>
                                 <i class="fa-solid fa-chevron-right text-[10px]"></i>
                             </a>
                         </div>
@@ -585,7 +585,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
                 <div class="flex items-center gap-2 pb-4 border-b border-slate-100 mb-4">
                     <i class="fa-solid fa-calendar-check text-amber-500 text-xl"></i>
-                    <h3 class="font-heading font-bold text-lg text-slate-900">Agenda Kegiatan Desa</h3>
+                    <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Agenda Kegiatan Desa') ?></h3>
                 </div>
                 <div class="space-y-4">
                     <!-- AGENDA 1 -->
@@ -637,13 +637,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <i class="fa-solid fa-handshake-angle absolute -right-4 -bottom-4 text-7xl text-amber-700/20 pointer-events-none"></i>
                 <h3 class="font-heading font-extrabold text-lg text-slate-900 mb-2 flex items-center gap-2">
                     <i class="fa-solid fa-circle-question"></i>
-                    <span>Butuh Bantuan Layanan?</span>
+                    <span><?= tr('Butuh Bantuan Layanan?') ?></span>
                 </h3>
                 <p class="text-xs font-medium text-slate-900/90 mb-4 leading-relaxed">
-                    Pengurusan Surat Keterangan Domisili, Pengantar KK/KTP, dan SKTM diselesaikan dalam 1 Hari Kerja tanpa dipungut biaya (Gratis).
+                    <?= tr('Pengurusan Surat Keterangan Domisili, Pengantar KK/KTP, dan SKTM diselesaikan dalam 1 Hari Kerja tanpa dipungut biaya (Gratis).') ?>
                 </p>
                 <a href="page.php?slug=panduan-layanan" class="inline-block bg-slate-900 hover:bg-emerald-950 text-white text-xs font-bold py-2.5 px-5 rounded-xl shadow transition-colors">
-                    <i class="fa-solid fa-list-check mr-1 text-amber-400"></i> Lihat Panduan & Syarat
+                    <i class="fa-solid fa-list-check mr-1 text-amber-400"></i> <?= tr('Lihat Panduan & Syarat') ?>
                 </a>
             </div>
 
@@ -656,10 +656,10 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="text-center mb-12">
             <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-                Layanan Balai Desa
+                <?= tr('Layanan Balai Desa') ?>
             </span>
             <h2 class="font-heading font-bold text-2xl sm:text-3xl text-slate-900 mt-2">
-                Pelayanan Administrasi Cepat & Gratis
+                <?= tr('Pelayanan Administrasi Cepat & Gratis') ?>
             </h2>
         </div>
 
@@ -670,9 +670,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="w-12 h-12 bg-emerald-700 text-white rounded-xl flex items-center justify-center mx-auto text-xl mb-4 shadow">
                     <i class="fa-solid fa-file-signature"></i>
                 </div>
-                <h3 class="font-heading font-bold text-slate-900 text-base">Surat Keterangan Domisili</h3>
-                <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-[10px] px-2.5 py-0.5 rounded-full my-2">Selesai 1 Hari Kerja</span>
-                <p class="text-xs text-slate-500 mt-2">Syarat: Fotokopi KTP, KK, dan Pengantar Ketua RT/RW.</p>
+                <h3 class="font-heading font-bold text-slate-900 text-base"><?= tr('Surat Keterangan Domisili') ?></h3>
+                <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-[10px] px-2.5 py-0.5 rounded-full my-2"><?= tr('Selesai 1 Hari Kerja') ?></span>
+                <p class="text-xs text-slate-500 mt-2"><?= tr('Syarat: Fotokopi KTP, KK, dan Pengantar Ketua RT/RW.') ?></p>
             </div>
 
             <!-- LAYANAN 2: PENGANTAR KTP/KK -->
@@ -680,9 +680,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center mx-auto text-xl mb-4 shadow">
                     <i class="fa-solid fa-id-card"></i>
                 </div>
-                <h3 class="font-heading font-bold text-slate-900 text-base">Pengantar KTP & KK</h3>
-                <span class="inline-block bg-amber-100 text-amber-800 font-semibold text-[10px] px-2.5 py-0.5 rounded-full my-2">Selesai 1 Hari Kerja</span>
-                <p class="text-xs text-slate-500 mt-2">Syarat: Blanko Formulir F1.01 atau Kartu Keluarga (KK) Lama.</p>
+                <h3 class="font-heading font-bold text-slate-900 text-base"><?= tr('Pengantar KTP & KK') ?></h3>
+                <span class="inline-block bg-amber-100 text-amber-800 font-semibold text-[10px] px-2.5 py-0.5 rounded-full my-2"><?= tr('Selesai 1 Hari Kerja') ?></span>
+                <p class="text-xs text-slate-500 mt-2"><?= tr('Syarat: Blanko Formulir F1.01 atau Kartu Keluarga (KK) Lama.') ?></p>
             </div>
 
             <!-- LAYANAN 3: SKTM -->
@@ -690,9 +690,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="w-12 h-12 bg-blue-700 text-white rounded-xl flex items-center justify-center mx-auto text-xl mb-4 shadow">
                     <i class="fa-solid fa-hand-holding-heart"></i>
                 </div>
-                <h3 class="font-heading font-bold text-slate-900 text-base">Surat Ket. Tidak Mampu</h3>
-                <span class="inline-block bg-blue-100 text-blue-800 font-semibold text-[10px] px-2.5 py-0.5 rounded-full my-2">Selesai 1 Hari Kerja</span>
-                <p class="text-xs text-slate-500 mt-2">Syarat: Fotokopi KTP, KK, dan Pengantar Resmi RT/RW.</p>
+                <h3 class="font-heading font-bold text-slate-900 text-base"><?= tr('Surat Ket. Tidak Mampu') ?></h3>
+                <span class="inline-block bg-blue-100 text-blue-800 font-semibold text-[10px] px-2.5 py-0.5 rounded-full my-2"><?= tr('Selesai 1 Hari Kerja') ?></span>
+                <p class="text-xs text-slate-500 mt-2"><?= tr('Syarat: Fotokopi KTP, KK, dan Pengantar Resmi RT/RW.') ?></p>
             </div>
 
             <!-- LAYANAN 4: USAHA SKU -->
@@ -700,9 +700,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="w-12 h-12 bg-purple-700 text-white rounded-xl flex items-center justify-center mx-auto text-xl mb-4 shadow">
                     <i class="fa-solid fa-briefcase"></i>
                 </div>
-                <h3 class="font-heading font-bold text-slate-900 text-base">Surat Keterangan Usaha (SKU)</h3>
-                <span class="inline-block bg-purple-100 text-purple-800 font-semibold text-[10px] px-2.5 py-0.5 rounded-full my-2">Selesai 1 Hari Kerja</span>
-                <p class="text-xs text-slate-500 mt-2">Syarat: Fotokopi KTP, KK, Pengantar RT/RW & Bukti Usaha.</p>
+                <h3 class="font-heading font-bold text-slate-900 text-base"><?= tr('Surat Keterangan Usaha (SKU)') ?></h3>
+                <span class="inline-block bg-purple-100 text-purple-800 font-semibold text-[10px] px-2.5 py-0.5 rounded-full my-2"><?= tr('Selesai 1 Hari Kerja') ?></span>
+                <p class="text-xs text-slate-500 mt-2"><?= tr('Syarat: Fotokopi KTP, KK, Pengantar RT/RW & Bukti Usaha.') ?></p>
             </div>
 
         </div>

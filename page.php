@@ -126,19 +126,19 @@ include 'config/header.php';
         <nav class="flex text-xs text-emerald-200/80 mb-4 font-medium" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 sm:space-x-2">
                 <li class="inline-flex items-center">
-                    <a href="index.php" class="hover:text-white transition-colors">Beranda</a>
+                    <a href="index.php" class="hover:text-white transition-colors"><?= tr('Beranda') ?></a>
                 </li>
                 <li>&bull;</li>
-                <li><span class="text-amber-300 font-semibold">Informasi & Layanan Publik</span></li>
+                <li><span class="text-amber-300 font-semibold"><?= tr('Informasi & Layanan Publik') ?></span></li>
             </ol>
         </nav>
         <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-white tracking-tight">
             <?= htmlspecialchars($pageData['judul']) ?>
         </h1>
         <p class="text-xs text-emerald-200/80 mt-3 flex flex-wrap items-center gap-2.5">
-            <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-amber-400"></i> Diperbarui: <?= date('d M Y', strtotime($pageData['updated_at'] ?? 'now')) ?></span>
+            <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-amber-400"></i> <?= tr('Diperbarui:') ?> <?= date('d M Y', strtotime($pageData['updated_at'] ?? 'now')) ?></span>
             <span class="text-emerald-400">&bull;</span>
-            <span class="bg-emerald-800/90 text-emerald-100 px-3 py-1 rounded-full font-semibold text-[11px] flex items-center gap-1.5 border border-emerald-600 shadow-xs"><i class="fa-solid fa-circle-check text-amber-400"></i> Portal Resmi Pemerintah Desa</span>
+            <span class="bg-emerald-800/90 text-emerald-100 px-3 py-1 rounded-full font-semibold text-[11px] flex items-center gap-1.5 border border-emerald-600 shadow-xs"><i class="fa-solid fa-circle-check text-amber-400"></i> <?= tr('Portal Resmi Pemerintah Desa') ?></span>
         </p>
     </div>
 </section>
@@ -187,30 +187,30 @@ include 'config/header.php';
             <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
                 <h3 class="font-heading font-bold text-base text-slate-900 pb-3 border-b border-slate-100 mb-3 flex items-center gap-2">
                     <i class="fa-solid fa-bookmark text-amber-500"></i>
-                    <span>Halaman Desa Lainnya</span>
+                    <span><?= tr('Halaman Desa Lainnya') ?></span>
                 </h3>
                 <ul class="space-y-2 text-sm font-medium">
                     <li>
                         <a href="page.php?slug=sejarah-visi-misi" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition-colors <?= $slug=='sejarah-visi-misi' ? 'bg-emerald-50 text-emerald-800 font-bold' : '' ?>">
-                            <span>Sejarah, Visi & Misi</span>
+                            <span><?= tr('Sejarah, Visi & Misi') ?></span>
                             <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
                         </a>
                     </li>
                     <li>
                         <a href="page.php?slug=struktur-pemerintahan" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition-colors <?= $slug=='struktur-pemerintahan' ? 'bg-emerald-50 text-emerald-800 font-bold' : '' ?>">
-                            <span>Struktur Pemerintahan</span>
+                            <span><?= tr('Struktur Pemerintahan') ?></span>
                             <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
                         </a>
                     </li>
                     <li>
                         <a href="page.php?slug=potensi-desa" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition-colors <?= $slug=='potensi-desa' ? 'bg-emerald-50 text-emerald-800 font-bold' : '' ?>">
-                            <span>Potensi & UMKM Desa</span>
+                            <span><?= tr('Potensi & UMKM Desa') ?></span>
                             <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
                         </a>
                     </li>
                     <li>
                         <a href="page.php?slug=panduan-layanan" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition-colors <?= $slug=='panduan-layanan' ? 'bg-emerald-50 text-emerald-800 font-bold' : '' ?>">
-                            <span>Panduan Layanan Warga</span>
+                            <span><?= tr('Panduan Layanan Warga') ?></span>
                             <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
                         </a>
                     </li>
@@ -219,16 +219,16 @@ include 'config/header.php';
 
             <!-- WIDGET 2: UNDUH REGULASI CEPAT -->
             <div class="bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden">
-                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded">Transparansi Data</span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded"><?= tr('Transparansi Data') ?></span>
                 <h3 class="font-heading font-bold text-lg text-white mt-3 mb-2">
-                    Cari Peraturan & Aset Desa?
+                    <?= tr('Cari Peraturan & Aset Desa?') ?>
                 </h3>
                 <p class="text-xs text-emerald-200/80 leading-relaxed mb-5">
-                    Perdes APBDes 2026, Buku Bantu Aset 2025, dan Naskah RPJM dapat Anda telusuri secara bebas.
+                    <?= tr('Perdes APBDes 2026, Buku Bantu Aset 2025, dan Naskah RPJM dapat Anda telusuri secara bebas.') ?>
                 </p>
                 <a href="dokumen.php" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-xs py-3 rounded-xl flex items-center justify-center gap-2 transition-transform transform hover:-translate-y-0.5 shadow">
                     <i class="fa-solid fa-folder-arrow-down"></i>
-                    <span>Buka Pustaka Dokumen (JDIH)</span>
+                    <span><?= tr('Buka Pustaka Dokumen (JDIH)') ?></span>
                 </a>
             </div>
         </aside>

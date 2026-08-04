@@ -19,20 +19,20 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
     <div class="absolute inset-0 hero-pattern opacity-20"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center max-w-4xl">
         <span class="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-amber-300 bg-amber-500/20 px-4 py-1.5 rounded-full mb-4 border border-amber-400/40">
-            <i class="fa-solid fa-chart-column"></i> <?= t('info_judul', 'Transparansi Pembendaharaan Negara & APBDes') ?>
+            <i class="fa-solid fa-chart-column"></i> <?= tr('Transparansi Pembendaharaan Negara & APBDes') ?>
         </span>
         <h1 class="font-heading font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
-            <?= t('infografis_keuangan', 'Pusat Infografis Keuangan & Demografi') ?>
+            <?= tr('Pusat Infografis Keuangan & Demografi') ?>
         </h1>
         <p class="text-emerald-100/90 text-sm sm:text-base mt-4 max-w-3xl mx-auto leading-relaxed">
-            <?= t('info_sub', 'Penyajian data visual interaktif atas realisasi Anggaran Pendapatan dan Belanja Desa (APBDes) 2026, Laporan SILPA 2025, kekayaan aset desa, serta sebaran penduduk Desa Klego.') ?>
+            <?= tr('Penyajian data visual interaktif atas realisasi Anggaran Pendapatan dan Belanja Desa (APBDes) 2026, Laporan SILPA 2025, kekayaan aset desa, serta sebaran penduduk Desa Klego.') ?>
         </p>
         <div class="mt-8 flex justify-center gap-4">
             <a href="#section-keuangan" class="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-lg transition-all text-xs sm:text-sm flex items-center gap-2">
-                <i class="fa-solid fa-money-bill-trend-up"></i> <?= t('infografis_keuangan', 'Infografis Keuangan') ?>
+                <i class="fa-solid fa-money-bill-trend-up"></i> <?= tr('Infografis Keuangan') ?>
             </a>
             <a href="#section-demografi" class="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-xl border border-white/20 transition-all text-xs sm:text-sm flex items-center gap-2">
-                <i class="fa-solid fa-users"></i> <?= t('sebaran_warga', 'Statistik Penduduk') ?>
+                <i class="fa-solid fa-users"></i> <?= tr('Statistik Penduduk') ?>
             </a>
         </div>
     </div>
@@ -48,10 +48,10 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <i class="fa-solid fa-hand-holding-dollar"></i>
             </div>
             <div>
-                <span class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider"><?= t('pendapatan_apbdes', 'Pendapatan APBDes 2026') ?></span>
+                <span class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider"><?= tr('Pendapatan APBDes 2026') ?></span>
                 <p class="text-2xl font-extrabold text-slate-900 font-heading">Rp 1,475 M</p>
                 <span class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
-                    <i class="fa-solid fa-arrow-trend-up text-emerald-600"></i> APBN & ADD Boyolali
+                    <i class="fa-solid fa-arrow-trend-up text-emerald-600"></i> <?= tr('APBN & ADD Boyolali') ?>
                 </span>
             </div>
         </div>
@@ -62,10 +62,10 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <i class="fa-solid fa-comments-dollar"></i>
             </div>
             <div>
-                <span class="text-[11px] font-bold text-blue-700 uppercase tracking-wider"><?= t('belanja_apbdes', 'Belanja Desa 2026') ?></span>
+                <span class="text-[11px] font-bold text-blue-700 uppercase tracking-wider"><?= tr('Belanja Desa 2026') ?></span>
                 <p class="text-2xl font-extrabold text-slate-900 font-heading">Rp 1,475 M</p>
                 <span class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
-                    <i class="fa-solid fa-balance-scale text-blue-600"></i> Anggaran Berimbang
+                    <i class="fa-solid fa-balance-scale text-blue-600"></i> <?= tr('Anggaran Berimbang') ?>
                 </span>
             </div>
         </div>
@@ -76,10 +76,10 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <i class="fa-solid fa-piggy-bank"></i>
             </div>
             <div>
-                <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider"><?= t('silpa_2025', 'SILPA Akhir 2025') ?></span>
+                <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider"><?= tr('SILPA Akhir 2025') ?></span>
                 <p class="text-2xl font-extrabold text-slate-900 font-heading">Rp 98,45 Juta</p>
                 <span class="text-[11px] text-emerald-700 font-bold flex items-center gap-1 mt-0.5">
-                    <i class="fa-solid fa-check-circle"></i> Laporan Audit Tersedia
+                    <i class="fa-solid fa-check-circle"></i> <?= tr('Laporan Audit Tersedia') ?>
                 </span>
             </div>
         </div>
@@ -90,10 +90,10 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <i class="fa-solid fa-building-columns"></i>
             </div>
             <div>
-                <span class="text-[11px] font-bold text-amber-300 uppercase tracking-wider"><?= t('nilai_aset', 'Nilai Buku Aset 2025') ?></span>
+                <span class="text-[11px] font-bold text-amber-300 uppercase tracking-wider"><?= tr('Nilai Buku Aset 2025') ?></span>
                 <p class="text-2xl font-extrabold text-white font-heading">Rp 3,45 M</p>
                 <span class="text-[11px] text-emerald-100 flex items-center gap-1 mt-0.5">
-                    <i class="fa-solid fa-shield-halved text-amber-400"></i> Tanah Kas & Infrastruktur
+                    <i class="fa-solid fa-shield-halved text-amber-400"></i> <?= tr('Tanah Kas & Infrastruktur') ?>
                 </span>
             </div>
         </div>
@@ -110,8 +110,8 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             <div>
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
                     <div>
-                        <h3 class="font-heading font-bold text-lg text-slate-900">Komposisi Pendapatan APBDes</h3>
-                        <p class="text-xs text-slate-500">Total: Rp 1.475.000.000 (TA 2026)</p>
+                        <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Komposisi Pendapatan APBDes') ?></h3>
+                        <p class="text-xs text-slate-500"><?= tr('Total: Rp 1.475.000.000 (TA 2026)') ?></p>
                     </div>
                     <span class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-chart-pie"></i>
@@ -125,25 +125,25 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <div class="mt-6 space-y-2 text-xs">
                     <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
                         <span class="flex items-center gap-2 font-semibold text-slate-700">
-                            <span class="w-3 h-3 rounded-full bg-[#165f36] inline-block"></span> Dana Desa (APBN)
+                            <span class="w-3 h-3 rounded-full bg-[#165f36] inline-block"></span> <?= tr('Dana Desa (APBN)') ?>
                         </span>
                         <span class="font-bold text-slate-900">Rp 875 Juta (59,3%)</span>
                     </div>
                     <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
                         <span class="flex items-center gap-2 font-semibold text-slate-700">
-                            <span class="w-3 h-3 rounded-full bg-[#2e9e5b] inline-block"></span> Alokasi Dana Desa (ADD)
+                            <span class="w-3 h-3 rounded-full bg-[#2e9e5b] inline-block"></span> <?= tr('Alokasi Dana Desa (ADD)') ?>
                         </span>
                         <span class="font-bold text-slate-900">Rp 350 Juta (23,7%)</span>
                     </div>
                     <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
                         <span class="flex items-center gap-2 font-semibold text-slate-700">
-                            <span class="w-3 h-3 rounded-full bg-[#c4891f] inline-block"></span> Pendapatan Asli Desa (PADes)
+                            <span class="w-3 h-3 rounded-full bg-[#c4891f] inline-block"></span> <?= tr('Pendapatan Asli Desa (PADes)') ?>
                         </span>
                         <span class="font-bold text-slate-900">Rp 185 Juta (12,5%)</span>
                     </div>
                     <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
                         <span class="flex items-center gap-2 font-semibold text-slate-700">
-                            <span class="w-3 h-3 rounded-full bg-[#fbbf24] inline-block"></span> Bagi Hasil Pajak & Retribusi
+                            <span class="w-3 h-3 rounded-full bg-[#fbbf24] inline-block"></span> <?= tr('Bagi Hasil Pajak & Retribusi') ?>
                         </span>
                         <span class="font-bold text-slate-900">Rp 65 Juta (4,5%)</span>
                     </div>
@@ -152,7 +152,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 
             <div class="pt-6 border-t border-slate-100 mt-6">
                 <a href="dokumen.php?kategori=Peraturan+%26+Produk+Legislasi+Desa" class="w-full text-center block bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs py-3 rounded-xl transition-colors">
-                    <i class="fa-solid fa-file-pdf text-rose-600 mr-1.5"></i> Unduh Perdes APBDes 2026 Lengkap
+                    <i class="fa-solid fa-file-pdf text-rose-600 mr-1.5"></i> <?= tr('Unduh Perdes APBDes 2026 Lengkap') ?>
                 </a>
             </div>
         </div>
@@ -162,8 +162,8 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             <div>
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
                     <div>
-                        <h3 class="font-heading font-bold text-lg text-slate-900">Alokasi Belanja & Program Kerja 2026</h3>
-                        <p class="text-xs text-slate-500">Penggunaan dana difokuskan untuk pembangunan infrastruktur dan UMKM</p>
+                        <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Alokasi Belanja & Program Kerja 2026') ?></h3>
+                        <p class="text-xs text-slate-500"><?= tr('Penggunaan dana difokuskan untuk pembangunan infrastruktur dan UMKM') ?></p>
                     </div>
                     <span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-chart-column"></i>
@@ -178,7 +178,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <div class="mt-8 space-y-4">
                     <div>
                         <div class="flex justify-between text-xs font-bold mb-1">
-                            <span class="text-slate-800">1. Pembangunan Infrastruktur & Jalan Desa (Rp 680 Juta)</span>
+                            <span class="text-slate-800"><?= tr('1. Pembangunan Infrastruktur & Jalan Desa (Rp 680 Juta)') ?></span>
                             <span class="text-emerald-700">46.1%</span>
                         </div>
                         <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
@@ -188,7 +188,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 
                     <div>
                         <div class="flex justify-between text-xs font-bold mb-1">
-                            <span class="text-slate-800">2. Penyelenggaraan Pemerintahan & Pelayanan (Rp 355 Juta)</span>
+                            <span class="text-slate-800"><?= tr('2. Penyelenggaraan Pemerintahan & Pelayanan (Rp 355 Juta)') ?></span>
                             <span class="text-amber-700">24.0%</span>
                         </div>
                         <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
@@ -198,7 +198,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 
                     <div>
                         <div class="flex justify-between text-xs font-bold mb-1">
-                            <span class="text-slate-800">3. Pemberdayaan & Pelatihan UMKM Warga (Rp 320 Juta)</span>
+                            <span class="text-slate-800"><?= tr('3. Pemberdayaan & Pelatihan UMKM Warga (Rp 320 Juta)') ?></span>
                             <span class="text-blue-700">21.6%</span>
                         </div>
                         <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
@@ -208,7 +208,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 
                     <div>
                         <div class="flex justify-between text-xs font-bold mb-1">
-                            <span class="text-slate-800">4. Pembinaan Kemasyarakatan (Posyandu, PKK, Karang Taruna) (Rp 120 Juta)</span>
+                            <span class="text-slate-800"><?= tr('4. Pembinaan Kemasyarakatan (Posyandu, PKK, Karang Taruna) (Rp 120 Juta)') ?></span>
                             <span class="text-purple-700">8.3%</span>
                         </div>
                         <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
@@ -220,10 +220,10 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 
             <div class="mt-6 pt-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                 <span class="flex items-center gap-1.5 font-medium">
-                    <i class="fa-solid fa-building-flag text-emerald-700"></i> Disetujui bersama BPD Desa Klego
+                    <i class="fa-solid fa-building-flag text-emerald-700"></i> <?= tr('Disetujui bersama BPD Desa Klego') ?>
                 </span>
                 <a href="dokumen.php?kategori=Inventarisasi+Aset+%26+Informasi" class="text-emerald-700 font-bold hover:underline">
-                    Periksa Buku Bantu Aset & SILPA &rarr;
+                    <?= tr('Periksa Buku Bantu Aset & SILPA &rarr;') ?>
                 </a>
             </div>
         </div>
@@ -236,13 +236,13 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="text-center max-w-3xl mx-auto mb-14">
             <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 bg-emerald-200/60 px-3.5 py-1.5 rounded-full border border-emerald-300">
-                Data Kependudukan
+                <?= tr('Data Kependudukan') ?>
             </span>
             <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-900 mt-3">
-                Sebaran Wilayah & Demografi Penduduk
+                <?= tr('Sebaran Wilayah & Demografi Penduduk') ?>
             </h2>
             <p class="text-slate-600 text-sm sm:text-base mt-2">
-                Berdasarkan pendataan administrasi balai desa terbaru, mencerminkan sebaran warga di 5 Dusun dan piramida usia produktif.
+                <?= tr('Berdasarkan pendataan administrasi balai desa terbaru, mencerminkan sebaran warga di 5 Dusun dan piramida usia produktif.') ?>
             </p>
         </div>
 
@@ -252,8 +252,8 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
                     <div>
-                        <h3 class="font-heading font-bold text-lg text-slate-900">Sebaran Penduduk per Dusun</h3>
-                        <p class="text-xs text-slate-500">Total 5 Dusun di Wilayah Desa Klego</p>
+                        <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Sebaran Penduduk per Dusun') ?></h3>
+                        <p class="text-xs text-slate-500"><?= tr('Total 5 Dusun di Wilayah Desa Klego') ?></p>
                     </div>
                     <span class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-map-marked-alt"></i>
@@ -266,20 +266,20 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 
                 <div class="grid grid-cols-2 gap-3 mt-6 text-xs">
                     <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between">
-                        <span class="font-semibold text-slate-700">Dusun Klego</span>
-                        <span class="font-bold text-emerald-700">1.243 Warga (25.8%)</span>
+                        <span class="font-semibold text-slate-700"><?= tr('Dusun Klego') ?></span>
+                        <span class="font-bold text-emerald-700"><?= tr('1.243 Warga (25.8%)') ?></span>
                     </div>
                     <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between">
-                        <span class="font-semibold text-slate-700">Dusun Ponggok</span>
-                        <span class="font-bold text-emerald-700">987 Warga (20.5%)</span>
+                        <span class="font-semibold text-slate-700"><?= tr('Dusun Ponggok') ?></span>
+                        <span class="font-bold text-emerald-700"><?= tr('987 Warga (20.5%)') ?></span>
                     </div>
                     <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between">
-                        <span class="font-semibold text-slate-700">Dusun Soka</span>
-                        <span class="font-bold text-emerald-700">876 Warga (18.2%)</span>
+                        <span class="font-semibold text-slate-700"><?= tr('Dusun Soka') ?></span>
+                        <span class="font-bold text-emerald-700"><?= tr('876 Warga (18.2%)') ?></span>
                     </div>
                     <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between">
-                        <span class="font-semibold text-slate-700">Dusun Rejosari</span>
-                        <span class="font-bold text-emerald-700">765 Warga (15.9%)</span>
+                        <span class="font-semibold text-slate-700"><?= tr('Dusun Rejosari') ?></span>
+                        <span class="font-bold text-emerald-700"><?= tr('765 Warga (15.9%)') ?></span>
                     </div>
                 </div>
             </div>
@@ -288,8 +288,8 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
                     <div>
-                        <h3 class="font-heading font-bold text-lg text-slate-900">Kelompok Usia & Bonus Demografi</h3>
-                        <p class="text-xs text-slate-500">Dominasi usia produktif (15 - 59 tahun)</p>
+                        <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Kelompok Usia & Bonus Demografi') ?></h3>
+                        <p class="text-xs text-slate-500"><?= tr('Dominasi usia produktif (15 - 59 tahun)') ?></p>
                     </div>
                     <span class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-user-clock"></i>
@@ -302,8 +302,8 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
 
                 <div class="mt-6 p-4 rounded-2xl bg-gradient-to-r from-emerald-800 to-teal-700 text-white flex items-center justify-between shadow">
                     <div>
-                        <p class="text-xs text-emerald-200 uppercase tracking-wide font-bold">Rasio Usia Produktif</p>
-                        <p class="text-base sm:text-lg font-black text-amber-300">64,2% Warga Usia Produktif</p>
+                        <p class="text-xs text-emerald-200 uppercase tracking-wide font-bold"><?= tr('Rasio Usia Produktif') ?></p>
+                        <p class="text-base sm:text-lg font-black text-amber-300"><?= tr('64,2% Warga Usia Produktif') ?></p>
                     </div>
                     <i class="fa-solid fa-award text-3xl text-amber-400 opacity-80"></i>
                 </div>
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(ctxInc, {
             type: 'doughnut',
             data: {
-                labels: ['Dana Desa (APBN)', 'ADD (Boyolali)', 'PADes Asli', 'Bagi Hasil Pajak'],
+                labels: ['<?= tr("Dana Desa (APBN)") ?>', '<?= tr("ADD (Boyolali)") ?>', '<?= tr("PADes Asli") ?>', '<?= tr("Bagi Hasil Pajak") ?>'],
                 datasets: [{
                     data: [875, 350, 185, 65],
                     backgroundColor: ['#165f36', '#2e9e5b', '#c4891f', '#fbbf24'],
@@ -353,9 +353,9 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(ctxExp, {
             type: 'bar',
             data: {
-                labels: ['Infrastruktur', 'Penyelenggaraan Pemdes', 'Pemberdayaan UMKM', 'Pembinaan Warga'],
+                labels: ['<?= tr("Infrastruktur") ?>', '<?= tr("Penyelenggaraan Pemdes") ?>', '<?= tr("Pemberdayaan UMKM") ?>', '<?= tr("Pembinaan Warga") ?>'],
                 datasets: [{
-                    label: 'Alokasi Belanja 2026',
+                    label: '<?= tr("Alokasi Belanja 2026") ?>',
                     data: [680, 355, 320, 120],
                     backgroundColor: ['#165f36', '#c4891f', '#2e9e5b', '#6366f1'],
                     borderRadius: 12,
@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(ctxDus, {
             type: 'pie',
             data: {
-                labels: ['Klego', 'Ponggok', 'Soka', 'Rejosari', 'Ngemplak'],
+                labels: ['<?= tr("Dusun Klego") ?>', '<?= tr("Dusun Ponggok") ?>', '<?= tr("Dusun Soka") ?>', '<?= tr("Dusun Rejosari") ?>', 'Ngemplak'],
                 datasets: [{
                     data: [1243, 987, 876, 765, 952],
                     backgroundColor: ['#165f36', '#10b981', '#c4891f', '#06b6d4', '#f59e0b'],
@@ -415,9 +415,9 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(ctxAge, {
             type: 'bar',
             data: {
-                labels: ['0-14 (Anak)', '15-29 (Pemuda)', '30-44 (Dewasa Muda)', '45-59 (Dewasa)', '60+ (Lansia)'],
+                labels: ['<?= tr("0-14 (Anak)") ?>', '<?= tr("15-29 (Pemuda)") ?>', '<?= tr("30-44 (Dewasa Muda)") ?>', '<?= tr("45-59 (Dewasa)") ?>', '<?= tr("60+ (Lansia)") ?>'],
                 datasets: [{
-                    label: 'Jumlah Warga',
+                    label: '<?= tr("Statistik Penduduk") ?>',
                     data: [965, 1205, 1014, 879, 760],
                     backgroundColor: ['#8ecba5', '#2e9e5b', '#165f36', '#c4891f', '#d97706'],
                     borderRadius: 8
