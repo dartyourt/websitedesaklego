@@ -26,4 +26,6 @@ RUN mkdir -p uploads/berita uploads/editor uploads/perangkat data \
     && chown -R www-data:www-data /var/www/html/uploads /var/www/html/data \
     && chmod -R 775 /var/www/html/uploads /var/www/html/data
 
-EXPOSE 80
+# Change Apache listening port to 8081 for host network mode compatibility
+RUN sed -i 's/80/8081/g' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
+EXPOSE 8081
