@@ -1,0 +1,1735 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebGIS Fasilitas Umum Desa Klego, Boyolali</title>
+
+  <!-- Google Fonts: Poppins & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <!-- Leaflet MarkerCluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+
+  <!-- Leaflet MiniMap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.min.css">
+
+  <style>
+    /* ==========================================
+       DESIGN SYSTEM & VARIABLES
+       ========================================== */
+    :root {
+      --primary: #0F6E8C;
+      --primary-dark: #0B536B;
+      --secondary: #2E8A99;
+      --accent: #84A7A1;
+      --bg: #F7FAFC;
+      --card-bg: #FFFFFF;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --border-color: #E2E8F0;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(15, 110, 140, 0.06);
+      --shadow-md: 0 8px 24px rgba(15, 110, 140, 0.1);
+      --shadow-lg: 0 12px 32px rgba(15, 110, 140, 0.15);
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Inter', 'Poppins', sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ==========================================
+       LOADING SCREEN
+       ========================================== */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #0F6E8C 0%, #154D63 100%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .loading-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .spinner-box {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+    }
+    .spinner-ring {
+      width: 100%;
+      height: 100%;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top-color: #84A7A1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    .spinner-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: #fff;
+    }
+    .loading-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .loading-sub {
+      font-size: 13px;
+      color: #84A7A1;
+      margin-top: 6px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ==========================================
+       HEADER NAVBAR
+       ========================================== */
+    .header {
+      background: linear-gradient(135deg, #0F6E8C 0%, #154D63 100%);
+      color: #fff;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      z-index: 1000;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .logos-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .logo-svg-icon {
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+    .logo-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .header-titles h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-titles p {
+      font-size: 12px;
+      color: #B4D5DE;
+      margin-top: 2px;
+    }
+    .badge-webgis {
+      background: linear-gradient(135deg, #2E8A99 0%, #84A7A1 100%);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      text-transform: uppercase;
+    }
+
+    /* ==========================================
+       MAIN LAYOUT
+       ========================================== */
+    .layout {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 20px;
+      max-width: 1600px;
+      width: 100%;
+      margin: 20px auto;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    /* ==========================================
+       SIDEBAR DASHBOARD
+       ========================================== */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .panel-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+    .panel-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+    .panel-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #F1F5F9;
+      padding-bottom: 8px;
+    }
+
+    /* STAT CARDS GRID */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .stat-card {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: var(--transition);
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+      border-color: var(--secondary);
+    }
+    .stat-icon-wrapper {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .stat-val {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* CATEGORY PROGRESS LIST */
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .cat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    .cat-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .cat-badge-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+    .cat-count {
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .progress-bar-bg {
+      height: 6px;
+      background: #E2E8F0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 1s ease-in-out;
+    }
+
+    /* SIDEBAR TOOLS BUTTONS */
+    .tools-btn-group {
+      display: grid;
+      gap: 10px;
+    }
+    .btn-action {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0F6E8C 0%, #2E8A99 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(15, 110, 140, 0.25);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0B536B 0%, #154D63 100%);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: #EDF4F7;
+      color: var(--primary);
+    }
+    .btn-secondary:hover {
+      background: #DCEBEF;
+      color: var(--primary-dark);
+    }
+
+    /* ==========================================
+       MAP CARD & CONTAINER
+       ========================================== */
+    .map-card {
+      position: relative;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    #map {
+      height: 76vh;
+      min-height: 580px;
+      width: 100%;
+      z-index: 1;
+    }
+
+    /* SEARCH OVERLAY ON MAP */
+    .map-search-container {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 999;
+      width: 280px;
+    }
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-input-wrap i {
+      position: absolute;
+      left: 14px;
+      color: var(--secondary);
+      font-size: 14px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 11px 14px 11px 38px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(15, 110, 140, 0.25);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      box-shadow: var(--shadow-md);
+      outline: none;
+      transition: var(--transition);
+    }
+    .search-input:focus {
+      background: #FFFFFF;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 110, 140, 0.2);
+    }
+    .autocomplete-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      max-height: 240px;
+      overflow-y: auto;
+      display: none;
+      z-index: 1000;
+    }
+    .autocomplete-item {
+      padding: 9px 14px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #F1F5F9;
+      transition: background 0.15s;
+    }
+    .autocomplete-item:last-child {
+      border-bottom: none;
+    }
+    .autocomplete-item:hover {
+      background: #F0F7F9;
+    }
+    .autocomplete-title {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .autocomplete-cat {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff;
+    }
+
+    /* CURSOR COORDINATE TRACKER */
+    .coordinate-tracker {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      z-index: 999;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 5px 12px;
+      font-size: 11px;
+      font-family: monospace;
+      font-weight: 600;
+      color: var(--primary-dark);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* COLLAPSIBLE LEGEND CONTROL */
+    .legend-control-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      padding: 12px 14px;
+      max-width: 250px;
+      font-size: 12px;
+    }
+    .legend-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
+      user-select: none;
+    }
+    .legend-toggle-btn {
+      background: #EDF4F7;
+      color: var(--primary);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      transition: var(--transition);
+    }
+    .legend-body {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: max-height 0.3s ease;
+      overflow: hidden;
+    }
+    .legend-body.collapsed {
+      display: none;
+    }
+    .lg-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .lg-icon-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+    .lg-poly-box {
+      width: 20px;
+      height: 12px;
+      border-radius: 3px;
+      background: rgba(54, 171, 195, 0.3);
+      border: 1.5px solid #086c86;
+      flex-shrink: 0;
+    }
+
+    /* LEAFLET CLUSTER CUSTOM STYLING */
+    .marker-cluster-custom {
+      background: rgba(15, 110, 140, 0.6);
+      border: 2px solid #FFFFFF;
+      border-radius: 50%;
+      color: #FFFFFF;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .marker-cluster-custom div {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    /* MAP MARKER STYLING */
+    .custom-map-marker {
+      background: transparent;
+      border: none;
+    }
+    .marker-pin-wrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .facility-icon-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .marker-pin-wrapper:hover .facility-icon-badge {
+      transform: scale(1.25);
+      box-shadow: 0 0 12px rgba(15, 110, 140, 0.8);
+    }
+    .facility-name-label {
+      background: rgba(255, 255, 255, 0.96);
+      color: #0F3B4A;
+      font-weight: 700;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(15, 110, 140, 0.3);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(3px);
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .marker-pin-wrapper:hover .facility-name-label {
+      background: #ffffff;
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* MARKER BOUNCE PULSE ANIMATION */
+    @keyframes markerPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 110, 140, 0.7); }
+      70% { transform: scale(1.3); box-shadow: 0 0 0 15px rgba(15, 110, 140, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 110, 140, 0); }
+    }
+    .marker-active-pulse .facility-icon-badge {
+      animation: markerPulse 1.5s infinite;
+    }
+
+    /* ==========================================
+       MODERN LEAFLET POPUP CARD WITH PHOTO
+       ========================================== */
+    .leaflet-popup-content-wrapper {
+      padding: 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+    }
+    .leaflet-popup-content {
+      margin: 0;
+      width: 280px !important;
+      font-family: 'Inter', sans-serif;
+    }
+    .popup-card-container {
+      width: 100%;
+      background: #FFFFFF;
+      overflow: hidden;
+    }
+    .popup-photo-wrapper {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: #E2E8F0;
+      overflow: hidden;
+      border-radius: 10px 10px 0 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+    .popup-photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.4s ease;
+    }
+    .skeleton-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+      background-size: 200% 100%;
+      animation: skeletonPulse 1.5s infinite;
+      z-index: 2;
+    }
+    @keyframes skeletonPulse {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: #EDF4F7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      font-size: 12px;
+      gap: 4px;
+      text-align: center;
+      padding: 12px;
+    }
+    .popup-card-body {
+      padding: 14px 16px;
+      background: #fff;
+    }
+    .popup-info-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .popup-info-row i {
+      color: var(--secondary);
+      width: 14px;
+    }
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .popup-info-row i {
+      color: var(--secondary);
+      width: 14px;
+    }
+    .popup-img-placeholder {
+      width: 100%;
+      height: 90px;
+      background: #EDF4F7;
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      font-size: 11px;
+      gap: 4px;
+      margin: 10px 0;
+    }
+    .popup-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn-popup {
+      padding: 7px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+    .btn-popup-maps {
+      background: #4285F4;
+      color: #fff;
+    }
+    .btn-popup-maps:hover {
+      background: #3367D6;
+    }
+    .btn-popup-copy {
+      background: #EDF4F7;
+      color: var(--primary);
+    }
+    .btn-popup-copy:hover {
+      background: #DCEBEF;
+    }
+
+    /* ==========================================
+       DATA TABLE SECTION
+       ========================================== */
+    .data-section {
+      max-width: 1600px;
+      width: 100%;
+      margin: 0 auto 30px;
+      padding: 0 20px;
+    }
+    .table-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+    }
+    .table-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .table-header-wrap h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      color: var(--primary);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      background: #F0F7F9;
+      color: var(--primary-dark);
+      font-weight: 700;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--border-color);
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+    tr:hover {
+      background: #F8FAFC;
+    }
+    tr.highlight-row {
+      background: #EBF5F8 !important;
+      font-weight: 600;
+    }
+
+    /* ==========================================
+       FOOTER
+       ========================================== */
+    .footer {
+      background: #0B3C4D;
+      color: #94A3B8;
+      padding: 24px;
+      font-size: 12px;
+      margin-top: auto;
+    }
+    .footer-content {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left strong {
+      color: #fff;
+    }
+    .footer-badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .footer-badge-item {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #CBD5E1;
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10000;
+    }
+    .toast-msg {
+      background: #0F6E8C;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 992px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      #map {
+        height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen" class="loading-screen">
+  <div class="spinner-box">
+    <div class="spinner-ring"></div>
+    <i class="fa-solid fa-map-location-dot spinner-icon"></i>
+  </div>
+  <div class="loading-title">WebGIS Desa Klego</div>
+  <div class="loading-sub">Memuat Peta Digital Fasilitas Umum & Batas Administrasi...</div>
+</div>
+
+<!-- HEADER NAVBAR -->
+<header class="header">
+  <div class="header-left">
+    <!-- LOGO EMBLEMS -->
+    <div class="logos-wrapper">
+      <!-- UNDIP LOGO -->
+      <div class="logo-badge" title="Universitas Diponegoro">
+        <svg class="logo-svg-icon" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="#0F6E8C" stroke="#84A7A1" stroke-width="2"/>
+          <path d="M18 6L23 14H13L18 6Z" fill="#FFF"/>
+          <circle cx="18" cy="20" r="5" fill="#84A7A1"/>
+          <path d="M10 28C10 24 14 22 18 22C22 22 26 24 26 28" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>UNDIP</span>
+      </div>
+
+      <div class="logo-divider"></div>
+
+      <!-- KABUPATEN BOYOLALI LOGO -->
+      <div class="logo-badge" title="Kabupaten Boyolali">
+        <svg class="logo-svg-icon" viewBox="0 0 36 36" fill="none">
+          <path d="M18 4L30 9V19C30 26 24 31 18 33C12 31 6 26 6 19V9L18 4Z" fill="#2E8A99" stroke="#FFF" stroke-width="1.5"/>
+          <path d="M18 10L22 17H14L18 10Z" fill="#FFF"/>
+          <circle cx="18" cy="22" r="3" fill="#84A7A1"/>
+        </svg>
+        <span>Boyolali</span>
+      </div>
+
+      <div class="logo-divider"></div>
+
+      <!-- DESA KLEGO LOGO -->
+      <div class="logo-badge" title="Pemerintah Desa Klego">
+        <svg class="logo-svg-icon" viewBox="0 0 36 36" fill="none">
+          <rect x="5" y="5" width="26" height="26" rx="8" fill="#84A7A1"/>
+          <path d="M18 10L26 24H10L18 10Z" fill="#0F6E8C"/>
+          <circle cx="18" cy="19" r="3" fill="#FFF"/>
+        </svg>
+        <span>Desa Klego</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT TITLE -->
+  <div class="header-titles">
+    <h1>
+      Peta Digital Fasilitas Umum
+      <span class="badge-webgis"><i class="fa-solid fa-layer-group"></i> WebGIS</span>
+    </h1>
+    <p>Desa Klego · Kecamatan Klego · Kabupaten Boyolali · Jawa Tengah</p>
+  </div>
+</header>
+
+<!-- MAIN LAYOUT GRID -->
+<main class="layout">
+  <!-- SIDEBAR PANEL -->
+  <aside class="sidebar">
+    <!-- STATISTIK RINGKASAN CARD -->
+    <div class="panel-card">
+      <div class="panel-title">
+        <span><i class="fa-solid fa-chart-pie"></i> Ringkasan Statistik</span>
+        <span class="cat-count" id="totalCountBadge">18 Total</span>
+      </div>
+
+      <!-- STAT CARDS GRID -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper" style="background:#0F6E8C;">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <div>
+            <div class="stat-val" id="statTotal">18</div>
+            <div class="stat-lbl">Total Fasilitas</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper" style="background:#168144;">
+            <i class="fa-solid fa-mosque"></i>
+          </div>
+          <div>
+            <div class="stat-val" id="statMasjid">7</div>
+            <div class="stat-lbl">Masjid</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper" style="background:#2979c7;">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <div class="stat-val" id="statSekolah">4</div>
+            <div class="stat-lbl">Sekolah</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper" style="background:#13a36b;">
+            <i class="fa-solid fa-kit-medical"></i>
+          </div>
+          <div>
+            <div class="stat-val" id="statKesehatan">1</div>
+            <div class="stat-lbl">Puskesmas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORY PROGRESS LIST -->
+      <div class="category-list" id="categoryProgressList"></div>
+    </div>
+
+    <!-- SIDEBAR TOOLS CARD -->
+    <div class="panel-card">
+      <div class="panel-title">
+        <span><i class="fa-solid fa-sliders"></i> Kontrol Peta</span>
+      </div>
+      <div class="tools-btn-group">
+        <button class="btn-action btn-primary" onclick="fitToVillage()">
+          <i class="fa-solid fa-expand"></i> Zoom ke Batas Desa
+        </button>
+        <button class="btn-action btn-secondary" onclick="resetView()">
+          <i class="fa-solid fa-rotate-left"></i> Reset Tampilan
+        </button>
+        <button class="btn-action btn-primary" onclick="downloadMap()" style="background: linear-gradient(135deg, #2E8A99 0%, #84A7A1 100%);">
+          <i class="fa-solid fa-file-arrow-down"></i> Unduh Peta PNG
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAP CONTAINER CARD -->
+  <section class="map-card">
+    <!-- SEARCH BAR OVERLAY -->
+    <div class="map-search-container">
+      <div class="search-input-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="mapSearchInput" class="search-input" placeholder="Cari fasilitas di Desa Klego..." autocomplete="off">
+      </div>
+      <div id="searchDropdown" class="autocomplete-dropdown"></div>
+    </div>
+
+    <!-- LEAFLET MAP ELEMENT -->
+    <div id="map"></div>
+
+    <!-- CURSOR COORDINATE TRACKER -->
+    <div class="coordinate-tracker">
+      <i class="fa-solid fa-crosshairs"></i>
+      <span id="cursorCoords">Lat: -7.35662 | Lng: 110.69030</span>
+    </div>
+  </section>
+</main>
+
+<!-- DATA TABLE SECTION -->
+<section class="data-section">
+  <div class="table-card">
+    <div class="table-header-wrap">
+      <h2><i class="fa-solid fa-table-list"></i> Data Detail Fasilitas Desa Klego</h2>
+      <span style="font-size: 12px; color: var(--text-muted);">Sistem Koordinat WGS 84 (EPSG:4326)</span>
+    </div>
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Fasilitas</th>
+            <th>Kategori</th>
+            <th>Longitude (BT)</th>
+            <th>Latitude (LS)</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-left">
+      <strong>Peta Digital WebGIS Desa Klego</strong> © 2026. Dikembangkan untuk Pemerintah Desa Klego & KKN Universitas Diponegoro.
+    </div>
+    <div class="footer-badges">
+      <div class="footer-badge-item"><i class="fa-solid fa-database"></i> Sumber: OpenStreetMap & Pemdes Klego</div>
+      <div class="footer-badge-item"><i class="fa-solid fa-globe"></i> EPSG:4326 (WGS84)</div>
+      <div class="footer-badge-item"><i class="fa-solid fa-graduation-cap"></i> UNDIP 2026</div>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- LEAFLET & PLUGIN SCRIPTS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.min.js"></script>
+<script src="https://unpkg.com/leaflet-image@0.4.0/leaflet-image.js"></script>
+
+<script>
+/* ==========================================
+   DATA FASILITAS DESA KLEGO (TIDAK DIUBAH)
+   ========================================== */
+const fasilitas = [
+  {no: 1, nama: 'Kantor Desa Klego', longitude: 110.6894, latitude: -7.35662, kategori: 'Kantor Desa'},
+  {no: 2, nama: 'Masjid Darul Fallah', longitude: 110.6908, latitude: -7.3557, kategori: 'Masjid'},
+  {no: 3, nama: 'Masjid Al-Fatah', longitude: 110.6840, latitude: -7.36123, kategori: 'Masjid'},
+  {no: 4, nama: 'Masjid Al-Istijabah', longitude: 110.6911, latitude: -7.36114, kategori: 'Masjid'},
+  {no: 5, nama: 'Masjid Amnah Ali', longitude: 110.6848, latitude: -7.35288, kategori: 'Masjid'},
+  {no: 6, nama: 'SDN 1 Klego', longitude: 110.6890, latitude: -7.35673, kategori: 'Sekolah / SD'},
+  {no: 7, nama: 'SDN 3 Klego', longitude: 110.6905, latitude: -7.35995, kategori: 'Sekolah / SD'},
+  {no: 8, nama: 'MIN Kedokan Klego', longitude: 110.6860, latitude: -7.35853, kategori: 'Sekolah / SD'},
+  {no: 9, nama: 'SMP Bhinneka Karya Klego', longitude: 110.6907, latitude: -7.35902, kategori: 'Sekolah / SMP'},
+  {no: 10, nama: 'Puskesmas Klego I', longitude: 110.6878, latitude: -7.35695, kategori: 'Puskesmas'},
+  {no: 11, nama: "Masjid Umul Mu'minin Aisyah", longitude: 110.6817, latitude: -7.35811, kategori: 'Masjid'},
+  {no: 12, nama: 'Mushola Al-Hidayah', longitude: 110.6847, latitude: -7.35977, kategori: 'Musholla'},
+  {no: 13, nama: 'Mushalla Al-Fatih', longitude: 110.6832, latitude: -7.35604, kategori: 'Musholla'},
+  {no: 14, nama: 'Pasar Klego', longitude: 110.6920, latitude: -7.35596, kategori: 'Pasar'},
+  {no: 15, nama: 'Taman Klego', longitude: 110.6933, latitude: -7.35468, kategori: 'Taman'},
+  {no: 16, nama: 'Lapangan Bola Klego', longitude: 110.6910, latitude: -7.35956, kategori: 'Lapangan'},
+  {no: 17, nama: 'Masjid Nurul Iman Karanganyar (Baru)', longitude: 110.6891, latitude: -7.3539, kategori: 'Masjid'},
+  {no: 18, nama: 'Masjid Amnah Ali Klalingan (Baru)', longitude: 110.6965, latitude: -7.3574, kategori: 'Masjid'}
+];
+
+/* ==========================================
+   WARNA KATEGORI
+   ========================================== */
+const colors = {
+  'Kantor Desa': '#d94a43',
+  'Masjid': '#168144',
+  'Musholla': '#77b840',
+  'Sekolah / SD': '#2979c7',
+  'Sekolah / SMP': '#8755b5',
+  'Puskesmas': '#13a36b',
+  'Pasar': '#ee9120',
+  'Taman': '#0e9b9e',
+  'Lapangan': '#94633c'
+};
+
+/* ==========================================
+   SVG ICONS PER KATEGORI
+   ========================================== */
+const categoryIcons = {
+  'Kantor Desa': `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-4h6v4"/><path d="M10 10h4"/></svg>`,
+  'Masjid': `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="M12 4c-3.5 0-6 2.5-6 6v11h12V10c0-3.5-2.5-6-6-6z"/><path d="M9 21v-4a3 3 0 0 1 6 0v4"/><circle cx="12" cy="2" r="1" fill="currentColor"/></svg>`,
+  'Musholla': `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2"/><path d="M12 5c-3 0-5 2-5 5v11h10V10c0-3-2-5-5-5z"/><path d="M10 21v-3a2 2 0 0 1 4 0v3"/><circle cx="12" cy="2" r="1" fill="currentColor"/></svg>`,
+  'Sekolah / SD': `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+  'Sekolah / SMP': `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h6M9 11h4"/></svg>`,
+  'Puskesmas': `<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z"/></svg>`,
+  'Pasar': `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+  'Taman': `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19v3"/><path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14z"/><path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>`,
+  'Lapangan': `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M2 12h20"/></svg>`
+};
+
+/* ==========================================
+   POLYGON BATAS ADMINISTRASI DESA KLEGO
+   - Bagian Atas Sampai Kiri: Mengikuti Jalur Biru Putus-Putus Asli (Outer Blue Line)
+   - Bagian Waduk & Kanan: Mengikuti Garis Merah (Waduk Bade Extension)
+   ========================================== */
+const villagePolygon = [
+  // 1. BAGIAN ATAS & BARAT LAUT (Jalur Biru Asli)
+  [-7.3533, 110.6800],
+  [-7.3524, 110.6831],
+  [-7.3501, 110.6842],
+  [-7.3483, 110.6871],
+  [-7.3458, 110.6884],
+  [-7.3470, 110.6895],
+  [-7.3457, 110.6910],
+  [-7.3470, 110.6945],
+  [-7.3462, 110.6963],
+  [-7.3473, 110.6996],
+
+  // 2. BAGIAN WADUK BADE & SISI KANAN (Garis Merah Waduk)
+  [-7.3501, 110.7006],
+  [-7.3522, 110.6995],
+  [-7.3558, 110.6999],
+  [-7.3574, 110.6965],
+  [-7.3578, 110.7010],
+  [-7.3584, 110.7044],
+  [-7.3591, 110.7064],
+  [-7.3636, 110.7052],
+  [-7.3657, 110.7006],
+  [-7.3651, 110.6963],
+  [-7.3637, 110.6935],
+  [-7.3632, 110.6895],
+  [-7.3649, 110.6850],
+
+  // 3. BAGIAN KIRI & BARAT DAYA (Jalur Biru Asli)
+  [-7.3635, 110.6814],
+  [-7.3604, 110.6802],
+  [-7.3574, 110.6796],
+  [-7.3556, 110.6808]
+];
+
+/* GLOBAL MAP VARIABLES */
+let map, boundaryLayer;
+const defaultCenter = [-7.3566, 110.6903];
+const defaultZoom = 14;
+const categoryLayers = {};
+const markerMap = {}; // menyimpan referensi marker berdasarkan no fasilitas
+let markersClusterGroup;
+
+/* CUSTOM MARKER ICON CREATOR */
+function createCustomIcon(category, name) {
+  const iconSvg = categoryIcons[category] || '';
+  const color = colors[category] || '#0F6E8C';
+  return L.divIcon({
+    className: 'custom-map-marker',
+    html: `
+      <div class="marker-pin-wrapper">
+        <div class="facility-icon-badge" style="background:${color}">
+          ${iconSvg}
+        </div>
+        <div class="facility-name-label">${name}</div>
+      </div>
+    `,
+    iconSize: [180, 28],
+    iconAnchor: [14, 14]
+  });
+}
+
+/* HIDE LOADING SCREEN FUNCTION */
+function hideLoading() {
+  console.log("Loading selesai");
+  const loadingScreen = document.getElementById('loading-screen');
+  if (loadingScreen) {
+    loadingScreen.classList.add('fade-out');
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+      loadingScreen.style.pointerEvents = 'none';
+    }, 600);
+  }
+}
+
+let mapInitialized = false;
+
+/* INITIALIZE MAP FUNCTION DENGAN ERROR HANDLING */
+function initMap() {
+  if (mapInitialized) return;
+  mapInitialized = true;
+
+  console.log("Loading dimulai");
+  
+  try {
+    if (typeof L === 'undefined') {
+      throw new Error("Leaflet.js tidak terdeteksi! Periksa koneksi CDN Leaflet.");
+    }
+    console.log("Leaflet berhasil dimuat");
+
+    // Inisialisasi Leaflet Map
+    map = L.map('map', { zoomControl: false });
+    L.control.zoom({ position: 'topright' }).addTo(map);
+
+    // BASEMAPS
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      crossOrigin: true,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    const cartoLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      subdomains: 'abcd',
+      crossOrigin: true,
+      attribution: '© CARTO, © OpenStreetMap'
+    });
+
+    const esriSatellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: '© Esri, Maxar, Earthstar Geographics'
+    });
+
+    const cartoDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      subdomains: 'abcd',
+      attribution: '© CARTO, © OpenStreetMap'
+    });
+
+    // BATAS DESA LAYER
+    try {
+      boundaryLayer = createBoundaryLayer().addTo(map);
+      console.log("Polygon berhasil dibuat");
+    } catch (e) {
+      console.error("Gagal membuat polygon batas desa:", e);
+    }
+
+    // MARKER CLUSTER GROUP
+    try {
+      if (typeof L.markerClusterGroup === 'function') {
+        markersClusterGroup = L.markerClusterGroup({
+          showCoverageOnHover: false,
+          maxClusterRadius: 40,
+          iconCreateFunction: function(cluster) {
+            return L.divIcon({
+              html: `<div>${cluster.getChildCount()}</div>`,
+              className: 'marker-cluster-custom',
+              iconSize: L.point(40, 40)
+            });
+          }
+        });
+      } else {
+        console.warn("Leaflet.markercluster tidak dimuat, menggunakan L.layerGroup sebagai fallback.");
+        markersClusterGroup = L.layerGroup();
+      }
+
+      createFacilityLayers();
+      map.addLayer(markersClusterGroup);
+      console.log("Marker berhasil dibuat");
+    } catch (e) {
+      console.error("Gagal membuat marker fasilitas:", e);
+    }
+
+    // LAYER CONTROL (BASEMAP & OVERLAY)
+    try {
+      L.control.layers(
+        {
+          'OpenStreetMap Standard': osm,
+          'Carto Light Clean': cartoLight,
+          'Esri World Satellite': esriSatellite,
+          'Carto Dark Mode': cartoDark
+        },
+        {
+          'Batas Desa Klego': boundaryLayer,
+          ...categoryLayers
+        },
+        { collapsed: false, position: 'topright' }
+      ).addTo(map);
+    } catch (e) {
+      console.error("Gagal membuat Layer Control:", e);
+    }
+
+    // MINIMAP CONTROL
+    try {
+      if (typeof L.Control.MiniMap === 'function') {
+        const miniMapTile = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd' });
+        new L.Control.MiniMap(miniMapTile, { toggleDisplay: true, minimized: false, position: 'bottomright' }).addTo(map);
+      } else {
+        console.warn("Leaflet.MiniMap plugin tidak tersedia.");
+      }
+    } catch (e) {
+      console.error("Gagal membuat MiniMap:", e);
+    }
+
+    // MOUSE MOVE COORDINATE TRACKER
+    try {
+      map.on('mousemove', function(e) {
+        const el = document.getElementById('cursorCoords');
+        if (el) {
+          el.innerText = `Lat: ${e.latlng.lat.toFixed(5)} | Lng: ${e.latlng.lng.toFixed(5)}`;
+        }
+      });
+    } catch (e) {
+      console.error("Gagal memasang event listener mousemove:", e);
+    }
+
+    // INITIALIZE UI COMPONENTS
+    try { createLegend(); } catch (e) { console.error("Gagal membuat legenda:", e); }
+    try { populateSidebarStats(); } catch (e) { console.error("Gagal memuat statistik:", e); }
+    try { fillTable(); } catch (e) { console.error("Gagal mengisi tabel data:", e); }
+    try { setupSearchAutocomplete(); } catch (e) { console.error("Gagal menyiapkan search autocomplete:", e); }
+    try { fitToVillage(); } catch (e) { console.error("Gagal fit to village:", e); }
+
+    console.log("Semua data berhasil dimuat");
+
+  } catch (error) {
+    console.error("Error utama pada proses inisialisasi peta:", error);
+  } finally {
+    // PASTI SEMBUNYIKAN LOADING SCREEN BAHKAN JIKA ADA ERROR
+    hideLoading();
+  }
+}
+
+/* BOUNDARY LAYER CREATOR TANPA PENYEDERHANAAN GARIS (smoothFactor: 0) */
+function createBoundaryLayer() {
+  return L.polygon(villagePolygon, {
+    color: '#0F6E8C',
+    weight: 3.5,
+    fillColor: '#36abc3',
+    fillOpacity: 0.18,
+    dashArray: '6, 6',
+    smoothFactor: 0
+  }).bindPopup(`
+    <div style="padding:10px; font-family:sans-serif;">
+      <h4 style="margin:0 0 4px; color:#0F6E8C;"><i class="fa-solid fa-draw-polygon"></i> Batas Administrasi Desa Klego</h4>
+      <p style="margin:0; font-size:12px; color:#555;">Luas Wilayah & Digitasi Presisi 1:1 Resmi Pemdes Boyolali.</p>
+    </div>
+  `);
+}
+
+/* FACILITY LAYERS & MARKERS CREATOR WITH CLEAN POPUP CARD */
+function createFacilityLayers() {
+  Object.keys(colors).forEach(c => {
+    categoryLayers[c] = L.layerGroup();
+  });
+
+  fasilitas.forEach(f => {
+    const marker = L.marker([f.latitude, f.longitude], {
+      icon: createCustomIcon(f.kategori, f.nama),
+      title: f.nama
+    });
+
+    // POPUP CARD STRUCTURE TANPA FOTO
+    const popupContent = `
+      <div class="popup-card-container">
+        <!-- HEADER CARD DENGAN WARNA KATEGORI -->
+        <div class="popup-card-header" style="background:${colors[f.kategori] || '#0F6E8C'}; color:#fff; padding:12px 14px; display:flex; align-items:center; gap:10px;">
+          <div style="width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.22); display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; flex-shrink:0;">
+            ${categoryIcons[f.kategori] || '<i class="fa-solid fa-location-dot"></i>'}
+          </div>
+          <div>
+            <h3 style="font-family:'Poppins',sans-serif; font-size:14px; font-weight:700; margin:0; line-height:1.2;">${f.nama}</h3>
+          </div>
+        </div>
+
+        <!-- BODY CARD INFORMASI -->
+        <div class="popup-card-body" style="padding:14px;">
+          <div style="margin-bottom:10px;">
+            <span style="background:${colors[f.kategori] || '#0F6E8C'}; color:#fff; font-size:11px; font-weight:600; padding:3px 10px; border-radius:12px; display:inline-flex; align-items:center; gap:5px;">
+              ${categoryIcons[f.kategori] || ''} ${f.kategori}
+            </span>
+          </div>
+
+          <div class="popup-info-row">
+            <i class="fa-solid fa-location-dot"></i> <b>Wilayah:</b> Desa Klego, Kec. Klego
+          </div>
+          <div class="popup-info-row">
+            <i class="fa-solid fa-compass"></i> <b>Koordinat:</b> ${f.latitude.toFixed(5)}, ${f.longitude.toFixed(5)}
+          </div>
+
+          <!-- ACTIONS: BUKA GOOGLE MAPS & SALIN KOORDINAT -->
+          <div class="popup-actions" style="margin-top:12px; display:grid; gap:8px;">
+            <a href="https://www.google.com/maps/search/?api=1&query=${f.latitude},${f.longitude}" target="_blank" class="btn-popup" style="background:#4285F4; color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px;">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka di Google Maps
+            </a>
+            <button onclick="copyCoords(${f.latitude}, ${f.longitude})" class="btn-popup" style="background:#EDF4F7; color:#0F6E8C; padding:6px 12px; border-radius:8px; font-weight:600; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+              <i class="fa-solid fa-copy"></i> Salin Koordinat
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    marker.bindPopup(popupContent, { maxWidth: 270 });
+
+    marker.on('click', function() {
+      highlightMarker(f.no);
+    });
+
+    categoryLayers[f.kategori].addLayer(marker);
+    markersClusterGroup.addLayer(marker);
+    markerMap[f.no] = marker;
+  });
+}
+
+/* HIGHLIGHT MARKER FUNCTION */
+function highlightMarker(no) {
+  Object.values(markerMap).forEach(m => {
+    const el = m.getElement();
+    if (el) el.classList.remove('marker-active-pulse');
+  });
+
+  const activeMarker = markerMap[no];
+  if (activeMarker) {
+    const el = activeMarker.getElement();
+    if (el) el.classList.add('marker-active-pulse');
+  }
+}
+
+/* SIDEBAR STATISTIK & PROGRESS BARS */
+function populateSidebarStats() {
+  const counts = {};
+  fasilitas.forEach(f => counts[f.kategori] = (counts[f.kategori] || 0) + 1);
+
+  // Update Stat Cards Ringkasan
+  let countMasjid = (counts['Masjid'] || 0) + (counts['Musholla'] || 0);
+  let countSekolah = (counts['Sekolah / SD'] || 0) + (counts['Sekolah / SMP'] || 0);
+  let countKesehatan = counts['Puskesmas'] || 0;
+
+  document.getElementById('statTotal').innerText = fasilitas.length;
+  document.getElementById('statMasjid').innerText = countMasjid;
+  document.getElementById('statSekolah').innerText = countSekolah;
+  document.getElementById('statKesehatan').innerText = countKesehatan;
+
+  // Render Progress Bars Kategori
+  const total = fasilitas.length;
+  const listHtml = Object.entries(counts).map(([cat, cnt]) => {
+    const pct = Math.round((cnt / total) * 100);
+    const color = colors[cat] || '#0F6E8C';
+    const icon = categoryIcons[cat] || '';
+    return `
+      <div class="cat-item">
+        <div class="cat-header">
+          <div class="cat-title-wrap">
+            <span class="cat-badge-icon" style="background:${color}">${icon}</span>
+            <span>${cat}</span>
+          </div>
+          <span class="cat-count">${cnt} (${pct}%)</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width:${pct}%; background:${color}"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('categoryProgressList').innerHTML = listHtml;
+}
+
+/* COLLAPSIBLE LEGEND CONTROL */
+function createLegend() {
+  const legend = L.control({ position: 'bottomright' });
+  legend.onAdd = () => {
+    const div = L.DomUtil.create('div', 'legend-control-card');
+    div.innerHTML = `
+      <div class="legend-header" onclick="toggleLegend()">
+        <span><i class="fa-solid fa-layer-group"></i> Legenda Fasilitas</span>
+        <span class="legend-toggle-btn" id="legendToggleIcon"><i class="fa-solid fa-minus"></i></span>
+      </div>
+      <div class="legend-body" id="legendBody">
+        ${Object.entries(colors).map(([cat, col]) => `
+          <div class="lg-row">
+            <span class="lg-icon-circle" style="background:${col}">
+              ${categoryIcons[cat] || ''}
+            </span>
+            <span>${cat}</span>
+          </div>
+        `).join('')}
+        <div class="lg-row">
+          <span class="lg-poly-box"></span>
+          <span>Batas Administrasi Desa</span>
+        </div>
+      </div>
+    `;
+    return div;
+  };
+  legend.addTo(map);
+}
+
+function toggleLegend() {
+  const body = document.getElementById('legendBody');
+  const icon = document.getElementById('legendToggleIcon');
+  if (body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    icon.innerHTML = '<i class="fa-solid fa-minus"></i>';
+  } else {
+    body.classList.add('collapsed');
+    icon.innerHTML = '<i class="fa-solid fa-plus"></i>';
+  }
+}
+
+/* SEARCH & AUTOCOMPLETE LOGIC */
+function setupSearchAutocomplete() {
+  const input = document.getElementById('mapSearchInput');
+  const dropdown = document.getElementById('searchDropdown');
+
+  input.addEventListener('input', function() {
+    const val = this.value.trim().toLowerCase();
+    if (!val) {
+      dropdown.style.display = 'none';
+      return;
+    }
+
+    const matches = fasilitas.filter(f => 
+      f.nama.toLowerCase().includes(val) || f.kategori.toLowerCase().includes(val)
+    );
+
+    if (matches.length === 0) {
+      dropdown.innerHTML = `<div class="autocomplete-item"><span style="color:#94A3B8;">Tidak ditemukan</span></div>`;
+    } else {
+      dropdown.innerHTML = matches.map(m => `
+        <div class="autocomplete-item" onclick="selectSearchFacility(${m.no})">
+          <span class="autocomplete-title">${m.nama}</span>
+          <span class="autocomplete-cat" style="background:${colors[m.kategori] || '#0F6E8C'}">${m.kategori}</span>
+        </div>
+      `).join('');
+    }
+    dropdown.style.display = 'block';
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = 'none';
+    }
+  });
+}
+
+function selectSearchFacility(no) {
+  const f = fasilitas.find(item => item.no === no);
+  if (!f) return;
+
+  document.getElementById('searchDropdown').style.display = 'none';
+  document.getElementById('mapSearchInput').value = f.nama;
+
+  const targetMarker = markerMap[no];
+  if (targetMarker) {
+    map.flyTo([f.latitude, f.longitude], 17, { animate: true, duration: 1.2 });
+    setTimeout(() => {
+      markersClusterGroup.zoomToShowLayer(targetMarker, function() {
+        targetMarker.openPopup();
+        highlightMarker(no);
+      });
+    }, 400);
+
+    showToast(`Zoom ke ${f.nama}`);
+  }
+}
+
+/* POPULATE DATA TABLE */
+function fillTable() {
+  document.getElementById('tableBody').innerHTML = fasilitas.map(f => `
+    <tr id="row-fac-${f.no}">
+      <td>${f.no}</td>
+      <td><b>${f.nama}</b></td>
+      <td>
+        <span style="display:inline-flex; align-items:center; gap:6px; font-weight:600; color:${colors[f.kategori]};">
+          <span class="cat-badge-icon" style="width:18px; height:18px; background:${colors[f.kategori]}">
+            ${categoryIcons[f.kategori] || ''}
+          </span>
+          ${f.kategori}
+        </span>
+      </td>
+      <td>${f.longitude.toFixed(5)}</td>
+      <td>${f.latitude.toFixed(5)}</td>
+      <td>
+        <button onclick="selectSearchFacility(${f.no})" class="btn-action btn-secondary" style="padding:4px 10px; font-size:11px;">
+          <i class="fa-solid fa-location-crosshairs"></i> Lihat di Peta
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+/* HELPER FUNCTIONS & ACTIONS */
+function fitToVillage() {
+  map.fitBounds(boundaryLayer.getBounds(), { padding: [30, 30] });
+  showToast('Tampilan disesuaikan ke Batas Desa');
+}
+
+function resetView() {
+  map.setView(defaultCenter, defaultZoom);
+  showToast('Posisi peta direset');
+}
+
+function copyCoords(lat, lng) {
+  const str = `${lat}, ${lng}`;
+  navigator.clipboard.writeText(str).then(() => {
+    showToast(`Koordinat ${str} disalin!`);
+  });
+}
+
+function showToast(msg) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast-msg';
+  toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+function downloadMap() {
+  const b = document.querySelector('button[onclick="downloadMap()"]');
+  b.disabled = true;
+  b.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyiapkan PNG…';
+
+  leafletImage(map, function(err, canvas) {
+    b.disabled = false;
+    b.innerHTML = '<i class="fa-solid fa-file-arrow-down"></i> Unduh Peta PNG';
+    if (err) {
+      showToast('Menggunakan pencetakan dokumen...');
+      window.print();
+      return;
+    }
+    const a = document.createElement('a');
+    a.download = 'webgis-peta-desa-klego.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+    showToast('Peta PNG berhasil diunduh!');
+  });
+}
+
+/* RUN INITIALIZATION SAFEGUARD */
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(initMap, 50);
+} else {
+  document.addEventListener('DOMContentLoaded', initMap);
+  window.addEventListener('load', initMap);
+}
+
+/* SAFETY NET TIMEOUT: PASTI SEMBUNYIKAN LOADING SCREEN DALAM MAX 3 DETIK */
+setTimeout(function() {
+  if (!mapInitialized) {
+    console.warn("Safety net timer: memanggil initMap secara otomatis.");
+    initMap();
+  }
+  hideLoading();
+}, 3000);
+</script>
+</body>
+</html>

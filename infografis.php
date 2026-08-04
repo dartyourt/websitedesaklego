@@ -242,6 +242,83 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
     </div>
 </section>
 
+<!-- ================= PERBANDINGAN APBDES & PEMBIAYAAN DESA ================= -->
+<section class="py-12 bg-slate-50 border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- DIAGRAM BATANG PERBANDINGAN PENDAPATAN & BELANJA (6 KOLOM) -->
+            <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                    <div>
+                        <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full"><?= tr('Analisis Keseimbangan') ?></span>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mt-1"><?= tr('Perbandingan Pendapatan vs Belanja') ?></h3>
+                    </div>
+                    <i class="fa-solid fa-scale-balanced text-3xl text-amber-500 opacity-80"></i>
+                </div>
+                
+                <div class="h-72 w-full">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+
+                <div class="mt-6 p-4 rounded-2xl bg-slate-50 border border-slate-100 text-xs text-slate-600 leading-relaxed">
+                    <strong class="text-slate-800 font-bold"><i class="fa-solid fa-circle-check text-emerald-700 mr-1.5"></i><?= tr('Anggaran Berimbang & Sehat:') ?></strong>
+                    <?= tr('Selisih antara total pendapatan dan total belanja desa akan ditutup sepenuhnya melalui pemanfaatan SILPA tahun sebelumnya yang tercatat dalam pos Pembiayaan Netto.') ?>
+                </div>
+            </div>
+
+            <!-- RINCIAN PEMBIAYAAN DESA TA 2026 (6 KOLOM) -->
+            <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                    <div>
+                        <span class="text-[10px] font-bold text-purple-800 bg-purple-100 px-2.5 py-0.5 rounded-full"><?= tr('Struktur Pembiayaan') ?></span>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mt-1"><?= tr('Informasi Pembiayaan Desa 2026') ?></h3>
+                    </div>
+                    <i class="fa-solid fa-vault text-3xl text-purple-600 opacity-80"></i>
+                </div>
+
+                <p class="text-xs text-slate-600 mb-6 leading-relaxed">
+                    <?= tr('Pembiayaan Desa meliputi penerimaan bersumber dari Sisa Lebih Perhitungan Anggaran (SILPA) dan pengeluaran yang ditujukan untuk investasi modal desa.') ?>
+                </p>
+
+                <div class="space-y-4">
+                    <div class="p-4 rounded-2xl bg-purple-50 border border-purple-200/70 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-purple-900 block"><?= tr('Penerimaan Pembiayaan') ?></span>
+                            <span class="text-[11px] text-slate-500"><?= tr('Pemanfaatan SILPA Tahun 2025') ?></span>
+                        </div>
+                        <span class="text-base sm:text-lg font-black text-purple-900">Rp 350.088.352</span>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200/70 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-rose-900 block"><?= tr('Pengeluaran Pembiayaan') ?></span>
+                            <span class="text-[11px] text-slate-500"><?= tr('Penyertaan Modal & Cadangan Desa') ?></span>
+                        </div>
+                        <span class="text-base sm:text-lg font-black text-rose-800">Rp 34.880.000</span>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-900 to-slate-900 text-white flex items-center justify-between shadow">
+                        <div>
+                            <span class="text-xs font-bold text-amber-300 block"><?= tr('Pembiayaan Netto (Bersih)') ?></span>
+                            <span class="text-[11px] text-emerald-200"><?= tr('Penerimaan dikurangi Pengeluaran') ?></span>
+                        </div>
+                        <span class="text-base sm:text-lg font-black text-white">Rp 315.208.352</span>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+                    <a href="dokumen.php" class="text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1.5">
+                        <span><?= tr('Unduh Dokumen Nota Keuangan APBDes') ?></span>
+                        <i class="fa-solid fa-file-pdf text-[11px] text-rose-600"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 <!-- ================= STATISTIK DEMOGRAFI KEPENDUDUKAN ================= -->
 <section class="py-16 bg-slate-100 border-t border-slate-200" id="section-demografi">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -447,6 +524,48 @@ document.addEventListener('DOMContentLoaded', function() {
                         grid: { color: '#f1f5f9' }
                     },
                     y: { grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    // 5. Comparison Chart (Pendapatan vs Belanja vs Pembiayaan)
+    const ctxComp = document.getElementById('comparisonChart');
+    if (ctxComp) {
+        new Chart(ctxComp, {
+            type: 'bar',
+            data: {
+                labels: ['<?= tr("Total Pendapatan") ?>', '<?= tr("Total Belanja") ?>', '<?= tr("Pembiayaan Netto") ?>'],
+                datasets: [{
+                    label: '<?= tr("Anggaran APBDes 2026 (Juta Rp)") ?>',
+                    data: [1800.3, 1815.4, 315.2],
+                    backgroundColor: [
+                        '#165f36',
+                        '#2563eb',
+                        '#9333ea'
+                    ],
+                    borderRadius: 12,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx) { return ' Rp ' + ctx.raw + ' Juta'; }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f1f5f9' },
+                        ticks: { callback: function(val) { return 'Rp ' + val + ' Jt'; } }
+                    },
+                    x: { grid: { display: false } }
                 }
             }
         });

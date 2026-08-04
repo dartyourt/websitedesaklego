@@ -45,20 +45,24 @@ $menus = [
     [2, 0, 'Profil Desa', '#', 2],
     [3, 2, 'Sejarah & Visi Misi', 'page.php?slug=sejarah-visi-misi', 1],
     [4, 2, 'Struktur Pemerintahan', 'page.php?slug=struktur-pemerintahan', 2],
-    [5, 2, 'Potensi & UMKM Desa', 'page.php?slug=potensi-desa', 3],
-    [6, 0, 'Infografis Keuangan', 'infografis.php', 3],
-    [7, 0, 'Regulasi & Aset Desa', 'dokumen.php', 4],
-    [8, 7, 'Peraturan & Produk Legislasi', 'dokumen.php?kategori=Peraturan+%26+Produk+Legislasi+Desa', 1],
-    [9, 7, 'Inventarisasi Aset & Pembendaharaan', 'dokumen.php?kategori=Inventarisasi+Aset+%26+Informasi', 2],
-    [10, 7, 'RPJM Desa & Perencanaan', 'dokumen.php?kategori=Rencana+Pembangunan+Jangka+Menengah+%28RPJM%29', 3],
-    [11, 0, 'Pelayanan & Berita', '#', 5],
-    [12, 11, 'Panduan Layanan Masyarakat', 'page.php?slug=panduan-layanan', 1],
-    [13, 11, 'Berita & Agenda Desa', 'berita.php', 2],
+    [5, 2, 'WebGIS Peta & Wilayah', 'peta-desa.php', 3],
+    [6, 0, 'Data & Transparansi', '#', 3],
+    [7, 6, 'Data Pertanian Desa', 'data-pertanian.php', 1],
+    [8, 6, 'Data Stunting Balita', 'data-stunting.php', 2],
+    [9, 6, 'Direktori & Potensi UMKM', 'data-umkm.php', 3],
+    [10, 6, 'Infografis APBDes 2026', 'infografis.php', 4],
+    [11, 0, 'Regulasi & Aset Desa', 'dokumen.php', 4],
+    [12, 11, 'Peraturan & Produk Legislasi', 'dokumen.php?kategori=Peraturan+%26+Produk+Legislasi+Desa', 1],
+    [13, 11, 'Inventarisasi Aset & Pembendaharaan', 'dokumen.php?kategori=Inventarisasi+Aset+%26+Informasi', 2],
+    [14, 11, 'RPJM Desa & Perencanaan', 'dokumen.php?kategori=Rencana+Pembangunan+Jangka+Menengah+%28RPJM%29', 3],
+    [15, 0, 'Pelayanan & Berita', '#', 5],
+    [16, 15, 'Panduan Layanan Masyarakat', 'page.php?slug=panduan-layanan', 1],
+    [17, 15, 'Berita & Agenda Desa', 'berita.php', 2],
 ];
 foreach ($menus as $m) {
     mysqli_query($conn, "INSERT INTO menu_navbar (id, parent_id, label, url, urutan) VALUES ({$m[0]}, {$m[1]}, '{$m[2]}', '{$m[3]}', {$m[4]})");
 }
-echo "[OK] Menu Navbar ala WordPress berhasil diposisikan (13 item).\n";
+echo "[OK] Menu Navbar ala WordPress berhasil diposisikan (17 item terlengkap).\n";
 
 // 3. Buat Tabel Halaman Statis
 $sqlHalaman = "CREATE TABLE IF NOT EXISTS `halaman_statis` (

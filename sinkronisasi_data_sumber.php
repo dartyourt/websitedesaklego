@@ -101,8 +101,42 @@ try {
             }
         }
     }
+
+    // Salin file WebGIS Naura ke folder assets agar siap diakses oleh peta-desa.php
+    $srcWebgis = __DIR__ . '/data/Sumber Data Naura/peta-desa-klego (1).html';
+    $destWebgis = __DIR__ . '/assets/peta_webgis.html';
+    if (is_file($srcWebgis)) {
+        if (!is_dir(__DIR__ . '/assets')) mkdir(__DIR__ . '/assets', 0775, true);
+        copy($srcWebgis, $destWebgis);
+    }
+
+    // Perbaharui struktur menu navigasi agar menampilkan seluruh portal data (Pertanian, Stunting, UMKM, WebGIS, Infografis)
+    run_query("TRUNCATE TABLE menu_navbar");
+    $menuData = [
+        [1, 0, 'Beranda', 'index.php', 1],
+        [2, 0, 'Profil Desa', '#', 2],
+        [3, 2, 'Sejarah & Visi Misi', 'page.php?slug=sejarah-visi-misi', 1],
+        [4, 2, 'Struktur Pemerintahan', 'page.php?slug=struktur-pemerintahan', 2],
+        [5, 2, 'WebGIS Peta & Wilayah', 'peta-desa.php', 3],
+        [6, 0, 'Data & Transparansi', '#', 3],
+        [7, 6, 'Data Pertanian Desa', 'data-pertanian.php', 1],
+        [8, 6, 'Data Stunting Balita', 'data-stunting.php', 2],
+        [9, 6, 'Direktori & Potensi UMKM', 'data-umkm.php', 3],
+        [10, 6, 'Infografis APBDes 2026', 'infografis.php', 4],
+        [11, 0, 'Regulasi & Aset Desa', 'dokumen.php', 4],
+        [12, 11, 'Peraturan & Produk Legislasi', 'dokumen.php?kategori=Peraturan+%26+Produk+Legislasi+Desa', 1],
+        [13, 11, 'Inventarisasi Aset & Pembendaharaan', 'dokumen.php?kategori=Inventarisasi+Aset+%26+Informasi', 2],
+        [14, 11, 'RPJM Desa & Perencanaan', 'dokumen.php?kategori=Rencana+Pembangunan+Jangka+Menengah+%28RPJM%29', 3],
+        [15, 0, 'Pelayanan & Berita', '#', 5],
+        [16, 15, 'Panduan Layanan Masyarakat', 'page.php?slug=panduan-layanan', 1],
+        [17, 15, 'Berita & Agenda Desa', 'berita.php', 2],
+    ];
+    foreach ($menuData as $m) {
+        run_query("INSERT INTO menu_navbar (id, parent_id, label, url, urutan) VALUES ({$m[0]}, {$m[1]}, '{$m[2]}', '{$m[3]}', {$m[4]})");
+    }
+
     mysqli_commit($conn);
-    echo "[OK] Sinkronisasi selesai: APBDes 2026, 6 UMKM, foto UMKM, dan dokumen non-Satria telah diimpor.\n";
+    echo "[OK] Sinkronisasi selesai: APBDes 2026, 6 UMKM, foto UMKM, dokumen non-Satria, WebGIS Peta, dan 17 Menu Navbar telah diimpor & diaktifkan.\n";
 } catch (Throwable $e) {
     mysqli_rollback($conn);
     fwrite(STDERR, '[ERROR] ' . $e->getMessage() . "\n");

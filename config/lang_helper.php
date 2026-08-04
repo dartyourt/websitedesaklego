@@ -438,7 +438,15 @@ function tr($text) {
             'Surat Ket. Tidak Mampu' => 'Certificate of Underprivileged (SKTM)',
             'Syarat: Fotokopi KTP, KK, dan Pengantar Resmi RT/RW.' => 'Requirements: Copy of KTP, KK, and Official RT/RW Referral.',
             'Surat Keterangan Usaha (SKU)' => 'Business Ownership Certificate (SKU)',
-            'Syarat: Fotokopi KTP, KK, Pengantar RT/RW & Bukti Usaha.' => 'Requirements: Copy of KTP, KK, RT/RW Referral & Proof of Business.'
+            'Syarat: Fotokopi KTP, KK, Pengantar RT/RW & Bukti Usaha.' => 'Requirements: Copy of KTP, KK, RT/RW Referral & Proof of Business.',
+            'WebGIS Peta & Wilayah' => 'WebGIS Maps & Territory',
+            'Data & Transparansi' => 'Data & Transparency',
+            'Data Pertanian Desa' => 'Village Agricultural Data',
+            'Data Stunting Balita' => 'Toddler Stunting Data',
+            'Direktori & Potensi UMKM' => 'MSME Directory & Potential',
+            'Infografis APBDes 2026' => 'APBDes 2026 Infographics',
+            'Perbandingan Pendapatan vs Belanja' => 'Revenue vs Expenditure Comparison',
+            'Informasi Pembiayaan Desa 2026' => '2026 Village Financing Information'
         ],
         'ja' => [
             // Menu & Submenu Navbar
@@ -638,7 +646,15 @@ function tr($text) {
             'Surat Ket. Tidak Mampu' => '福祉支援証明 (SKTM) 発行',
             'Syarat: Fotokopi KTP, KK, dan Pengantar Resmi RT/RW.' => '必要書類: KTP、世帯カード(KK)写し、および公式な町内会 (RT/RW) の推薦状。',
             'Surat Keterangan Usaha (SKU)' => '自営業・商工営業証明書 (SKU)',
-            'Syarat: Fotokopi KTP, KK, Pengantar RT/RW & Bukti Usaha.' => '必要書類: KTP、世帯カード写し、RT/RW 推薦状 および 事業実態証明書類。'
+            'Syarat: Fotokopi KTP, KK, Pengantar RT/RW & Bukti Usaha.' => '必要書類: KTP、世帯カード写し、RT/RW 推薦状 および 事業実態証明書類。',
+            'WebGIS Peta & Wilayah' => 'WebGIS地図と区域界',
+            'Data & Transparansi' => 'データと透明性',
+            'Data Pertanian Desa' => '村の農業データ',
+            'Data Stunting Balita' => '幼児発育不全モニタリング',
+            'Direktori & Potensi UMKM' => '中小企業 (UMKM) カタログ',
+            'Infografis APBDes 2026' => '2026年度村予算インフォグラフィック',
+            'Perbandingan Pendapatan vs Belanja' => '歳入と歳出の比較分析',
+            'Informasi Pembiayaan Desa 2026' => '2026年度村財政調達情報'
         ]
     ];
 
