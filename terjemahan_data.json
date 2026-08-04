@@ -1,0 +1,640 @@
+{
+    "generated_at": "2026-08-04 15:51:41",
+    "master_bahasa": [
+        {
+            "kode": "en",
+            "nama": "English",
+            "bendera": "🇬🇧",
+            "is_default": "0",
+            "status": "1"
+        },
+        {
+            "kode": "id",
+            "nama": "Bahasa Indonesia",
+            "bendera": "🇮🇩",
+            "is_default": "1",
+            "status": "1"
+        },
+        {
+            "kode": "ja",
+            "nama": "日本語 (Japan)",
+            "bendera": "🇯🇵",
+            "is_default": "0",
+            "status": "1"
+        }
+    ],
+    "terjemahan_konten": [
+        {
+            "id": "1",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "beranda",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Beranda",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "2",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "beranda",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Home",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "3",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "beranda",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "ホーム",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "4",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "profil_desa",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Profil Desa",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "5",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "profil_desa",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Village Profile",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "6",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "profil_desa",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "村の概要",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "7",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "infografis_keuangan",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Infografis Keuangan",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "8",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "infografis_keuangan",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Financial Infographics",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "9",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "infografis_keuangan",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "財務インフォグラフィック",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "10",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "regulasi_aset",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Regulasi & Aset Desa",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "11",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "regulasi_aset",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Regulations & Assets",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "12",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "regulasi_aset",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "法規と村の資産",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "13",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pelayanan_berita",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Pelayanan & Berita",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "14",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pelayanan_berita",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Services & News",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "15",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pelayanan_berita",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "行政サービスとニュース",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "16",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pustaka_hukum",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Pustaka Dokumen (JDIH)",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "17",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pustaka_hukum",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Legal Repository (JDIH)",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "18",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pustaka_hukum",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "法規アーカイブ (JDIH)",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "19",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "kembali_beranda",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Kembali ke Beranda",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "20",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "kembali_beranda",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Back to Home",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "21",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "kembali_beranda",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "ホームに戻る",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "22",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "unduh_file",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Unduh Berkas",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "23",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "unduh_file",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Download File",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "24",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "unduh_file",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "ダウンロード",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "25",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pratinjau",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Pratinjau",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "26",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pratinjau",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Preview",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "27",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pratinjau",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "プレビュー",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "28",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "selamat_datang",
+            "kode_bahasa": "id",
+            "teks_terjemahan": "Selamat Datang di Portal Resmi Pemerintahan Desa Klego",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "29",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "selamat_datang",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Welcome to the Official Portal of Klego Village Government",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "30",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "selamat_datang",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "クレゴ村公式政府ポータルへようこそ",
+            "updated_at": "2026-08-04 09:30:34"
+        },
+        {
+            "id": "51",
+            "kategori": "halaman",
+            "referensi_id": "4",
+            "kunci": "judul",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "住民行政サービス利用ガイド",
+            "updated_at": "2026-08-04 09:41:23"
+        },
+        {
+            "id": "52",
+            "kategori": "halaman",
+            "referensi_id": "4",
+            "kunci": "konten",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "<p style=\"text-align: left;\">村役場では、各種証明書の申請手続きを迅速に行っており、通常1営業日以内に発行いたします。住民の皆様は、以下の必要書類をご準備ください。<br>1. 居住証明書・事業証明書・生活困窮証明書<br>以下の書類をご持参ください。<br>身分証明書（KTP）のコピー<br>家族カード（KK）のコピー<br>お住まいの地域のRT\/RW代表者による紹介状<br>2. 身分証明書（KTP）・家族カード（KK）の申請用紹介状<br>以下のいずれかをご持参ください。<br>F1.01申請書<br>更新する家族カード（KK）の原本<br>受付時間： 月曜日～金曜日　8:00～16:00（WIB）<br>受付場所： クレゴ村役場<\/p>",
+            "updated_at": "2026-08-04 09:44:18"
+        },
+        {
+            "id": "57",
+            "kategori": "halaman",
+            "referensi_id": "3",
+            "kunci": "judul",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "クレゴ村の魅力とUMKM",
+            "updated_at": "2026-08-04 09:50:21"
+        },
+        {
+            "id": "58",
+            "kategori": "halaman",
+            "referensi_id": "3",
+            "kunci": "konten",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "<p style=\"text-align: left;\">クレゴ村は、312ヘクタールを超える生産性の高い農地に恵まれ、付加価値の高い主要農産物を生産しています。&nbsp;また、農業分野だけでなく、87の零細・中小企業（UMKM）が地域経済を支える重要な存在として発展しており、主な産業は以下のとおりです。<\/p>\r\n<ol>\r\n<li>輸出品質の竹・木工編み細工<\/li>\r\n<li>地元農産物を活用した伝統食品・加工食品<\/li>\r\n<li>手描きバティック（バティック・トゥリス）および縫製産業<\/li>\r\n<\/ol>",
+            "updated_at": "2026-08-04 09:50:21"
+        },
+        {
+            "id": "61",
+            "kategori": "halaman",
+            "referensi_id": "2",
+            "kunci": "judul",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "クレゴ村の行政組織",
+            "updated_at": "2026-08-04 09:58:10"
+        },
+        {
+            "id": "62",
+            "kategori": "halaman",
+            "referensi_id": "2",
+            "kunci": "konten",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "<p>クレゴ村役場の組織体制（SOTK）<\/p>\r\n<p>クレゴ村役場は、迅速かつ一体的な行政サービスの提供を目指しています。村長をはじめとする職員一同は、住民の行政手続きの円滑な実施と地域の発展を支えるため、常に取り組んでいます。<br>現在、クレゴ村は5つの集落 、6つのRW、18のRTで構成されています。<\/p>\r\n<p>役職や担当業務などの詳細につきましては、平日の開庁時間内に村役場までお気軽にお問い合わせください。<\/p>",
+            "updated_at": "2026-08-04 09:58:10"
+        },
+        {
+            "id": "65",
+            "kategori": "halaman",
+            "referensi_id": "1",
+            "kunci": "judul",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "クレゴ村の歴史とビジョン・ミッション",
+            "updated_at": "2026-08-04 10:03:25"
+        },
+        {
+            "id": "66",
+            "kategori": "halaman",
+            "referensi_id": "1",
+            "kunci": "konten",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "<figure style=\"margin: 24px auto; text-align: center; display: block; clear: both;\"><img style=\"max-width: 100%; height: 331px; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.12) 0px 10px 25px -5px; display: block; margin: 0px auto; border: 1px solid rgb(226, 232, 240);\" src=\"..\/uploads\/editor\/img_20260804_022807_6a713217d2582.jpeg\" alt=\"Gambar Bukti\" width=\"228\"><\/figure>\r\n<p>&nbsp;<\/p>\r\n<p>村長のビジョン<\/p>\r\n<p>「説明責任のある行政運営を通じて、豊かで自立し、文化を大切にし、透明性の高いクレゴ村の実現を目指します。」<\/p>\r\n<p>クレゴ村のミッション<\/p>\r\n<p>- 情報技術（IT）を活用し、クレゴ村の全住民に対する行政サービスの質を向上させます。<br>- 村内すべての集落において、道路や公共施設などの社会基盤を計画的かつ持続的に整備します。<br>- 近代的な農業の推進とUMKM（零細・中小企業）の育成を通じて、地域経済の発展を図ります。<br>- 情報公開を積極的に進めるとともに、透明性が高く、適切な予算運営を実現します。<\/p>\r\n<p>クレゴ村の沿革<\/p>\r\n<p>クレゴ村は、ボヨラリ県の戦略的な地域に位置しています。古くから地域経済の発展を支える拠点であるとともに、公平な農業地域として知られてきました。現在では、その伝統を受け継ぎながら、競争力の高い近代的な行政を目指して発展を続けています.<\/p>",
+            "updated_at": "2026-08-04 10:03:25"
+        },
+        {
+            "id": "69",
+            "kategori": "infografis",
+            "referensi_id": "0",
+            "kunci": "info_judul",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "予算・財政の透明性",
+            "updated_at": "2026-08-04 10:13:10"
+        },
+        {
+            "id": "70",
+            "kategori": "infografis",
+            "referensi_id": "0",
+            "kunci": "info_sub",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "APBDesおよび村有資産のリアルタイム財務情報",
+            "updated_at": "2026-08-04 10:13:10"
+        },
+        {
+            "id": "71",
+            "kategori": "infografis",
+            "referensi_id": "0",
+            "kunci": "pendapatan_apbdes",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "2026年度APBDes歳入",
+            "updated_at": "2026-08-04 10:13:10"
+        },
+        {
+            "id": "72",
+            "kategori": "infografis",
+            "referensi_id": "0",
+            "kunci": "belanja_apbdes",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "2026年度APBDes歳出",
+            "updated_at": "2026-08-04 10:13:10"
+        },
+        {
+            "id": "73",
+            "kategori": "infografis",
+            "referensi_id": "0",
+            "kunci": "silpa_2025",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "2025年度APBDes繰越金（SILPA）",
+            "updated_at": "2026-08-04 10:13:10"
+        },
+        {
+            "id": "74",
+            "kategori": "infografis",
+            "referensi_id": "0",
+            "kunci": "nilai_aset",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "村有資産簿価",
+            "updated_at": "2026-08-04 10:13:10"
+        },
+        {
+            "id": "75",
+            "kategori": "infografis",
+            "referensi_id": "0",
+            "kunci": "komposisi_apbdes",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "2026年度APBDes予算構成グラフ",
+            "updated_at": "2026-08-04 10:13:10"
+        },
+        {
+            "id": "76",
+            "kategori": "infografis",
+            "referensi_id": "0",
+            "kunci": "sebaran_warga",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "集落別人口分布グラフ（4,823人）",
+            "updated_at": "2026-08-04 10:13:10"
+        },
+        {
+            "id": "89",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "pusat_unduhan",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "ダウンロードセンター",
+            "updated_at": "2026-08-04 10:21:45"
+        },
+        {
+            "id": "98",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "baca_selengkapnya",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "続きを読む",
+            "updated_at": "2026-08-04 10:21:45"
+        },
+        {
+            "id": "99",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "dipublikasikan",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "公開日",
+            "updated_at": "2026-08-04 10:21:45"
+        },
+        {
+            "id": "100",
+            "kategori": "ui",
+            "referensi_id": "0",
+            "kunci": "bagikan",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "記事を共有",
+            "updated_at": "2026-08-04 10:21:45"
+        },
+        {
+            "id": "133",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "dok_judul",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "文書・村有資産資料館",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "134",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "dok_sub",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "2026年規則、SILPA、および RPJMアーカイブ",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "135",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "kat_semua",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": " すべてのカテゴリー",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "136",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "kat_legislasi",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "規則・法令",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "137",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "kat_aset",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "資産・財務管理",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "138",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "kat_rpjm",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "開発計画（RPJM）",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "139",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "col_judul",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "文書名・説明",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "140",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "col_kategori",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "カテゴリー",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "141",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "col_tahun",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "年度／アップロード日",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "142",
+            "kategori": "dokumen",
+            "referensi_id": "0",
+            "kunci": "col_aksi",
+            "kode_bahasa": "ja",
+            "teks_terjemahan": "ダウンロード",
+            "updated_at": "2026-08-04 10:27:06"
+        },
+        {
+            "id": "153",
+            "kategori": "halaman",
+            "referensi_id": "4",
+            "kunci": "judul",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Community Administrative Services Guide",
+            "updated_at": "2026-08-04 10:32:19"
+        },
+        {
+            "id": "154",
+            "kategori": "halaman",
+            "referensi_id": "4",
+            "kunci": "konten",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "<p>Easy &amp; Fast Services at Klego Village Office<\/p>\r\n<p><br>The Village Government provides fast processing of administrative certificates, with completion within one business day. Residents are requested to prepare the following required documents:<\/p>\r\n<ol>\r\n<li>Certificate of Residence \/ Business Certificate \/ Certificate of Indigency: Bring a photocopy of your National ID Card (KTP), Family Card (KK), and a recommendation letter from the local RT\/RW head.<\/li>\r\n<li>Introduction Letter for National ID Card (KTP) \/ Family Card (KK): Bring the F1.01 form or the original Family Card (KK) to be updated.<\/li>\r\n<\/ol>\r\n<p>Office hours: Monday to Friday, 08:00 AM &ndash; 04:00 PM (WIB) at the Klego Village Office.<\/p>",
+            "updated_at": "2026-08-04 10:32:19"
+        },
+        {
+            "id": "157",
+            "kategori": "halaman",
+            "referensi_id": "3",
+            "kunci": "judul",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Potentials & UMKM of Klego Village",
+            "updated_at": "2026-08-04 10:35:41"
+        },
+        {
+            "id": "158",
+            "kategori": "halaman",
+            "referensi_id": "3",
+            "kunci": "konten",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "<p>Potentials &amp; UMKM of Klego Village<br>Agricultural Excellence &amp; MSME Products<br>Klego Village is blessed with more than 312 hectares of productive agricultural land, producing high-value staple crops. In addition to its strong agricultural sector, the village is home to 87 Micro, Small, and Medium Enterprises (MSMEs) that contribute significantly to the local economy, including:<\/p>\r\n<ul>\r\n<li>Export-quality bamboo and wooden handicrafts.<\/li>\r\n<li>Processed local and traditional food products.<\/li>\r\n<li>Handmade batik and local garment production.<\/li>\r\n<\/ul>",
+            "updated_at": "2026-08-04 10:35:41"
+        },
+        {
+            "id": "161",
+            "kategori": "halaman",
+            "referensi_id": "2",
+            "kunci": "judul",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "Organizational Structure of Klego Village Government",
+            "updated_at": "2026-08-04 10:38:08"
+        },
+        {
+            "id": "162",
+            "kategori": "halaman",
+            "referensi_id": "2",
+            "kunci": "konten",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "<p>Organizational Structure and Work Procedures (SOTK) of Klego Village Government<\/p>\r\n<p><br>The Klego Village Government is committed to providing fast and integrated public services. The Village Head and all village officials work together to ensure efficient administrative services and support sustainable development across 5 hamlets, 6 neighborhood associations (RW), and 18 community units (RT) in Klego Village.<\/p>\r\n<p>For detailed information regarding village officials, their positions, and responsibilities, residents may visit the Klego Village Office during regular office hours.<\/p>",
+            "updated_at": "2026-08-04 10:38:08"
+        },
+        {
+            "id": "165",
+            "kategori": "halaman",
+            "referensi_id": "1",
+            "kunci": "judul",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "History, Vision & Mission of Klego Village",
+            "updated_at": "2026-08-04 10:41:21"
+        },
+        {
+            "id": "166",
+            "kategori": "halaman",
+            "referensi_id": "1",
+            "kunci": "konten",
+            "kode_bahasa": "en",
+            "teks_terjemahan": "<figure style=\"margin: 24px auto; text-align: center; display: block; clear: both;\"><img style=\"max-width: 100%; height: 331px; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.12) 0px 10px 25px -5px; display: block; margin: 0px auto; border: 1px solid rgb(226, 232, 240);\" src=\"..\/uploads\/editor\/img_20260804_022807_6a713217d2582.jpeg\" alt=\"Gambar Bukti\" width=\"228\"><\/figure>\r\n<p>&nbsp;<\/p>\r\n<p>History, Vision &amp; Mission of Klego Village<\/p>\r\n<p>Village Head's Vision<br>\"To build a prosperous, independent, culturally rich, and transparent Klego Village through accountable governance.\"<\/p>\r\n<p>Village Mission<br>- Improve the quality of public administrative services for all residents of Klego Village through the use of information technology.<br>- Develop road infrastructure and community facilities evenly and sustainably across all hamlets.<br>- Strengthen the local economy through modern agriculture and the empowerment of Micro, Small, and Medium Enterprises (MSMEs).<br>- Promote public information transparency and ensure accountable, transparent, and well-targeted budget management.<\/p>\r\n<p><br>Brief History of Klego Village<br>Klego Village is strategically located in Boyolali Regency. Since ancient times, the village has been recognized as a center of local economic growth and a fair agricultural region. Today, it continues to evolve into a modern, competitive village government while preserving its rich heritage.<\/p>",
+            "updated_at": "2026-08-04 10:41:21"
+        }
+    ]
+}
