@@ -58,11 +58,10 @@ include 'config/header.php';
 
         <?php if (!empty($berita['foto'])): ?>
             <?php 
-            // Cek lokasi file apakah di uploads/berita/ atau di uploads/
-            $fotoPath = file_exists('uploads/berita/' . $berita['foto']) ? 'uploads/berita/' . $berita['foto'] : 'uploads/' . $berita['foto'];
+            $fotoPath = resolve_uploaded_image($berita['foto']);
             ?>
-            <div class="mb-10 rounded-2xl overflow-hidden shadow-lg border border-slate-200">
-                <img src="<?= htmlspecialchars($fotoPath); ?>" alt="<?= htmlspecialchars($berita['judul']); ?>" class="w-full h-auto object-cover max-h-[500px]">
+            <div class="mb-10 rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-slate-100 flex items-center justify-center">
+                <img src="<?= htmlspecialchars($fotoPath); ?>" alt="<?= htmlspecialchars($berita['judul']); ?>" onerror="this.onerror=null; this.src='assets/img/utama.jpg';" class="w-full h-auto object-cover max-h-[500px]">
             </div>
         <?php endif; ?>
 

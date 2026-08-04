@@ -1,6 +1,7 @@
 <?php
 include 'config/database.php';
 include_once 'config/lang_helper.php';
+require_once __DIR__ . '/config/upload_helper.php';
 
 $pageTitle = t('pelayanan_berita', "Berita & Agenda Desa");
 include 'config/header.php';
@@ -59,19 +60,16 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                     <div class="h-52 bg-slate-100 relative overflow-hidden">
                         <?php 
                         $foto = !empty($b['foto']) ? $b['foto'] : '';
-                        $fotoPath = '';
-                        if (!empty($foto)) {
-                            $fotoPath = file_exists('uploads/berita/' . $foto) ? 'uploads/berita/' . $foto : (file_exists('uploads/' . $foto) ? 'uploads/' . $foto : '');
-                        }
+                        $fotoPath = !empty($foto) ? resolve_uploaded_image($foto) : '';
                         ?>
                         <?php if (!empty($fotoPath)): ?>
-                            <img src="<?= htmlspecialchars($fotoPath) ?>" alt="<?= htmlspecialchars($b['judul']) ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="<?= htmlspecialchars($fotoPath) ?>" alt="<?= htmlspecialchars($b['judul']) ?>" onerror="this.onerror=null; this.src='assets/img/utama.jpg';" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <?php else: ?>
                             <div class="w-full h-full bg-gradient-to-tr from-emerald-900 to-[#165f36] flex items-center justify-center text-amber-300 text-5xl">
                                 <i class="fa-regular fa-newspaper opacity-40"></i>
                             </div>
                         <?php endif; ?>
-                        
+
                         <div class="absolute top-3 left-3 bg-amber-500 text-slate-900 font-extrabold text-[10px] px-3 py-1 rounded-full shadow">
                             Kabar Desa
                         </div>

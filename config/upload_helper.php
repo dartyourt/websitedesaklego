@@ -37,3 +37,47 @@ function normalize_content_image_urls(string $html): string
         return $m[0];
     }, $html);
 }
+
+/**
+ * Mencari resolusi path gambar yang tahan terhadap perbedaan huruf besar/kecil (case-sensitivity di Linux Docker)
+ * dan spasi pada penamaan file, serta mencari otomatis di folder berita, editor, maupun root uploads.
+ */
+function resolve_uploaded_image(string $filename, array $subdirs = ['berita', 'editor', 'umkm', 'perangkat', '']): string
+{
+    $filename = trim($filename);
+    if (empty($filename)) return '';
+    if (preg_match('#^(http://|https://|data:image)#i', $filename)) return $filename;
+    
+    // Hapus prefix uploads/ atau folder internal jika ada di DB
+    $baseName = basename($filename);
+    $docRoot = rtrim($_SERVER['DOCUMENT_ROOT'] ?? __DIR__ . '/..', '/\\') . '/';
+    $baseAppPath = ltrim(app_base_path(), '/');
+    $prefixPath = ($baseAppPath !== '' ? $baseAppPath . '/' : '');
+    
+    // Cek di masing-masing subdirectory di bawah uploads/
+    foreach ($subdirs as $sub) {
+        $relDir = 'uploads' . ($sub !== '' ? '/' . $sub : '');
+        $testRelPath = $relDir . '/' . $baseName;
+        $fullPath = $docRoot . $prefixPath . $testRelPath;
+        
+        // 1. Cek langsung (exact match)
+        if (file_exists($fullPath)) {
+            return str_replace(' ', '%20', $testRelPath);
+        }
+        
+        // 2. Cek case-insensitive (penting untuk Linux/Docker yang membedakan huruf besar/kecil)
+        $dirPath = dirname($fullPath);
+        if (is_dir($dirPath)) {
+            $files = scandir($dirPath);
+            foreach ($files as $f) {
+                if ($f !== '.' && $f !== '..' && strcasecmp($f, $baseName) === 0) {
+                    return str_replace(' ', '%20', $relDir . '/' . $f);
+                }
+            }
+        }
+    }
+
+    // Default fallback jika file belum dipindahkan atau sedang diimpor
+    $defaultFolder = (strpos($filename, '/') !== false) ? 'uploads/' . ltrim($filename, '/') : 'uploads/berita/' . $filename;
+    return str_replace(' ', '%20', $defaultFolder);
+}
