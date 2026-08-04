@@ -182,6 +182,16 @@ if (!isset($_SESSION['login'])) {
                     </div>
                 </a>
 
+                <a href="agenda.php" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:bg-amber-50/50 transition flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl flex-shrink-0">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Agenda Kegiatan Desa</h3>
+                        <p class="text-xs text-slate-500 mt-1">Atur jadwal kegiatan, waktu, dan lokasi agenda desa.</p>
+                    </div>
+                </a>
+
                 <a href="profil.php" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:bg-emerald-50/50 transition flex items-start gap-4">
                     <div class="w-12 h-12 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-xl flex-shrink-0">
                         <i class="fa-solid fa-gear"></i>

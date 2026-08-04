@@ -506,9 +506,9 @@ document.addEventListener('DOMContentLoaded', function() {
             ?>
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-6 items-center hover-card-animate">
                         <div class="w-full sm:w-48 h-40 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0 relative">
-                            <?php $newsFotoPath = file_exists('uploads/berita/' . ($b['foto'] ?? '')) ? 'uploads/berita/' . $b['foto'] : (file_exists('uploads/' . ($b['foto'] ?? '')) ? 'uploads/' . $b['foto'] : ''); ?>
+                            <?php $newsFotoPath = !empty($b['foto']) ? resolve_uploaded_image($b['foto']) : ''; ?>
                             <?php if (!empty($newsFotoPath)): ?>
-                                <img src="<?= htmlspecialchars($newsFotoPath) ?>" alt="<?= htmlspecialchars($b['judul']) ?>" class="w-full h-full object-cover">
+                                <img src="<?= htmlspecialchars($newsFotoPath) ?>" onerror="this.onerror=null; this.src='assets/img/utama.jpg';" alt="<?= htmlspecialchars($b['judul']) ?>" class="w-full h-full object-cover">
                             <?php else: ?>
                                 <div class="w-full h-full bg-emerald-800/10 flex items-center justify-center text-emerald-700 text-3xl">
                                     <i class="fa-regular fa-newspaper"></i>
@@ -525,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <a href="detail-berita.php?id=<?= $b['id'] ?>"><?= htmlspecialchars($b['judul']) ?></a>
                             </h3>
                             <p class="text-sm text-slate-600 line-clamp-2 leading-relaxed mb-4">
-                                <?= htmlspecialchars(strip_tags($b['isi'])) ?>
+                                <?= clean_preview_text($b['isi'] ?? '', 160) ?>
                             </p>
                             <a href="detail-berita.php?id=<?= $b['id'] ?>" class="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
                                 <span><?= tr('Baca Selengkapnya') ?></span>
@@ -594,47 +594,35 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h3 class="font-heading font-bold text-lg text-slate-900"><?= tr('Agenda Kegiatan Desa') ?></h3>
                 </div>
                 <div class="space-y-4">
-                    <!-- AGENDA 1 -->
-                    <div class="flex gap-4 items-start pb-4 border-b border-slate-50 last:border-0 last:pb-0">
-                        <div class="w-14 text-center rounded-xl bg-emerald-50 text-emerald-900 p-2 flex-shrink-0 border border-emerald-200/60">
-                            <span class="text-lg font-extrabold block leading-none">18</span>
-                            <span class="text-[10px] uppercase font-bold text-amber-700">Agt</span>
+                    <?php
+                    $qAgenda = @mysqli_query($conn, "SELECT * FROM agenda_desa ORDER BY tanggal ASC LIMIT 5");
+                    if ($qAgenda && mysqli_num_rows($qAgenda) > 0) :
+                        while ($ag = mysqli_fetch_assoc($qAgenda)) :
+                    ?>
+                        <div class="flex gap-4 items-start pb-4 border-b border-slate-50 last:border-0 last:pb-0">
+                            <div class="w-14 text-center rounded-xl bg-emerald-50 text-emerald-900 p-2 flex-shrink-0 border border-emerald-200/60">
+                                <span class="text-lg font-extrabold block leading-none"><?= date('d', strtotime($ag['tanggal'])); ?></span>
+                                <span class="text-[10px] uppercase font-bold text-amber-700"><?= date('M', strtotime($ag['tanggal'])); ?></span>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-800 hover:text-emerald-700 transition-colors"><?= htmlspecialchars($ag['judul']); ?></h4>
+                                <p class="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
+                                    <i class="fa-regular fa-clock text-amber-500"></i> <?= htmlspecialchars($ag['waktu']); ?>
+                                </p>
+                                <p class="text-xs text-slate-500 mt-0.5 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-location-dot text-emerald-600"></i> <?= htmlspecialchars($ag['lokasi']); ?>
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800 hover:text-emerald-700 transition-colors cursor-pointer">Posyandu Balita & Pemeriksaan Lansia</h4>
-                            <p class="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
-                                <i class="fa-solid fa-location-dot text-amber-500"></i> Balai Desa Klego (08.00 WIB)
-                            </p>
+                    <?php 
+                        endwhile;
+                    else: 
+                    ?>
+                        <div class="text-center py-8 text-slate-400 text-xs font-medium">
+                            <i class="fa-regular fa-calendar-xmark text-2xl block mb-2 text-slate-300"></i>
+                            <?= tr('Belum ada jadwal agenda kegiatan desa terdahulu atau waktu dekat.') ?>
                         </div>
-                    </div>
-
-                    <!-- AGENDA 2 -->
-                    <div class="flex gap-4 items-start pb-4 border-b border-slate-50 last:border-0 last:pb-0">
-                        <div class="w-14 text-center rounded-xl bg-emerald-50 text-emerald-900 p-2 flex-shrink-0 border border-emerald-200/60">
-                            <span class="text-lg font-extrabold block leading-none">22</span>
-                            <span class="text-[10px] uppercase font-bold text-amber-700">Agt</span>
-                        </div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800 hover:text-emerald-700 transition-colors cursor-pointer">Rapat Koordinasi Rutin RT & RW</h4>
-                            <p class="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
-                                <i class="fa-solid fa-location-dot text-amber-500"></i> Aula Balai Desa (19.30 WIB)
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- AGENDA 3 -->
-                    <div class="flex gap-4 items-start">
-                        <div class="w-14 text-center rounded-xl bg-emerald-50 text-emerald-900 p-2 flex-shrink-0 border border-emerald-200/60">
-                            <span class="text-lg font-extrabold block leading-none">25</span>
-                            <span class="text-[10px] uppercase font-bold text-amber-700">Agt</span>
-                        </div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800 hover:text-emerald-700 transition-colors cursor-pointer">Gotong Royong Kebersihan Lingkungan</h4>
-                            <p class="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
-                                <i class="fa-solid fa-location-dot text-amber-500"></i> Seluruh Wilayah 5 Dusun
-                            </p>
-                        </div>
-                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

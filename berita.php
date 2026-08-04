@@ -86,7 +86,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                                 <a href="detail-berita.php?id=<?= $b['id'] ?>"><?= htmlspecialchars($b['judul']) ?></a>
                             </h3>
                             <p class="text-xs text-slate-600 line-clamp-3 leading-relaxed mt-2.5">
-                                <?= htmlspecialchars(strip_tags($b['isi'] ?? '')) ?>
+                                <?= clean_preview_text($b['isi'] ?? '', 160) ?>
                             </p>
                         </div>
 

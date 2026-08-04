@@ -15,6 +15,25 @@ if (!$conn) {
 // Pastikan seluruh nama, alamat, dan konten berbahasa Indonesia tersimpan utuh.
 mysqli_set_charset($conn, 'utf8mb4');
 
+// Otomatis pastikan tabel agenda_desa tersedia agar tidak menggunakan data dummy di beranda
+@mysqli_query($conn, "CREATE TABLE IF NOT EXISTS agenda_desa (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  judul VARCHAR(255) NOT NULL,
+  tanggal DATE NOT NULL,
+  waktu VARCHAR(100) NOT NULL,
+  lokasi VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+// Cek apakah tabel kosong (belum diisi sama sekali)
+$qCekAgenda = @mysqli_query($conn, "SELECT id FROM agenda_desa LIMIT 1");
+if ($qCekAgenda && mysqli_num_rows($qCekAgenda) == 0) {
+    @mysqli_query($conn, "INSERT INTO agenda_desa (judul, tanggal, waktu, lokasi) VALUES
+    ('Posyandu Balita & Pemeriksaan Lansia Rutin', '2026-08-18', '08.00 WIB - Selesai', 'Balai Desa Klego'),
+    ('Rapat Koordinasi Rutin Pengurus RT & RW', '2026-08-22', '19.30 WIB - Selesai', 'Aula Balai Desa Klego'),
+    ('Gotong Royong Kebersihan Lingkungan & Drainase', '2026-08-25', '06.30 WIB - Selesai', 'Seluruh Wilayah 5 Dusun Desa Klego')");
+}
+
 $queryProfil = mysqli_query($conn, "SELECT * FROM profil_desa WHERE id=1");
 if ($queryProfil && mysqli_num_rows($queryProfil) > 0) {
     $APP_PROFIL = mysqli_fetch_assoc($queryProfil);

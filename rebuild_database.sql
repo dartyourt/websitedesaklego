@@ -552,6 +552,25 @@ CREATE TABLE `surat_template` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Table structure and dump for table `agenda_desa`
+--
+DROP TABLE IF EXISTS `agenda_desa`;
+CREATE TABLE `agenda_desa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `judul` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `waktu` varchar(100) NOT NULL,
+  `lokasi` varchar(255) NOT NULL,
+  `created_at` timestamp DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `agenda_desa` (`judul`, `tanggal`, `waktu`, `lokasi`) VALUES
+('Posyandu Balita & Pemeriksaan Lansia Rutin', '2026-08-18', '08.00 WIB - Selesai', 'Balai Desa Klego'),
+('Rapat Koordinasi Rutin Pengurus RT & RW', '2026-08-22', '19.30 WIB - Selesai', 'Aula Balai Desa Klego'),
+('Gotong Royong Kebersihan Lingkungan & Drainase', '2026-08-25', '06.30 WIB - Selesai', 'Seluruh Wilayah 5 Dusun Desa Klego');
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

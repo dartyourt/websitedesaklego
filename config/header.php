@@ -3,6 +3,7 @@ if (!isset($conn)) {
     include __DIR__ . '/database.php';
 }
 include_once __DIR__ . '/lang_helper.php';
+include_once __DIR__ . '/upload_helper.php';
 
 // Ambil data menu navigasi dari tabel menu_navbar (jika koneksi sukses)
 $menuItems = [];

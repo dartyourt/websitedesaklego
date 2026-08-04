@@ -100,7 +100,7 @@ $query = mysqli_query($conn, "SELECT * FROM berita ORDER BY tanggal DESC");
                                     <a href="../detail-berita.php?id=<?= $row['id'] ?>" target="_blank"><?= htmlspecialchars($row['judul']) ?></a>
                                 </span>
                                 <span class="text-xs text-slate-400 mt-1 line-clamp-1">
-                                    <?= htmlspecialchars(substr(strip_tags($row['isi'] ?? ''), 0, 90)) ?>...
+                                    <?= clean_preview_text($row['isi'] ?? '', 90) ?>
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-center">

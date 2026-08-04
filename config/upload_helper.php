@@ -81,3 +81,20 @@ function resolve_uploaded_image(string $filename, array $subdirs = ['berita', 'e
     $defaultFolder = (strpos($filename, '/') !== false) ? 'uploads/' . ltrim($filename, '/') : 'uploads/berita/' . $filename;
     return str_replace(' ', '%20', $defaultFolder);
 }
+
+/**
+ * Membersihkan tag HTML dan mengubah HTML entity (seperti &ndash;, &nbsp;, &quot;) menjadi karakter asli
+ * untuk ringkasan/preview teks berita agar tidak terlihat cacat atau aneh di UI.
+ */
+function clean_preview_text(?string $html, int $length = 150): string
+{
+    if (empty($html)) return '';
+    // Decode HTML entities (seperti &ndash; menjadi dash sejati, &quot; menjadi kutip)
+    $text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    // Hapus spasi berlipat dan newline berlebih
+    $text = trim(preg_replace('/\s+/', ' ', $text));
+    if (mb_strlen($text, 'UTF-8') > $length) {
+        $text = mb_substr($text, 0, $length, 'UTF-8') . '...';
+    }
+    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
