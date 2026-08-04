@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: desaklego_web
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=rahasia_klego_2026
+      - DB_NAME=desa_klego
+    depends_on:
+      - db
+    volumes:
+      - ./uploads:/var/www/html/uploads
+      - ./data:/var/www/html/data
+    networks:
+      - klego_network
+
+  db:
+    image: mariadb:10.11
+    container_name: desaklego_db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=rahasia_klego_2026
+      - MYSQL_DATABASE=desa_klego
+    volumes:
+      - db_data:/var/lib/mysql
+      # Otomatis mengimpor struktur tabel dan data saat kontainer pertama kali dijalankan
+      - ./rebuild_database.sql:/docker-entrypoint-initdb.d/1_rebuild_database.sql:ro
+    networks:
+      - klego_network
+
+volumes:
+  db_data:
+
+networks:
+  klego_network:
+    driver: bridge

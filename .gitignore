@@ -1,0 +1,28 @@
+# Dependency directory
+/vendor/
+/node_modules/
+
+# Environment configurations
+.env
+.env.local
+.env.production
+
+# IDE and OS files
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
+
+# Log and backup files
+*.log
+*.bak
+*.tmp
+*.xls
+*.xlsx
+*.doc
+*.docx
+*.csv
+
+# Docker volume data
+/mysql_data/
+/db_data/

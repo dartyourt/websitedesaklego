@@ -1,0 +1,269 @@
+/* =====================
+   GLOBAL THEME & TYPOGRAPHY
+===================== */
+:root {
+  --primary-color: #165f36;
+  --primary-light: #2e9e5b;
+  --primary-dark: #0e3f23;
+  --secondary-color: #c4891f;
+  --secondary-light: #fbbf24;
+  --surface-color: #f8fafc;
+  --border-color: #e2e8f0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom Smooth Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #165f36;
+  border-radius: 4px;
+  border: 2px solid #f1f5f9;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0e3f23;
+}
+
+/* =====================
+   HERO & SECTION STYLING (FROM DESIGN IDEAS)
+===================== */
+.hero-gradient {
+  background: linear-gradient(135deg, rgba(22, 95, 54, 0.95) 0%, rgba(14, 63, 35, 0.98) 100%), 
+              radial-gradient(circle at top right, rgba(196, 137, 31, 0.3), transparent 60%);
+}
+
+.hero-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Glassmorphic Elements */
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+}
+
+.glass-badge {
+  background: rgba(22, 95, 54, 0.1);
+  color: var(--primary-color);
+  border: 1px solid rgba(22, 95, 54, 0.2);
+}
+
+/* Micro-Animations & Hover Transformations */
+.hover-card-animate {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-card-animate:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 35px -15px rgba(22, 95, 54, 0.15);
+  border-color: #fbbf24;
+}
+
+/* =====================
+   PERANGKAT SLIDER & CARDS
+===================== */
+.perangkat-slider {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 16px;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.perangkat-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.perangkat-card {
+  min-width: 240px;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+  padding: 24px 16px;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+.perangkat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--secondary-light);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+}
+
+.perangkat-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 9999px;
+  object-fit: cover;
+  object-position: top;
+  margin: 0 auto 16px;
+  border: 3px solid #f1f5f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.perangkat-card .nama {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 1rem;
+}
+
+/* =====================
+   TABLE & DATA REPOSITORY
+===================== */
+.doc-table-row {
+  transition: all 0.2s ease;
+}
+.doc-table-row:hover {
+  background-color: #f0fdf4;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .perangkat-card {
+    min-width: 200px;
+  }
+}
+
+/* =====================
+   WYSIWYG CONTENT BODY (FRONTEND TYPOGRAPHY & IMAGE RENDERER)
+===================== */
+.content-body h1 {
+  font-size: 2.2rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.25 !important;
+}
+.content-body h2 {
+  font-size: 1.65rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin-top: 2rem !important;
+  margin-bottom: 0.8rem !important;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.4rem;
+}
+.content-body h3 {
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+  color: #165f36 !important; /* Warna Hijau zamrud senada dengan di dalam editor */
+  margin-top: 1.75rem !important;
+  margin-bottom: 0.6rem !important;
+}
+.content-body h4 {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+.content-body p {
+  margin-bottom: 1.2rem !important;
+  line-height: 1.85 !important;
+  font-size: 1.025rem !important;
+}
+.content-body ul {
+  list-style-type: disc !important;
+  padding-left: 2rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+.content-body ol {
+  list-style-type: decimal !important;
+  padding-left: 2rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+.content-body li {
+  margin-bottom: 0.6rem !important;
+  padding-left: 0.35rem !important;
+  display: list-item !important;
+  line-height: 1.7 !important;
+}
+.content-body blockquote {
+  border-left: 4px solid #c4891f !important;
+  background-color: #fffbeb !important;
+  padding: 14px 22px !important;
+  margin: 1.75rem 0 !important;
+  font-style: italic !important;
+  border-radius: 0 16px 16px 0 !important;
+  color: #334155 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.content-body figure {
+  margin: 2.5rem auto !important;
+  text-align: center !important;
+  clear: both !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+.content-body figure img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.15) !important;
+  display: block !important;
+  margin: 0 auto !important;
+  border: 1px solid #cbd5e1 !important;
+}
+.content-body figcaption {
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  color: #475569 !important;
+  font-style: italic !important;
+  margin-top: 14px !important;
+  background-color: #f8fafc !important;
+  padding: 6px 20px !important;
+  border-radius: 9999px !important;
+  display: inline-block !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+.content-body strong, .content-body b {
+  font-weight: 700 !important;
+  color: #0f172a !important;
+}
+.content-body em, .content-body i {
+  font-style: italic !important;
+}
+.content-body a {
+  color: #165f36 !important;
+  text-decoration: underline !important;
+  font-weight: 600 !important;
+}
+.content-body a:hover {
+  color: #c4891f !important;
+}
+.content-body table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 1.5rem 0 !important;
+}
+.content-body table th, .content-body table td {
+  border: 1px solid #cbd5e1 !important;
+  padding: 10px 14px !important;
+  text-align: left !important;
+}
+.content-body table th {
+  background-color: #f1f5f9 !important;
+  font-weight: 700 !important;
+}
+
