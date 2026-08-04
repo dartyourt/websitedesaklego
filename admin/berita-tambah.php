@@ -5,6 +5,7 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 include '../config/database.php';
+require_once __DIR__ . '/../config/upload_helper.php';
 
 $msg = "";
 if (isset($_POST['submit'])) {
@@ -12,21 +13,10 @@ if (isset($_POST['submit'])) {
     $isi    = mysqli_real_escape_string($conn, $_POST['isi']);
     $tanggal = $_POST['tanggal'] ?: date('Y-m-d');
 
-    // Upload foto utama berita
-    $foto    = $_FILES['foto']['name'];
-    $tmp     = $_FILES['foto']['tmp_name'];
-    $folder  = "../uploads/";
-    
-    if (!is_dir($folder)) {
-        @mkdir($folder, 0777, true);
-    }
-
-    $newFoto = "berita_" . time() . "_" . preg_replace('/[^A-Za-z0-9._-]/', '_', $foto);
-    if (!empty($foto)) {
-        move_uploaded_file($tmp, $folder . $newFoto);
+    [$uploaded, $newFoto] = upload_image($_FILES['foto'] ?? [], __DIR__ . '/../uploads/berita', 'berita_');
+    if (!$uploaded) {
+        $msg = $newFoto;
     } else {
-        $newFoto = "";
-    }
 
     // Simpan ke database
     $sql = "INSERT INTO berita (judul, isi, foto, tanggal) VALUES ('$judul', '$isi', '$newFoto', '$tanggal')";
@@ -37,6 +27,7 @@ if (isset($_POST['submit'])) {
         exit;
     } else {
         $msg = "Gagal menerbitkan berita: " . mysqli_error($conn);
+    }
     }
 }
 ?>
@@ -235,7 +226,7 @@ if (isset($_POST['submit'])) {
             if (res.success && res.public_url) {
                 const htmlInsert = `
                     <figure style="margin: 20px auto; text-align: center;">
-                        <img src="../${res.public_url}" alt="${captionText}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); display: block; margin: 0 auto; border: 1px solid #e2e8f0;" />
+                        <img src="${res.public_url}" alt="${captionText}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); display: block; margin: 0 auto; border: 1px solid #e2e8f0;" />
                         ${captionText ? `<figcaption style="font-size: 13px; color: #475569; font-style: italic; margin-top: 8px; background: #f1f5f9; padding: 4px 16px; border-radius: 999px; display: inline-block; border: 1px solid #cbd5e1;">📸 ${captionText}</figcaption>` : ''}
                     </figure>
                     <p>&nbsp;</p>

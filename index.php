@@ -2,11 +2,10 @@
 $pageTitle = "Beranda Utama";
 include 'config/header.php';
 
-// Coba ambil statistik penduduk asli jika database terhubung dan ada datanya
-$statPenduduk = 4823;
-$statKK = 1456;
-$statLaki = 2411;
-$statPerempuan = 2412;
+// Seluruh angka beranda bersumber dari database, bukan angka contoh.
+$statPenduduk = $statKK = $statLaki = $statPerempuan = 0;
+$statDusun = $statRW = $statRT = 0;
+$statApbdes = 0;
 
 if (isset($conn) && $conn && !mysqli_connect_error()) {
     $qTotal = @mysqli_query($conn, "SELECT COUNT(*) as total FROM penduduk");
@@ -14,12 +13,18 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
         if ($r['total'] > 0) {
             $statPenduduk = $r['total'];
             $rKK = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(DISTINCT NO_KK) as kk FROM penduduk"));
-            $statKK = $rKK['kk'] ?? 1456;
+            $statKK = $rKK['kk'] ?? 0;
             $rL = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as l FROM penduduk WHERE JENIS_KELAMIN='Laki-laki' OR JENIS_KELAMIN='L'"));
-            $statLaki = $rL['l'] ?? 2411;
+            $statLaki = $rL['l'] ?? 0;
             $statPerempuan = $statPenduduk - $statLaki;
         }
     }
+    foreach (['wilayah_dusun' => 'statDusun', 'wilayah_rw' => 'statRW', 'wilayah_rt' => 'statRT'] as $table => $variable) {
+        $result = @mysqli_query($conn, "SELECT COUNT(*) AS total FROM $table");
+        if ($result && ($row = mysqli_fetch_assoc($result))) $$variable = (int) $row['total'];
+    }
+    $result = @mysqli_query($conn, "SELECT SUM(nilai) AS total FROM infografis_statistik WHERE kategori='Pendapatan APBDes 2026'");
+    if ($result && ($row = mysqli_fetch_assoc($result))) $statApbdes = (float) ($row['total'] ?? 0);
 }
 ?>
 
@@ -149,8 +154,8 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <i class="fa-solid fa-map-pin"></i>
             </div>
             <div>
-                <p class="text-2xl font-bold text-slate-900"><?= tr('5 Dusun') ?></p>
-                <p class="text-xs text-slate-500 font-medium"><?= tr('Klego, Ponggok, Soka, dst.') ?></p>
+                <p class="text-2xl font-bold text-slate-900"><?= $statDusun ?> <?= tr('Dusun') ?></p>
+                <p class="text-xs text-slate-500 font-medium"><?= tr('Data wilayah tersimpan') ?></p>
             </div>
         </div>
 
@@ -160,7 +165,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <i class="fa-solid fa-sitemap"></i>
             </div>
             <div>
-                <p class="text-2xl font-bold text-slate-900"><?= tr('6 RW / 18 RT') ?></p>
+                <p class="text-2xl font-bold text-slate-900"><?= $statRW ?> <?= tr('RW') ?> / <?= $statRT ?> <?= tr('RT') ?></p>
                 <p class="text-xs text-slate-500 font-medium"><?= tr('Pembagian Wilayah') ?></p>
             </div>
         </div>
@@ -171,7 +176,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
                 <i class="fa-solid fa-coins"></i>
             </div>
             <div>
-                <p class="text-xl sm:text-2xl font-black text-amber-300">Rp 1,25 M</p>
+                <p class="text-xl sm:text-2xl font-black text-amber-300">Rp <?= number_format($statApbdes / 1000000000, 2, ',', '.') ?> M</p>
                 <p class="text-xs text-emerald-100 font-medium"><?= tr('Total APBDes 2026') ?></p>
             </div>
         </div>
@@ -501,8 +506,9 @@ document.addEventListener('DOMContentLoaded', function() {
             ?>
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-6 items-center hover-card-animate">
                         <div class="w-full sm:w-48 h-40 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0 relative">
-                            <?php if (!empty($b['foto']) && file_exists('uploads/' . $b['foto'])): ?>
-                                <img src="uploads/<?= htmlspecialchars($b['foto']) ?>" alt="<?= htmlspecialchars($b['judul']) ?>" class="w-full h-full object-cover">
+                            <?php $newsFotoPath = file_exists('uploads/berita/' . ($b['foto'] ?? '')) ? 'uploads/berita/' . $b['foto'] : (file_exists('uploads/' . ($b['foto'] ?? '')) ? 'uploads/' . $b['foto'] : ''); ?>
+                            <?php if (!empty($newsFotoPath)): ?>
+                                <img src="<?= htmlspecialchars($newsFotoPath) ?>" alt="<?= htmlspecialchars($b['judul']) ?>" class="w-full h-full object-cover">
                             <?php else: ?>
                                 <div class="w-full h-full bg-emerald-800/10 flex items-center justify-center text-emerald-700 text-3xl">
                                     <i class="fa-regular fa-newspaper"></i>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config/database.php';
+require_once __DIR__ . '/../config/upload_helper.php';
 
 if (!isset($_SESSION['login'])) {
     header("Location: ../index.html");
@@ -8,6 +9,7 @@ if (!isset($_SESSION['login'])) {
 }
 
 if (isset($_POST['simpan'])) {
+    $logoUploadError = '';
     $nama_desa = mysqli_real_escape_string($conn, $_POST['nama_desa']);
     $kecamatan = mysqli_real_escape_string($conn, $_POST['kecamatan']);
     $kabupaten = mysqli_real_escape_string($conn, $_POST['kabupaten']);
@@ -20,14 +22,11 @@ if (isset($_POST['simpan'])) {
     // Proses Logo
     $logo_query = "";
     if (isset($_FILES['logo']) && $_FILES['logo']['error'] == 0) {
-        $nama_file = $_FILES['logo']['name'];
-        $tmp_file  = $_FILES['logo']['tmp_name'];
-        $ext       = pathinfo($nama_file, PATHINFO_EXTENSION);
-        $nama_baru = "logo_desa_" . time() . "." . $ext;
-        $path      = "../assets/img/" . $nama_baru;
-        
-        if (move_uploaded_file($tmp_file, $path)) {
+        [$uploaded, $nama_baru] = upload_image($_FILES['logo'], __DIR__ . '/../assets/img', 'logo_desa_');
+        if ($uploaded) {
             $logo_query = ", logo='$nama_baru'";
+        } else {
+            $logoUploadError = $nama_baru;
         }
     }
     
@@ -44,7 +43,8 @@ if (isset($_POST['simpan'])) {
               WHERE id=1";
               
     if(mysqli_query($conn, $query)){
-        header("Location: profil.php?pesan=Profil berhasil diperbarui!");
+        $pesan = $logoUploadError ? 'Profil diperbarui, tetapi logo tidak diunggah: ' . $logoUploadError : 'Profil berhasil diperbarui!';
+        header("Location: profil.php?pesan=" . urlencode($pesan));
     } else {
         header("Location: profil.php?pesan=Gagal memperbarui profil: " . mysqli_error($conn));
     }

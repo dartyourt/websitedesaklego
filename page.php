@@ -1,8 +1,10 @@
 <?php
 include 'config/database.php';
+require_once __DIR__ . '/config/upload_helper.php';
 
 $slug = $_GET['slug'] ?? 'sejarah-visi-misi';
 $pageData = null;
+$umkmList = [];
 
 // Ambil dari database jika aktif
 if ($conn && !mysqli_connect_error()) {
@@ -10,6 +12,10 @@ if ($conn && !mysqli_connect_error()) {
     $qPage = @mysqli_query($conn, "SELECT * FROM halaman_statis WHERE slug = '$escSlug'");
     if ($qPage && mysqli_num_rows($qPage) > 0) {
         $pageData = mysqli_fetch_assoc($qPage);
+    }
+    if ($slug === 'potensi-desa') {
+        $qUmkm = @mysqli_query($conn, "SELECT * FROM umkm ORDER BY nama_usaha ASC");
+        if ($qUmkm) while ($row = mysqli_fetch_assoc($qUmkm)) $umkmList[] = $row;
     }
 }
 
@@ -160,10 +166,33 @@ include 'config/header.php';
                 <?php 
                 $kontenHalaman = $pageData['konten'];
                 // Otomatis perbaiki URL gambar dari path relatif (seperti ../uploads atau uploads) menjadi /desa-desa/uploads agar gambar selalu load di frontend
-                $kontenHalaman = preg_replace('/(src=")(?:\.\.\/)*uploads\//i', '$1/desa-desa/uploads/', $kontenHalaman);
+                $kontenHalaman = normalize_content_image_urls($kontenHalaman);
                 echo $kontenHalaman; 
                 ?>
             </div>
+
+            <?php if ($slug === 'potensi-desa' && !empty($umkmList)): ?>
+                <div class="mt-10 pt-8 border-t border-slate-200 not-prose">
+                    <h2 class="font-heading font-extrabold text-2xl text-slate-900 mb-2">UMKM Terdata</h2>
+                    <p class="text-sm text-slate-600 mb-6">Data usaha lokal yang telah tersimpan pada database desa.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <?php foreach ($umkmList as $usaha): ?>
+                            <article class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                                <?php if (!empty($usaha['foto']) && file_exists('uploads/umkm/' . $usaha['foto'])): ?>
+                                    <img src="uploads/umkm/<?= htmlspecialchars($usaha['foto']) ?>" alt="<?= htmlspecialchars($usaha['nama_usaha']) ?>" class="h-44 w-full object-cover">
+                                <?php endif; ?>
+                                <div class="p-5">
+                                    <p class="text-[11px] font-bold uppercase tracking-wide text-emerald-700"><?= htmlspecialchars($usaha['jenis']) ?></p>
+                                    <h3 class="mt-1 font-heading font-bold text-lg text-slate-900"><?= htmlspecialchars($usaha['nama_usaha']) ?></h3>
+                                    <p class="mt-2 text-xs leading-relaxed text-slate-600"><?= htmlspecialchars($usaha['deskripsi']) ?></p>
+                                    <p class="mt-3 text-xs text-slate-500"><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i><?= htmlspecialchars($usaha['alamat']) ?></p>
+                                    <?php if (!empty($usaha['telepon'])): ?><a class="mt-3 inline-block text-xs font-bold text-emerald-700 hover:text-emerald-900" href="tel:<?= htmlspecialchars($usaha['telepon']) ?>"><i class="fa-solid fa-phone mr-1"></i><?= htmlspecialchars($usaha['telepon']) ?></a><?php endif; ?>
+                                </div>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <div class="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <span class="text-xs text-slate-400 font-medium">

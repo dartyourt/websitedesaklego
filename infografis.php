@@ -4,13 +4,24 @@ include 'config/header.php';
 
 // Ambil data infografis dari database apabila tesedia, jika tidak gunakan standar berkualitas tinggi
 $statsData = [];
+$incomeLabels = $incomeValues = $expenseLabels = $expenseValues = [];
+$dusunLabels = $dusunValues = $ageLabels = $ageValues = [];
+$totalPendapatan = $totalBelanja = $silpa = $aset = 0;
 if (isset($conn) && $conn && !mysqli_connect_error()) {
     $qInfo = @mysqli_query($conn, "SELECT * FROM infografis_statistik ORDER BY urutan ASC, id ASC");
     if ($qInfo && mysqli_num_rows($qInfo) > 0) {
         while ($row = mysqli_fetch_assoc($qInfo)) {
             $statsData[$row['kategori']][] = $row;
+            if ($row['kategori'] === 'Pendapatan APBDes 2026') { $incomeLabels[] = $row['label']; $incomeValues[] = round($row['nilai'] / 1000000, 2); $totalPendapatan += $row['nilai']; }
+            if ($row['kategori'] === 'Belanja APBDes 2026') { $expenseLabels[] = $row['label']; $expenseValues[] = round($row['nilai'] / 1000000, 2); $totalBelanja += $row['nilai']; }
+            if ($row['label'] === 'Saldo Akhir Kas / SILPA 2025') $silpa = $row['nilai'];
+            if ($row['label'] === 'Nilai Aset Tetap 2025') $aset = $row['nilai'];
         }
     }
+    $qDusun = @mysqli_query($conn, "SELECT COALESCE(NULLIF(DUSUN, ''), 'Belum diisi') AS nama, COUNT(*) AS jumlah FROM penduduk GROUP BY nama ORDER BY nama");
+    if ($qDusun) while ($row = mysqli_fetch_assoc($qDusun)) { $dusunLabels[] = $row['nama']; $dusunValues[] = (int) $row['jumlah']; }
+    $qUsia = @mysqli_query($conn, "SELECT CASE WHEN TIMESTAMPDIFF(YEAR, TGL_LAHIR, CURDATE()) < 15 THEN '0-14 (Anak)' WHEN TIMESTAMPDIFF(YEAR, TGL_LAHIR, CURDATE()) < 30 THEN '15-29 (Pemuda)' WHEN TIMESTAMPDIFF(YEAR, TGL_LAHIR, CURDATE()) < 45 THEN '30-44 (Dewasa Muda)' WHEN TIMESTAMPDIFF(YEAR, TGL_LAHIR, CURDATE()) < 60 THEN '45-59 (Dewasa)' ELSE '60+ (Lansia)' END AS rentang, COUNT(*) AS jumlah FROM penduduk WHERE TGL_LAHIR IS NOT NULL GROUP BY rentang");
+    if ($qUsia) while ($row = mysqli_fetch_assoc($qUsia)) { $ageLabels[] = $row['rentang']; $ageValues[] = (int) $row['jumlah']; }
 }
 ?>
 
@@ -49,7 +60,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <span class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider"><?= tr('Pendapatan APBDes 2026') ?></span>
-                <p class="text-2xl font-extrabold text-slate-900 font-heading">Rp 1,475 M</p>
+                <p class="text-2xl font-extrabold text-slate-900 font-heading">Rp <?= number_format($totalPendapatan / 1000000000, 2, ',', '.') ?> M</p>
                 <span class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
                     <i class="fa-solid fa-arrow-trend-up text-emerald-600"></i> <?= tr('APBN & ADD Boyolali') ?>
                 </span>
@@ -63,7 +74,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <span class="text-[11px] font-bold text-blue-700 uppercase tracking-wider"><?= tr('Belanja Desa 2026') ?></span>
-                <p class="text-2xl font-extrabold text-slate-900 font-heading">Rp 1,475 M</p>
+                <p class="text-2xl font-extrabold text-slate-900 font-heading">Rp <?= number_format($totalBelanja / 1000000000, 2, ',', '.') ?> M</p>
                 <span class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
                     <i class="fa-solid fa-balance-scale text-blue-600"></i> <?= tr('Anggaran Berimbang') ?>
                 </span>
@@ -77,7 +88,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider"><?= tr('SILPA Akhir 2025') ?></span>
-                <p class="text-2xl font-extrabold text-slate-900 font-heading">Rp 98,45 Juta</p>
+                <p class="text-2xl font-extrabold text-slate-900 font-heading">Rp <?= number_format($silpa / 1000000, 2, ',', '.') ?> Juta</p>
                 <span class="text-[11px] text-emerald-700 font-bold flex items-center gap-1 mt-0.5">
                     <i class="fa-solid fa-check-circle"></i> <?= tr('Laporan Audit Tersedia') ?>
                 </span>
@@ -91,7 +102,7 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             </div>
             <div>
                 <span class="text-[11px] font-bold text-amber-300 uppercase tracking-wider"><?= tr('Nilai Buku Aset 2025') ?></span>
-                <p class="text-2xl font-extrabold text-white font-heading">Rp 3,45 M</p>
+                <p class="text-2xl font-extrabold text-white font-heading">Rp <?= number_format($aset / 1000000000, 2, ',', '.') ?> M</p>
                 <span class="text-[11px] text-emerald-100 flex items-center gap-1 mt-0.5">
                     <i class="fa-solid fa-shield-halved text-amber-400"></i> <?= tr('Tanah Kas & Infrastruktur') ?>
                 </span>
@@ -322,9 +333,9 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(ctxInc, {
             type: 'doughnut',
             data: {
-                labels: ['<?= tr("Dana Desa (APBN)") ?>', '<?= tr("ADD (Boyolali)") ?>', '<?= tr("PADes Asli") ?>', '<?= tr("Bagi Hasil Pajak") ?>'],
+                labels: <?= json_encode($incomeLabels, JSON_UNESCAPED_UNICODE) ?>,
                 datasets: [{
-                    data: [875, 350, 185, 65],
+                    data: <?= json_encode($incomeValues) ?>,
                     backgroundColor: ['#165f36', '#2e9e5b', '#c4891f', '#fbbf24'],
                     borderWidth: 3,
                     borderColor: '#ffffff',
@@ -353,10 +364,10 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(ctxExp, {
             type: 'bar',
             data: {
-                labels: ['<?= tr("Infrastruktur") ?>', '<?= tr("Penyelenggaraan Pemdes") ?>', '<?= tr("Pemberdayaan UMKM") ?>', '<?= tr("Pembinaan Warga") ?>'],
+                labels: <?= json_encode($expenseLabels, JSON_UNESCAPED_UNICODE) ?>,
                 datasets: [{
                     label: '<?= tr("Alokasi Belanja 2026") ?>',
-                    data: [680, 355, 320, 120],
+                    data: <?= json_encode($expenseValues) ?>,
                     backgroundColor: ['#165f36', '#c4891f', '#2e9e5b', '#6366f1'],
                     borderRadius: 12,
                     borderWidth: 0
@@ -391,9 +402,9 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(ctxDus, {
             type: 'pie',
             data: {
-                labels: ['<?= tr("Dusun Klego") ?>', '<?= tr("Dusun Ponggok") ?>', '<?= tr("Dusun Soka") ?>', '<?= tr("Dusun Rejosari") ?>', 'Ngemplak'],
+                labels: <?= json_encode($dusunLabels, JSON_UNESCAPED_UNICODE) ?>,
                 datasets: [{
-                    data: [1243, 987, 876, 765, 952],
+                    data: <?= json_encode($dusunValues) ?>,
                     backgroundColor: ['#165f36', '#10b981', '#c4891f', '#06b6d4', '#f59e0b'],
                     borderWidth: 2,
                     borderColor: '#ffffff'
@@ -415,10 +426,10 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(ctxAge, {
             type: 'bar',
             data: {
-                labels: ['<?= tr("0-14 (Anak)") ?>', '<?= tr("15-29 (Pemuda)") ?>', '<?= tr("30-44 (Dewasa Muda)") ?>', '<?= tr("45-59 (Dewasa)") ?>', '<?= tr("60+ (Lansia)") ?>'],
+                labels: <?= json_encode($ageLabels, JSON_UNESCAPED_UNICODE) ?>,
                 datasets: [{
                     label: '<?= tr("Statistik Penduduk") ?>',
-                    data: [965, 1205, 1014, 879, 760],
+                    data: <?= json_encode($ageValues) ?>,
                     backgroundColor: ['#8ecba5', '#2e9e5b', '#165f36', '#c4891f', '#d97706'],
                     borderRadius: 8
                 }]

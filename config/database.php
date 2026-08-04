@@ -12,6 +12,9 @@ if (!$conn) {
   die("Koneksi database gagal");
 }
 
+// Pastikan seluruh nama, alamat, dan konten berbahasa Indonesia tersimpan utuh.
+mysqli_set_charset($conn, 'utf8mb4');
+
 $queryProfil = mysqli_query($conn, "SELECT * FROM profil_desa WHERE id=1");
 if ($queryProfil && mysqli_num_rows($queryProfil) > 0) {
     $APP_PROFIL = mysqli_fetch_assoc($queryProfil);

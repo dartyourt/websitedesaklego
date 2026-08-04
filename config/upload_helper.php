@@ -1,0 +1,39 @@
+<?php
+/** Utilitas upload gambar yang dipakai seluruh panel admin. */
+function app_base_path(): string
+{
+    $script = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+    $directory = rtrim(str_replace('\\', '/', dirname($script)), '/');
+    if (preg_match('#/admin$#i', $directory)) {
+        $directory = rtrim(str_replace('\\', '/', dirname($directory)), '/');
+    }
+    return $directory === '/' ? '' : $directory;
+}
+
+function public_upload_url(string $relativePath): string
+{
+    return app_base_path() . '/uploads/' . ltrim(str_replace('\\', '/', $relativePath), '/');
+}
+
+function upload_image(array $file, string $directory, string $prefix = 'image_'): array
+{
+    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) return [false, 'Tidak ada gambar yang berhasil diunggah.'];
+    if (($file['size'] ?? 0) < 1 || $file['size'] > 10 * 1024 * 1024) return [false, 'Ukuran gambar maksimal 10 MB.'];
+    $info = @getimagesize($file['tmp_name'] ?? '');
+    $extensions = ['image/jpeg'=>'jpg', 'image/png'=>'png', 'image/gif'=>'gif', 'image/webp'=>'webp', 'image/bmp'=>'bmp'];
+    if ($info === false || !isset($extensions[$info['mime'] ?? ''])) return [false, 'File yang dipilih bukan gambar JPG, PNG, GIF, WEBP, atau BMP yang valid.'];
+    if (!is_dir($directory) && !mkdir($directory, 0775, true) && !is_dir($directory)) return [false, 'Folder penyimpanan gambar tidak dapat dibuat.'];
+    $filename = $prefix . date('Ymd_His') . '_' . bin2hex(random_bytes(6)) . '.' . $extensions[$info['mime']];
+    if (!move_uploaded_file($file['tmp_name'], rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . $filename)) return [false, 'Gambar gagal disimpan ke server.'];
+    return [true, $filename];
+}
+
+function normalize_content_image_urls(string $html): string
+{
+    $prefix = app_base_path() . '/uploads/';
+    return preg_replace_callback('/\\bsrc\\s*=\\s*(["\'])([^"\']+)\\1/i', function ($m) use ($prefix) {
+        $url = str_replace('\\', '/', html_entity_decode($m[2], ENT_QUOTES, 'UTF-8'));
+        if (preg_match('#^(?:\.\./|\./)*uploads/(.+)$#i', $url, $path)) return 'src=' . $m[1] . $prefix . ltrim($path[1], '/') . $m[1];
+        return $m[0];
+    }, $html);
+}

@@ -1,5 +1,6 @@
 <?php
 include 'config/database.php';
+require_once __DIR__ . '/config/upload_helper.php';
 
 // Cek apakah ada id
 if (!isset($_GET['id'])) {
@@ -68,9 +69,7 @@ include 'config/header.php';
         <!-- RENDERING KONTEN BERITA DENGAN WYSIWYG STYLES (.content-body) DAN AUTO-KOREKSI URL GAMBAR -->
         <div class="content-body text-slate-800 font-normal leading-relaxed">
             <?php 
-            $kontenBerita = $berita['isi'];
-            // Koreksi otomatis url gambar jika berupa path relatif agar tepat sasaran ke /desa-desa/uploads/
-            $kontenBerita = preg_replace('/(src=")(?:\.\.\/)*uploads\//i', '$1/desa-desa/uploads/', $kontenBerita);
+            $kontenBerita = normalize_content_image_urls($berita['isi']);
             echo $kontenBerita; 
             ?>
         </div>

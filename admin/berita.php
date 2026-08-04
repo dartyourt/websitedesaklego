@@ -60,7 +60,8 @@ $query = mysqli_query($conn, "SELECT * FROM berita ORDER BY tanggal DESC");
           <td class="px-4 py-2"><?= date('d-m-Y', strtotime($row['tanggal'])); ?></td>
           <td class="px-4 py-2">
             <?php if($row['foto']): ?>
-              <img src="../uploads/berita/<?= $row['foto']; ?>" alt="Foto" class="w-20 h-16 object-cover rounded">
+              <?php $fotoPath = file_exists('../uploads/berita/' . $row['foto']) ? '../uploads/berita/' . $row['foto'] : '../uploads/' . $row['foto']; ?>
+              <img src="<?= htmlspecialchars($fotoPath); ?>" alt="Foto" class="w-20 h-16 object-cover rounded">
             <?php else: ?>
               -
             <?php endif; ?>

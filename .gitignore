@@ -23,6 +23,12 @@ Thumbs.db
 *.docx
 *.csv
 
+# Berkas sumber resmi desa wajib ikut ke repository agar proses sinkronisasi
+# di server dapat mendaftarkan dokumen dan menyalin aset gambar dengan benar.
+!data/
+!data/**/
+!data/**
+
 # Docker volume data
 /mysql_data/
 /db_data/
