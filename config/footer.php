@@ -126,7 +126,7 @@
                     <span>&bull;</span>
                     <span class="hover:underline cursor-pointer">Syarat Penggunaan</span>
                     <span>&bull;</span>
-                    <span class="text-amber-400 font-semibold">Modular CMS Architecture</span>
+                    <span class="text-amber-400 font-semibold">Sistem Informasi Resmi Pemerintahan</span>
                 </div>
             </div>
         </div>

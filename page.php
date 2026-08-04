@@ -129,16 +129,16 @@ include 'config/header.php';
                     <a href="index.php" class="hover:text-white transition-colors">Beranda</a>
                 </li>
                 <li>&bull;</li>
-                <li><span class="text-amber-300">Halaman Statis (Modular)</span></li>
+                <li><span class="text-amber-300 font-semibold">Informasi & Layanan Publik</span></li>
             </ol>
         </nav>
         <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-white tracking-tight">
             <?= htmlspecialchars($pageData['judul']) ?>
         </h1>
-        <p class="text-xs text-emerald-200/70 mt-3 flex items-center gap-2">
-            <i class="fa-regular fa-clock text-amber-400"></i> Diperbarui: <?= date('d M Y', strtotime($pageData['updated_at'] ?? 'now')) ?>
-            <span>&bull;</span>
-            <span class="bg-emerald-800/80 text-white px-2 py-0.5 rounded font-bold text-[10px]">CMS WordPress-Style</span>
+        <p class="text-xs text-emerald-200/80 mt-3 flex flex-wrap items-center gap-2.5">
+            <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-amber-400"></i> Diperbarui: <?= date('d M Y', strtotime($pageData['updated_at'] ?? 'now')) ?></span>
+            <span class="text-emerald-400">&bull;</span>
+            <span class="bg-emerald-800/90 text-emerald-100 px-3 py-1 rounded-full font-semibold text-[11px] flex items-center gap-1.5 border border-emerald-600 shadow-xs"><i class="fa-solid fa-circle-check text-amber-400"></i> Portal Resmi Pemerintah Desa</span>
         </p>
     </div>
 </section>

@@ -203,20 +203,27 @@ if ($conn && !mysqli_connect_error()) {
 
                 <div class="h-6 w-[1px] bg-slate-200 mx-1.5"></div>
 
-                <!-- NEW: LANGUAGE SWITCHER DALAM NAVBAR (ANTI TUMPANG TINDIH / OVERLAP) -->
+                <!-- LANGUAGE SWITCHER RESPONSIF & HARMONIS -->
                 <?php if (!empty($activeLanguages)): ?>
-                    <div class="relative group inline-block text-left z-[100]">
-                        <button type="button" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-extrabold px-3.5 py-2 rounded-xl text-xs border border-slate-300 shadow-xs transition-all cursor-pointer">
-                            <span class="text-sm"><?= htmlspecialchars($activeLanguages[$currentLang]['bendera'] ?? '🇮🇩') ?></span>
-                            <span><?= strtoupper($currentLang) ?></span>
-                            <i class="fa-solid fa-chevron-down text-[9px] text-slate-500"></i>
+                    <div class="relative group dropdown-container z-[100]">
+                        <button type="button" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-200 focus:outline-none cursor-pointer">
+                            <span class="text-base leading-none filter drop-shadow-xs transform group-hover:scale-110 transition-transform duration-200"><?= htmlspecialchars($activeLanguages[$currentLang]['bendera'] ?? '🇮🇩') ?></span>
+                            <span class="font-bold tracking-wide"><?= strtoupper($currentLang) ?></span>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:text-emerald-600 transition-transform duration-200 group-hover:-rotate-180"></i>
                         </button>
-                        <div class="absolute right-0 top-full mt-2 w-48 rounded-2xl shadow-2xl bg-white border border-slate-200 p-1.5 hidden group-hover:block z-[110] text-slate-800 text-xs transform transition-all">
-                            <div class="px-3 py-1.5 font-bold text-slate-400 border-b border-slate-100 text-[10px] uppercase tracking-wider mb-1">Pilih Bahasa / Language</div>
+                        <div class="absolute right-0 top-full mt-1.5 w-52 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[110] transform origin-top-right scale-95 group-hover:scale-100 overflow-hidden p-1.5">
+                            <div class="px-3 py-1.5 text-[10px] font-bold tracking-wider uppercase text-slate-400 border-b border-slate-100 mb-1 flex items-center gap-1.5">
+                                <i class="fa-solid fa-globe text-emerald-600"></i> Pilih Bahasa / Language
+                            </div>
                             <?php foreach ($activeLanguages as $codeL => $infoL): ?>
-                                <a href="?<?= http_build_query(array_merge($_GET, ['lang' => $codeL])) ?>" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 font-semibold transition-all <?= $codeL == $currentLang ? 'bg-emerald-50 text-emerald-800 font-extrabold shadow-inner border border-emerald-200' : '' ?>">
-                                    <span class="text-base"><?= htmlspecialchars($infoL['bendera']) ?></span>
-                                    <span><?= htmlspecialchars($infoL['nama']) ?></span>
+                                <a href="?<?= http_build_query(array_merge($_GET, ['lang' => $codeL])) ?>" class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold <?= $codeL == $currentLang ? 'bg-emerald-50/90 text-emerald-800 font-extrabold border-l-4 border-emerald-600 shadow-xs' : 'text-slate-700 hover:text-emerald-700 hover:bg-slate-50' ?> transition-all duration-150 my-0.5">
+                                    <span class="flex items-center gap-2.5">
+                                        <span class="text-base leading-none"><?= htmlspecialchars($infoL['bendera']) ?></span>
+                                        <span><?= htmlspecialchars($infoL['nama']) ?></span>
+                                    </span>
+                                    <?php if ($codeL == $currentLang): ?>
+                                        <i class="fa-solid fa-circle-check text-emerald-600 text-[11px]"></i>
+                                    <?php endif; ?>
                                 </a>
                             <?php endforeach; ?>
                         </div>
@@ -232,11 +239,12 @@ if ($conn && !mysqli_connect_error()) {
 
             <!-- MOBILE MENU BUTTON -->
             <div class="lg:hidden flex items-center gap-2">
-                <!-- MOBILE LANGUAGE BUTTON QUICK BAR -->
+                <!-- MOBILE LANGUAGE BUTTON -->
                 <?php if (!empty($activeLanguages)): ?>
-                    <a href="?lang=<?= $currentLang === 'id' ? 'en' : ($currentLang === 'en' ? 'ja' : 'id') ?>" class="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-300 text-slate-800 font-bold text-xs flex items-center gap-1">
-                        <span><?= htmlspecialchars($activeLanguages[$currentLang]['bendera'] ?? '🇮🇩') ?> <?= strtoupper($currentLang) ?></span>
-                        <i class="fa-solid fa-rotate text-[10px] text-emerald-700 ml-0.5"></i>
+                    <a href="?lang=<?= $currentLang === 'id' ? 'en' : ($currentLang === 'en' ? 'ja' : 'id') ?>" class="px-3 py-1.5 rounded-lg bg-emerald-50/80 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 font-bold text-xs flex items-center gap-1.5 shadow-2xs transition-all">
+                        <span class="text-sm"><?= htmlspecialchars($activeLanguages[$currentLang]['bendera'] ?? '🇮🇩') ?></span>
+                        <span><?= strtoupper($currentLang) ?></span>
+                        <i class="fa-solid fa-arrows-rotate text-[10px] text-emerald-600 ml-0.5"></i>
                     </a>
                 <?php endif; ?>
                 

@@ -80,7 +80,7 @@ $staticPages = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Menu Navbar (WordPress Style) - Admin</title>
+    <title>Kelola Menu Navigasi - Admin Portal</title>
     <link rel="icon" href="../logoboyolali.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -94,7 +94,7 @@ $staticPages = [
                 <a href="index.php" class="w-9 h-9 rounded-xl bg-emerald-800 flex items-center justify-center text-white hover:bg-emerald-700 transition-colors">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
-                <h1 class="font-bold text-lg">Kelola Menu Navbar (CMS WordPress-Style)</h1>
+                <h1 class="font-bold text-lg">Kelola Struktur Menu & Navigasi Website</h1>
             </div>
             <a href="../index.php" target="_blank" class="bg-amber-500 text-slate-900 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow">
                 <i class="fa-solid fa-eye"></i> Pratinjau Navbar Depan

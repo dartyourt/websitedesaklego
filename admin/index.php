@@ -40,7 +40,7 @@ if (!isset($_SESSION['login'])) {
                 </div>
                 <div>
                     <h1 class="font-bold text-lg leading-tight">Dasbor Admin <?= htmlspecialchars($APP_PROFIL['nama_desa'] ?? 'Desa Klego') ?></h1>
-                    <p class="text-xs text-amber-300 font-medium">Modular Content Management System (WordPress Style)</p>
+                    <p class="text-xs text-amber-300 font-medium">Sistem Informasi & Portal Resmi Pemerintahan Desa</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -56,11 +56,11 @@ if (!isset($_SESSION['login'])) {
 
     <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
         
-        <!-- SECTION 1: MODULAR CMS ALA WORDPRESS -->
+        <!-- SECTION 1: MANAJEMEN PORTAL & KONTEN PUBLIK -->
         <div>
             <div class="flex items-center gap-2 mb-4">
-                <i class="fa-solid fa-wand-magic-sparkles text-amber-600 text-xl"></i>
-                <h2 class="font-extrabold text-xl text-slate-900">Modul CMS & Tata Kelola Tampilan Web (WordPress Style)</h2>
+                <i class="fa-solid fa-layer-group text-amber-600 text-xl"></i>
+                <h2 class="font-extrabold text-xl text-slate-900">Manajemen Portal & Tata Kelola Konten Publik</h2>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -70,18 +70,18 @@ if (!isset($_SESSION['login'])) {
                     <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-2xl mb-4 group-hover:bg-emerald-700 group-hover:text-white transition-colors shadow-inner">
                         <i class="fa-solid fa-bars-staggered"></i>
                     </div>
-                    <h3 class="font-bold text-lg text-slate-900 group-hover:text-emerald-800 transition-colors">Menu Navbar Dinamis</h3>
-                    <p class="text-xs text-slate-500 mt-1">Atur menu navigasi & dropdown website depan (mirip WordPress menu).</p>
-                    <span class="inline-block mt-4 text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Kelola Navbar &rarr;</span>
+                    <h3 class="font-bold text-lg text-slate-900 group-hover:text-emerald-800 transition-colors">Menu Navigasi Website</h3>
+                    <p class="text-xs text-slate-500 mt-1">Atur struktur menu navigasi utama & dropdown beranda website depan.</p>
+                    <span class="inline-block mt-4 text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Kelola Navigasi &rarr;</span>
                 </a>
 
                 <!-- PAGE BUILDER MANAGER -->
                 <a href="halaman.php" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all group">
                     <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-4 group-hover:bg-amber-600 group-hover:text-white transition-colors shadow-inner">
-                        <i class="fa-solid fa-file-pen"></i>
+                        <i class="fa-solid fa-file-lines"></i>
                     </div>
-                    <h3 class="font-bold text-lg text-slate-900 group-hover:text-amber-700 transition-colors">Halaman Statis Kustom</h3>
-                    <p class="text-xs text-slate-500 mt-1">Buat atau ubah konten halaman (Sejarah, Visi Misi, Potensi) tanpa coding.</p>
+                    <h3 class="font-bold text-lg text-slate-900 group-hover:text-amber-700 transition-colors">Informasi & Layanan Publik</h3>
+                    <p class="text-xs text-slate-500 mt-1">Kelola halaman informasi (Sejarah, Visi Misi, Potensi) dengan editor visual.</p>
                     <span class="inline-block mt-4 text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">Kelola Halaman &rarr;</span>
                 </a>
 

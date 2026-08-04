@@ -153,8 +153,8 @@ if ($tableExists) {
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight">Kelola Halaman Statis & Artikel (Visual Editor)</h1>
-                    <p class="text-[11px] text-amber-300">Tanpa Perlu Kode HTML - Nulis Rapi Seperti di Word!</p>
+                    <h1 class="font-bold text-lg leading-tight">Manajemen Informasi & Layanan Publik (Visual Editor)</h1>
+                    <p class="text-[11px] text-amber-300">Editor Visual Terpadu - Kelola Konten Resmi Pemerintahan Tanpa Kode!</p>
                 </div>
             </div>
             <a href="../page.php?slug=sejarah-visi-misi" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-900 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow">
