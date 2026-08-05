@@ -46,6 +46,7 @@ try {
         ['Pembiayaan APBDes 2026', 'Pengeluaran Pembiayaan', 34880000, 'Rp', '2026', '#be123c', 2],
         ['SILPA & Aset 2025', 'Saldo Akhir Kas / SILPA 2025', 350276263, 'Rp', '2025', '#047857', 1],
         ['SILPA & Aset 2025', 'Nilai Aset Tetap 2025', 37240430950, 'Rp', '2025', '#d97706', 2],
+        ['SILPA & Aset 2025', 'Lahan Pertanian & Kas Desa', 312, 'Hektar', '2025', '#059669', 3],
     ];
     foreach ($stats as [$kategori, $label, $nilai, $satuan, $tahun, $warna, $urutan]) {
         run_query("INSERT INTO infografis_statistik (kategori,label,nilai,satuan,tahun,warna,urutan) VALUES ('" . db_escape($kategori) . "','" . db_escape($label) . "',$nilai,'$satuan','$tahun','$warna',$urutan)");

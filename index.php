@@ -183,6 +183,180 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
     </div>
 </section>
 
+<!-- ================= PETA INTERAKTIF DESA KLEGO (SUMBER: NAURA) ================= -->
+<section class="py-16 max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 bg-emerald-100/80 px-3 py-1.5 rounded-full border border-emerald-300">
+            <?= tr('Peta Digital & Fasilitas Umum') ?>
+        </span>
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-900 mt-3">
+            <?= tr('Peta Interaktif Desa Klego') ?>
+        </h2>
+        <p class="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
+            <?= tr('Peta digital fasilitas umum Desa Klego dengan batas administrasi resmi. Klik marker untuk melihat detail lokasi.') ?>
+        </p>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200 shadow-lg overflow-hidden">
+        <div id="petaDesaKlego" style="height: 480px; width: 100%; z-index: 10;"></div>
+    </div>
+</section>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+<style>
+/* Peta Desa Klego Custom Styles */
+#petaDesaKlego .leaflet-control-layers { border-radius: 12px !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; font-size: 12px; }
+#petaDesaKlego .leaflet-control-zoom a { border-radius: 8px !important; }
+#petaDesaKlego .peta-legend-card { background: #fff; border-radius: 14px; padding: 0; box-shadow: 0 4px 16px rgba(0,0,0,0.12); border: 1px solid #e2e8f0; min-width: 180px; font-family: 'Inter', sans-serif; overflow: hidden; }
+#petaDesaKlego .peta-legend-header { padding: 10px 14px; background: #f0fdf4; border-bottom: 1px solid #e2e8f0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: #165f36; }
+#petaDesaKlego .peta-legend-body { padding: 10px 14px; }
+#petaDesaKlego .peta-legend-body.collapsed { display: none; }
+#petaDesaKlego .peta-lg-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 11px; color: #334155; }
+#petaDesaKlego .peta-lg-circle { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+#petaDesaKlego .peta-lg-poly { width: 22px; height: 14px; border: 2px dashed #0F6E8C; background: rgba(54,171,195,0.18); border-radius: 3px; flex-shrink: 0; }
+#petaDesaKlego .custom-map-marker .marker-pin-wrapper { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+#petaDesaKlego .custom-map-marker .facility-icon-badge { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); border: 2px solid #fff; flex-shrink: 0; }
+#petaDesaKlego .custom-map-marker .facility-icon-badge svg { width: 12px; height: 12px; }
+#petaDesaKlego .custom-map-marker .facility-name-label { font-size: 10px; font-weight: 700; color: #1e293b; background: rgba(255,255,255,0.92); padding: 2px 6px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+#petaDesaKlego .marker-cluster-custom { background: rgba(22,95,54,0.2); border-radius: 50%; }
+#petaDesaKlego .marker-cluster-custom div { background: #165f36; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+</style>
+
+<script>
+(function() {
+  // DATA FASILITAS DESA KLEGO
+  const fasilitasKlego = [
+    {no: 1, nama: 'Kantor Desa Klego', lng: 110.6894, lat: -7.35662, kat: 'Kantor Desa'},
+    {no: 2, nama: 'Masjid Darul Fallah', lng: 110.6908, lat: -7.3557, kat: 'Masjid'},
+    {no: 3, nama: 'Masjid Al-Fatah', lng: 110.6840, lat: -7.36123, kat: 'Masjid'},
+    {no: 4, nama: 'Masjid Al-Istijabah', lng: 110.6911, lat: -7.36114, kat: 'Masjid'},
+    {no: 5, nama: 'Masjid Amnah Ali', lng: 110.6848, lat: -7.35288, kat: 'Masjid'},
+    {no: 6, nama: 'SDN 1 Klego', lng: 110.6890, lat: -7.35673, kat: 'Sekolah / SD'},
+    {no: 7, nama: 'SDN 3 Klego', lng: 110.6905, lat: -7.35995, kat: 'Sekolah / SD'},
+    {no: 8, nama: 'MIN Kedokan Klego', lng: 110.6860, lat: -7.35853, kat: 'Sekolah / SD'},
+    {no: 9, nama: 'SMP Bhinneka Karya Klego', lng: 110.6907, lat: -7.35902, kat: 'Sekolah / SMP'},
+    {no: 10, nama: 'Puskesmas Klego I', lng: 110.6878, lat: -7.35695, kat: 'Puskesmas'},
+    {no: 11, nama: "Masjid Umul Mu'minin Aisyah", lng: 110.6817, lat: -7.35811, kat: 'Masjid'},
+    {no: 12, nama: 'Mushola Al-Hidayah', lng: 110.6847, lat: -7.35977, kat: 'Musholla'},
+    {no: 13, nama: 'Mushalla Al-Fatih', lng: 110.6832, lat: -7.35604, kat: 'Musholla'},
+    {no: 14, nama: 'Pasar Klego', lng: 110.6920, lat: -7.35596, kat: 'Pasar'},
+    {no: 15, nama: 'Taman Klego', lng: 110.6933, lat: -7.35468, kat: 'Taman'},
+    {no: 16, nama: 'Lapangan Bola Klego', lng: 110.6910, lat: -7.35956, kat: 'Lapangan'},
+    {no: 17, nama: 'Masjid Nurul Iman Karanganyar', lng: 110.6891, lat: -7.3539, kat: 'Masjid'},
+    {no: 18, nama: 'Masjid Amnah Ali Klalingan', lng: 110.6965, lat: -7.3574, kat: 'Masjid'}
+  ];
+
+  // WARNA & IKON PER KATEGORI
+  const petaColors = {
+    'Kantor Desa': '#d94a43', 'Masjid': '#168144', 'Musholla': '#77b840',
+    'Sekolah / SD': '#2979c7', 'Sekolah / SMP': '#8755b5', 'Puskesmas': '#13a36b',
+    'Pasar': '#ee9120', 'Taman': '#0e9b9e', 'Lapangan': '#94633c'
+  };
+  const petaIcons = {
+    'Kantor Desa': '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-4h6v4"/></svg>',
+    'Masjid': '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2"/><path d="M12 4c-3.5 0-6 2.5-6 6v11h12V10c0-3.5-2.5-6-6-6z"/><circle cx="12" cy="2" r="1" fill="currentColor"/></svg>',
+    'Musholla': '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v2"/><path d="M12 5c-3 0-5 2-5 5v11h10V10c0-3-2-5-5-5z"/><circle cx="12" cy="2" r="1" fill="currentColor"/></svg>',
+    'Sekolah / SD': '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+    'Sekolah / SMP': '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+    'Puskesmas': '<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z"/></svg>',
+    'Pasar': '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
+    'Taman': '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19v3"/><path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14z"/></svg>',
+    'Lapangan': '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M2 12h20"/></svg>'
+  };
+
+  // POLYGON BATAS ADMINISTRASI DESA KLEGO
+  const batasDesaPolygon = [
+    [-7.3533, 110.6800], [-7.3524, 110.6831], [-7.3501, 110.6842], [-7.3483, 110.6871],
+    [-7.3458, 110.6884], [-7.3470, 110.6895], [-7.3457, 110.6910], [-7.3470, 110.6945],
+    [-7.3462, 110.6963], [-7.3473, 110.6996],
+    [-7.3501, 110.7006], [-7.3522, 110.6995], [-7.3558, 110.6999], [-7.3574, 110.6965],
+    [-7.3578, 110.7010], [-7.3584, 110.7044], [-7.3591, 110.7064], [-7.3636, 110.7052],
+    [-7.3657, 110.7006], [-7.3651, 110.6963], [-7.3637, 110.6935], [-7.3632, 110.6895],
+    [-7.3649, 110.6850],
+    [-7.3635, 110.6814], [-7.3604, 110.6802], [-7.3574, 110.6796], [-7.3556, 110.6808]
+  ];
+
+  function initPetaDesa() {
+    const mapEl = document.getElementById('petaDesaKlego');
+    if (!mapEl || typeof L === 'undefined') return;
+
+    const petaMap = L.map('petaDesaKlego', { zoomControl: false, scrollWheelZoom: false });
+    L.control.zoom({ position: 'topright' }).addTo(petaMap);
+
+    // Tile Layers
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '© OpenStreetMap'
+    }).addTo(petaMap);
+    const cartoLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd' });
+    const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 });
+
+    // Batas Desa Polygon
+    const boundary = L.polygon(batasDesaPolygon, {
+      color: '#0F6E8C', weight: 3.5, fillColor: '#36abc3', fillOpacity: 0.18, dashArray: '6, 6', smoothFactor: 0
+    }).addTo(petaMap);
+
+    // Layer Control (topright, collapsed)
+    L.control.layers(
+      { 'OpenStreetMap': osm, 'Carto Light': cartoLight, 'Esri Satellite': esriSat },
+      { 'Batas Desa Klego': boundary },
+      { collapsed: true, position: 'topright' }
+    ).addTo(petaMap);
+
+    // Custom Marker Icon Creator
+    function makeIcon(kat, nama) {
+      return L.divIcon({
+        className: 'custom-map-marker',
+        html: '<div class="marker-pin-wrapper"><div class="facility-icon-badge" style="background:' + (petaColors[kat]||'#0F6E8C') + '">' + (petaIcons[kat]||'') + '</div><div class="facility-name-label">' + nama + '</div></div>',
+        iconSize: [180, 28], iconAnchor: [14, 14]
+      });
+    }
+
+    // Marker Cluster Group
+    var cluster = (typeof L.markerClusterGroup === 'function') ? L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 40,
+      iconCreateFunction: function(c) { return L.divIcon({ html: '<div>' + c.getChildCount() + '</div>', className: 'marker-cluster-custom', iconSize: L.point(40,40) }); }
+    }) : L.layerGroup();
+
+    fasilitasKlego.forEach(function(f) {
+      var m = L.marker([f.lat, f.lng], { icon: makeIcon(f.kat, f.nama), title: f.nama });
+      m.bindPopup('<div style="padding:10px;font-family:Inter,sans-serif;min-width:200px;"><div style="background:' + (petaColors[f.kat]||'#0F6E8C') + ';color:#fff;padding:10px 12px;border-radius:10px 10px 0 0;margin:-10px -10px 10px -10px;"><b style="font-size:13px;">' + f.nama + '</b></div><div style="font-size:11px;color:#64748b;margin-bottom:4px;"><i class="fa-solid fa-tag" style="color:' + (petaColors[f.kat]||'#0F6E8C') + ';margin-right:4px;"></i>' + f.kat + '</div><div style="font-size:11px;color:#64748b;"><i class="fa-solid fa-location-dot" style="color:#d94a43;margin-right:4px;"></i>Desa Klego, Kec. Klego, Boyolali</div><div style="margin-top:8px;"><a href="https://www.google.com/maps/search/?api=1&query=' + f.lat + ',' + f.lng + '" target="_blank" style="display:block;text-align:center;background:#4285F4;color:#fff;padding:6px;border-radius:8px;font-weight:600;font-size:11px;text-decoration:none;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Google Maps</a></div></div>', { maxWidth: 260 });
+      cluster.addLayer(m);
+    });
+    petaMap.addLayer(cluster);
+
+    // Legenda (bottomleft - agar tidak menumpuk layer control)
+    var legend = L.control({ position: 'bottomleft' });
+    legend.onAdd = function() {
+      var div = L.DomUtil.create('div', 'peta-legend-card');
+      var rows = '';
+      Object.entries(petaColors).forEach(function(e) {
+        rows += '<div class="peta-lg-row"><span class="peta-lg-circle" style="background:' + e[1] + '">' + (petaIcons[e[0]]||'') + '</span><span>' + e[0] + '</span></div>';
+      });
+      rows += '<div class="peta-lg-row"><span class="peta-lg-poly"></span><span>Batas Administrasi Desa</span></div>';
+      div.innerHTML = '<div class="peta-legend-header" onclick="var b=this.nextElementSibling;b.classList.toggle(\'collapsed\');this.querySelector(\'i\').className=b.classList.contains(\'collapsed\')?\'fa-solid fa-plus\':\'fa-solid fa-minus\';"><span><i class="fa-solid fa-layer-group"></i> Legenda Fasilitas</span><span><i class="fa-solid fa-minus"></i></span></div><div class="peta-legend-body">' + rows + '</div>';
+      L.DomEvent.disableClickPropagation(div);
+      return div;
+    };
+    legend.addTo(petaMap);
+
+    // Fit to village bounds
+    petaMap.fitBounds(boundary.getBounds(), { padding: [30, 30] });
+
+    // Enable scroll zoom on click
+    petaMap.on('click', function() { petaMap.scrollWheelZoom.enable(); });
+    petaMap.on('mouseout', function() { petaMap.scrollWheelZoom.disable(); });
+  }
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(initPetaDesa, 100);
+  } else {
+    document.addEventListener('DOMContentLoaded', initPetaDesa);
+  }
+})();
+</script>
+
 <!-- ================= PUSAT INFORMASI & KETERBUKAAN DATA (FOLDER SATRIA) ================= -->
 <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6">
     <div class="text-center max-w-3xl mx-auto mb-16">

@@ -192,25 +192,33 @@ echo "[OK] Tabel infografis_statistik siap.\n";
 $chkInfogra = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM infografis_statistik");
 $rowInfo = mysqli_fetch_assoc($chkInfogra);
 if ($rowInfo['cnt'] == 0) {
+    // Data resmi dari sumber XLSX Naila (APBDesa 2026)
     $stats = [
-        ['Pendapatan 2026', 'Dana Desa (APBN Pembendaharaan)', 875000000, 'Rp', '2026', '#165f36', 1],
-        ['Pendapatan 2026', 'Alokasi Dana Desa (ADD Kab. Boyolali)', 350000000, 'Rp', '2026', '#2e9e5b', 2],
-        ['Pendapatan 2026', 'Pendapatan Asli Desa (PADes & BUMDes)', 185000000, 'Rp', '2026', '#c4891f', 3],
-        ['Pendapatan 2026', 'Bagi Hasil Pajak & Retribusi', 65000000, 'Rp', '2026', '#fbbf24', 4],
-        
-        ['Belanja 2026', 'Pembangunan Infrastruktur Desa', 680000000, 'Rp', '2026', '#1e40af', 1],
-        ['Belanja 2026', 'Pemberdayaan & Pelatihan UMKM', 320000000, 'Rp', '2026', '#10b981', 2],
-        ['Belanja 2026', 'Penyelenggaraan Pemerintahan Desa', 355000000, 'Rp', '2026', '#f59e0b', 3],
-        ['Belanja 2026', 'Pembinaan Kemasyarakatan (Posyandu/PKK)', 120000000, 'Rp', '2026', '#8ecba5', 4],
+        // PENDAPATAN DESA 2026 (Sumber: Pendapatan Desa 2026_Diagram Lingkaran.xlsx)
+        ['Pendapatan APBDes 2026', 'Pendapatan Asli Desa',               357550000,  'Rp', '2026', '#165f36', 1],
+        ['Pendapatan APBDes 2026', 'Pendapatan Transfer',                1440238000, 'Rp', '2026', '#2e9e5b', 2],
+        ['Pendapatan APBDes 2026', 'Lain-lain Pendapatan Yang Sah',      2500000,    'Rp', '2026', '#c4891f', 3],
 
-        ['SILPA & Aset 2025', 'SILPA Akhir Tahun 2025', 98450000, 'Rp', '2025', '#047857', 1],
-        ['SILPA & Aset 2025', 'Total Nilai Buku Aset & Inventaris Desa', 3450000000, 'Rp', '2025', '#d97706', 2],
-        ['SILPA & Aset 2025', 'Lahan Pertanian & Kas Desa', 312, 'Hektar', '2025', '#059669', 3]
+        // BELANJA DESA 2026 (Sumber: Belanja Desa 2026_Diagram Lingkaran.xlsx)
+        ['Belanja APBDes 2026', 'Penyelenggaraan Pemerintahan Desa',       907361852, 'Rp', '2026', '#1e40af', 1],
+        ['Belanja APBDes 2026', 'Pelaksanaan Pembangunan Desa',            805142500, 'Rp', '2026', '#10b981', 2],
+        ['Belanja APBDes 2026', 'Pembinaan Kemasyarakatan Desa',           268541000, 'Rp', '2026', '#f59e0b', 3],
+        ['Belanja APBDes 2026', 'Pemberdayaan Masyarakat Desa',            22141000,  'Rp', '2026', '#8ecba5', 4],
+        ['Belanja APBDes 2026', 'Penanggulangan Bencana, Darurat & Mendesak', 112310000, 'Rp', '2026', '#ef4444', 5],
+
+        // PEMBIAYAAN 2026 (Sumber: Pembiayaan 2026_Diagram Batang.xlsx)
+        ['Pembiayaan APBDes 2026', 'Penerimaan Pembiayaan',    350088352,   'Rp', '2026', '#7c3aed', 1],
+        ['Pembiayaan APBDes 2026', 'Pengeluaran Pembiayaan',   34880000,    'Rp', '2026', '#be123c', 2],
+
+        // SILPA & ASET 2025 (Referensi)
+        ['SILPA & Aset 2025', 'Saldo Akhir Kas / SILPA 2025',            350276263,   'Rp', '2025', '#047857', 1],
+        ['SILPA & Aset 2025', 'Nilai Aset Tetap 2025',                   37240430950, 'Rp', '2025', '#d97706', 2],
+        ['SILPA & Aset 2025', 'Lahan Pertanian & Kas Desa',              312,         'Hektar', '2025', '#059669', 3]
     ];
     foreach ($stats as $st) {
         mysqli_query($conn, "INSERT INTO infografis_statistik (kategori, label, nilai, satuan, tahun, warna, urutan) VALUES ('{$st[0]}', '{$st[1]}', {$st[2]}, '{$st[3]}', '{$st[4]}', '{$st[5]}', {$st[6]})");
     }
-    echo "[OK] Data Infografis Pembendaharaan & APBDes berhasil ditanamkan.\n";
+    echo "[OK] Data Infografis APBDes 2026 (sumber XLSX Naila) berhasil ditanamkan.\n";
 }
 
 echo "\n=== SETUP SELESAI DENGAN SUKSES! ===\n";

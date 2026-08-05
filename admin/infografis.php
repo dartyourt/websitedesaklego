@@ -1,56 +1,33 @@
 <?php
 session_start();
-include '../config/database.php';
-
 if (!isset($_SESSION['login'])) {
     header("Location: ../login.php");
     exit;
 }
 
+include '../config/database.php';
+
 $msg = "";
-$tableExists = false;
-if ($conn && !mysqli_connect_error()) {
-    $chk = @mysqli_query($conn, "SHOW TABLES LIKE 'infografis_statistik'");
-    if ($chk && mysqli_num_rows($chk) > 0) {
-        $tableExists = true;
-    }
+if (isset($_GET['status'])) {
+    if ($_GET['status'] == 'sukses_tambah') $msg = "Data keuangan / infografis baru berhasil ditambahkan.";
+    if ($_GET['status'] == 'sukses_edit') $msg = "Data keuangan / infografis berhasil diperbarui.";
+    if ($_GET['status'] == 'sukses_hapus') $msg = "Data keuangan / infografis telah dihapus secara permanen.";
 }
 
-// Proses Tambah Item Grafik
-if (isset($_POST['tambah']) && $tableExists) {
-    $kategori = mysqli_real_escape_string($conn, $_POST['kategori']);
-    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
-    $nilai = (float)$_POST['nilai_angka'];
-    $warna = mysqli_real_escape_string($conn, $_POST['warna_grafik'] ?: '#165f36');
-    $urutan = (int)$_POST['urutan'];
-    
-    $ins = mysqli_query($conn, "INSERT INTO infografis_statistik (kategori, nama, nilai_angka, warna_grafik, urutan) VALUES ('$kategori', '$nama', $nilai, '$warna', $urutan)");
-    if ($ins) {
-        $msg = "Data statistik berhasil ditambahkan ke dasbor grafik depan!";
-    } else {
-        $msg = "Gagal menyimpan: " . mysqli_error($conn);
-    }
-}
+// Ambil semua data dari infografis_statistik dikelompokkan per kategori
+$query = mysqli_query($conn, "SELECT * FROM infografis_statistik ORDER BY kategori ASC, urutan ASC, id ASC");
 
-// Proses Hapus Item
-if (isset($_GET['hapus']) && $tableExists) {
-    $id = (int)$_GET['hapus'];
-    mysqli_query($conn, "DELETE FROM infografis_statistik WHERE id = $id");
-    header("Location: infografis.php?msg=deleted");
-    exit;
-}
+$kategori_list = [
+    'Pendapatan APBDes 2026' => 'Pendapatan APBDes Tahun 2026',
+    'Belanja APBDes 2026' => 'Belanja & Pengeluaran Desa 2026',
+    'Pembiayaan APBDes 2026' => 'Pembiayaan Desa 2026',
+    'SILPA & Aset 2025' => 'SILPA Akhir Tahun 2025 & Nilai Aset Desa'
+];
 
-if (isset($_GET['msg']) && $_GET['msg'] == 'deleted') {
-    $msg = "Item statistik berhasil dihapus dari grafik.";
-}
-
-// Ambil Daftar Data
-$statItems = ['keuangan' => [], 'demografi' => []];
-if ($tableExists) {
-    $res = mysqli_query($conn, "SELECT * FROM infografis_statistik ORDER BY kategori ASC, urutan ASC");
-    while ($r = mysqli_fetch_assoc($res)) {
-        $statItems[$r['kategori']][] = $r;
-    }
+$data_per_kat = [];
+while ($row = mysqli_fetch_assoc($query)) {
+    $kat = $row['kategori'];
+    $data_per_kat[$kat][] = $row;
 }
 ?>
 <!DOCTYPE html>
@@ -58,148 +35,181 @@ if ($tableExists) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Infografis Keuangan & Demografi - Admin CMS</title>
+    <title>Kelola Keuangan & APBDesa - Admin CMS</title>
     <link rel="icon" href="../logoboyolali.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-slate-100 min-h-screen font-sans text-slate-800">
 
+    <!-- Header -->
     <header class="bg-[#165f36] text-white shadow-md border-b-4 border-amber-500">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <a href="index.php" class="w-9 h-9 rounded-xl bg-emerald-800 flex items-center justify-center text-white hover:bg-emerald-700 transition-colors">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
-                <h1 class="font-bold text-lg">Kelola Data Infografis Pembendaharaan & Demografi</h1>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">Manajemen Keuangan & APBDesa (Infografis)</h1>
+                    <p class="text-[11px] text-amber-300">Data Pendapatan, Belanja, & Pembiayaan Resmi Desa Klego</p>
+                </div>
             </div>
-            <a href="../infografis.php" target="_blank" class="bg-amber-500 text-slate-900 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow">
-                <i class="fa-solid fa-eye"></i> Pratinjau Dasbor Infografis
-            </a>
+            <div class="flex items-center gap-3">
+                <a href="../infografis.php" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-900 text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow transition-all">
+                    <i class="fa-solid fa-eye"></i> Pratinjau Web Infografis
+                </a>
+                <a href="logout.php" class="text-xs bg-rose-600 hover:bg-rose-700 font-bold px-3.5 py-2 rounded-xl transition-colors">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                </a>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-8">
+    <main class="max-w-6xl mx-auto px-6 py-8 space-y-6">
         <?php if (!empty($msg)): ?>
-            <div class="bg-emerald-100 border border-emerald-300 text-emerald-800 px-4 py-3 rounded-2xl mb-6 flex items-center gap-3 shadow-sm">
+            <div class="bg-emerald-100 border border-emerald-300 text-emerald-800 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-sm">
                 <i class="fa-solid fa-circle-check text-xl"></i>
                 <span class="text-sm font-semibold"><?= htmlspecialchars($msg) ?></span>
             </div>
         <?php endif; ?>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-            <!-- FORM TAMBAH ANGKA STATISTIK -->
-            <div class="lg:col-span-5 space-y-6">
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                    <h2 class="font-bold text-lg text-slate-900 pb-3 border-b border-slate-100 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-square-plus text-teal-700"></i> Tambah Data Grafik Baru
-                    </h2>
+        <!-- Tombol Aksi -->
+        <div class="flex justify-between items-center">
+            <a href="index.php" class="inline-flex items-center gap-2 bg-white text-slate-700 border border-slate-300 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-50 transition shadow-sm">
+                <i class="fa-solid fa-arrow-left text-emerald-700"></i> Kembali ke Dashboard
+            </a>
 
-                    <form action="" method="POST" class="space-y-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kelompok Grafik <span class="text-rose-500">*</span></label>
-                            <select name="kategori" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-600 text-sm font-semibold bg-white">
-                                <option value="keuangan">Keuangan & Pembendaharaan (APBDes)</option>
-                                <option value="demografi">Demografi & Wilayah (Penduduk per Dusun)</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Parameter / Program <span class="text-rose-500">*</span></label>
-                            <input type="text" name="nama" required placeholder="Contoh: Dana Desa (APBN) atau Dusun Klego" 
-                                   class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-600 text-sm font-bold">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nilai Angka / Jumlah <span class="text-rose-500">*</span></label>
-                            <input type="number" step="any" name="nilai_angka" required placeholder="Contoh: 875 (dalam Juta Rp) atau 1243 (warga)" 
-                                   class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-600 text-sm font-mono font-bold">
-                            <span class="text-[10px] text-slate-400">Untuk keuangan gunakan nominal Juta Rupiah (misal Rp 875 Juta = ketik 875)</span>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Warna Batang/Pie</label>
-                                <input type="color" name="warna_grafik" value="#165f36" class="w-full h-10 rounded-xl border border-slate-300 p-1 cursor-pointer">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Urutan</label>
-                                <input type="number" name="urutan" value="1" min="1" max="50" class="w-full px-4 py-2 rounded-xl border border-slate-300 font-bold text-center">
-                            </div>
-                        </div>
-
-                        <div class="pt-3">
-                            <button type="submit" name="tambah" class="w-full bg-[#165f36] hover:bg-[#0e3f23] text-white font-bold py-3 px-4 rounded-xl shadow transition-all duration-200 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-check"></i> Simpan ke Dasbor Infografis
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- DAFTAR ANGKA DAN STATISTIK -->
-            <div class="lg:col-span-7 space-y-6">
-                <!-- KELOMPOK KEUANGAN -->
-                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-center pb-3 border-b border-slate-100 mb-4">
-                        <h3 class="font-bold text-base text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-coins text-amber-500"></i> Parameter Pembendaharaan & APBDes 2026
-                        </h3>
-                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-0.5 rounded-full">Keuangan</span>
-                    </div>
-
-                    <?php if (empty($statItems['keuangan'])): ?>
-                        <p class="text-xs text-slate-400 italic py-4 text-center">Belum ada item khusus di database. Web depan saat ini menampilkan angka default perdes 2026.</p>
-                    <?php else: ?>
-                        <div class="space-y-3">
-                            <?php foreach ($statItems['keuangan'] as $item): ?>
-                                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                                    <div class="flex items-center gap-3">
-                                        <span class="w-6 h-6 rounded-lg shadow-sm" style="background-color: <?= htmlspecialchars($item['warna_grafik'] ?? '#165f36') ?>;"></span>
-                                        <div>
-                                            <span class="font-bold text-sm text-slate-900 block"><?= htmlspecialchars($item['nama']) ?></span>
-                                            <span class="text-xs text-emerald-700 font-mono font-bold">Rp <?= number_format($item['nilai_angka'], 2, ',', '.') ?> Juta</span>
-                                        </div>
-                                    </div>
-                                    <a href="infografis.php?hapus=<?= $item['id'] ?>" onclick="return confirm('Hapus item dari grafik?')" class="text-xs text-rose-600 font-bold hover:underline">Hapus</a>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-
-                <!-- KELOMPOK DEMOGRAFI -->
-                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-center pb-3 border-b border-slate-100 mb-4">
-                        <h3 class="font-bold text-base text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-users text-blue-600"></i> Parameter Demografi & Wilayah
-                        </h3>
-                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-0.5 rounded-full">Demografi</span>
-                    </div>
-
-                    <?php if (empty($statItems['demografi'])): ?>
-                        <p class="text-xs text-slate-400 italic py-4 text-center">Belum ada item kustom di database. Web depan saat ini menggunakan estimasi kependudukan resmi balai desa.</p>
-                    <?php else: ?>
-                        <div class="space-y-3">
-                            <?php foreach ($statItems['demografi'] as $item): ?>
-                                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                                    <div class="flex items-center gap-3">
-                                        <span class="w-6 h-6 rounded-lg shadow-sm" style="background-color: <?= htmlspecialchars($item['warna_grafik'] ?? '#3b82f6') ?>;"></span>
-                                        <div>
-                                            <span class="font-bold text-sm text-slate-900 block"><?= htmlspecialchars($item['nama']) ?></span>
-                                            <span class="text-xs text-slate-600 font-mono"><?= number_format($item['nilai_angka'], 0, ',', '.') ?> Warga</span>
-                                        </div>
-                                    </div>
-                                    <a href="infografis.php?hapus=<?= $item['id'] ?>" onclick="return confirm('Hapus item dari grafik?')" class="text-xs text-rose-600 font-bold hover:underline">Hapus</a>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-
+            <a href="infografis-tambah.php" class="inline-flex items-center gap-2 bg-[#165f36] text-white px-5 py-2.5 rounded-xl hover:bg-[#0f4426] transition font-bold text-xs shadow-md">
+                <i class="fa-solid fa-plus text-amber-300"></i> Tambah Data APBDes / Infografis
+            </a>
         </div>
+
+        <!-- Tabel Per Kategori -->
+        <?php foreach ($kategori_list as $kat_key => $kat_judul): ?>
+            <?php $items = $data_per_kat[$kat_key] ?? []; ?>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-5 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-sm shadow">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-bold text-sm text-slate-900"><?= htmlspecialchars($kat_judul) ?></h3>
+                            <p class="text-[11px] text-slate-500">Kategori Database: <code><?= htmlspecialchars($kat_key) ?></code></p>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-100 text-emerald-800 font-extrabold text-xs px-3 py-1 rounded-full border border-emerald-200">
+                        <?= count($items) ?> Item Data
+                    </span>
+                </div>
+
+                <?php if (empty($items)): ?>
+                    <div class="p-6 text-center text-slate-400 text-xs italic">
+                        Belum ada item data untuk kategori ini. Klik "Tambah Data APBDes / Infografis" untuk menambahkan.
+                    </div>
+                <?php else: ?>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600 font-extrabold uppercase tracking-wider border-b border-slate-200">
+                                    <th class="py-3.5 px-6 w-14 text-center">Urutan</th>
+                                    <th class="py-3.5 px-6">Uraian / Label Parameter</th>
+                                    <th class="py-3.5 px-6 text-right">Nilai Nominal / Angka</th>
+                                    <th class="py-3.5 px-6 w-24 text-center">Satuan</th>
+                                    <th class="py-3.5 px-6 w-24 text-center">Tahun</th>
+                                    <th class="py-3.5 px-6 w-32 text-center">Warna Grafik</th>
+                                    <th class="py-3.5 px-6 w-44 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 font-medium">
+                                <?php foreach ($items as $item): ?>
+                                    <tr class="hover:bg-slate-50/70 transition">
+                                        <td class="py-4 px-6 text-center font-bold text-slate-500">
+                                            <?= (int)$item['urutan'] ?>
+                                        </td>
+                                        <td class="py-4 px-6 font-extrabold text-slate-900 text-sm">
+                                            <?= htmlspecialchars($item['label']) ?>
+                                        </td>
+                                        <td class="py-4 px-6 text-right font-mono font-bold text-emerald-700 text-sm">
+                                            <?= number_format($item['nilai'], 0, ',', '.') ?>
+                                        </td>
+                                        <td class="py-4 px-6 text-center font-bold text-slate-600">
+                                            <?= htmlspecialchars($item['satuan'] ?: 'Rp') ?>
+                                        </td>
+                                        <td class="py-4 px-6 text-center">
+                                            <span class="bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-0.5 rounded-full font-bold">
+                                                <?= htmlspecialchars($item['tahun'] ?: '2026') ?>
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-6 text-center">
+                                            <div class="flex items-center justify-center gap-1.5 font-mono text-[11px] text-slate-600">
+                                                <span class="w-5 h-5 rounded shadow-sm border border-slate-300 inline-block" style="background-color: <?= htmlspecialchars($item['warna'] ?: '#165f36') ?>;"></span>
+                                                <?= htmlspecialchars($item['warna'] ?: '#165f36') ?>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 px-6 text-center space-x-1">
+                                            <a href="infografis-edit.php?id=<?= $item['id']; ?>" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-bold text-xs border border-blue-200 transition">
+                                                <i class="fa-solid fa-pen-to-square"></i> Edit
+                                            </a>
+                                            <a href="infografis-hapus.php?id=<?= $item['id']; ?>" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 font-bold text-xs border border-rose-200 transition" onclick="return confirm('Yakin ingin menghapus item data ini secara permanen?');">
+                                                <i class="fa-solid fa-trash-can"></i> Hapus
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+
+        <!-- Kategori Lainnya (apabila ada data dengan kategori selain default di atas) -->
+        <?php 
+        $other_keys = array_diff(array_keys($data_per_kat), array_keys($kategori_list));
+        if (!empty($other_keys)): 
+            foreach ($other_keys as $oth_kat): $items = $data_per_kat[$oth_kat];
+        ?>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-5 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-sm text-slate-900"><?= htmlspecialchars($oth_kat) ?></h3>
+                        <p class="text-[11px] text-slate-500">Kategori Kustom</p>
+                    </div>
+                    <span class="bg-amber-100 text-amber-800 font-extrabold text-xs px-3 py-1 rounded-full border border-amber-200">
+                        <?= count($items) ?> Item Data
+                    </span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-600 font-extrabold uppercase tracking-wider border-b border-slate-200">
+                                <th class="py-3.5 px-6 text-center w-14">Urutan</th>
+                                <th class="py-3.5 px-6">Uraian / Label Parameter</th>
+                                <th class="py-3.5 px-6 text-right">Nilai Nominal / Angka</th>
+                                <th class="py-3.5 px-6 text-center">Satuan</th>
+                                <th class="py-3.5 px-6 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 font-medium">
+                            <?php foreach ($items as $item): ?>
+                                <tr class="hover:bg-slate-50/70">
+                                    <td class="py-4 px-6 text-center font-bold"><?= (int)$item['urutan'] ?></td>
+                                    <td class="py-4 px-6 font-extrabold text-slate-900"><?= htmlspecialchars($item['label']) ?></td>
+                                    <td class="py-4 px-6 text-right font-mono font-bold text-emerald-700"><?= number_format($item['nilai'], 0, ',', '.') ?></td>
+                                    <td class="py-4 px-6 text-center"><?= htmlspecialchars($item['satuan'] ?: 'Rp') ?></td>
+                                    <td class="py-4 px-6 text-center space-x-1">
+                                        <a href="infografis-edit.php?id=<?= $item['id'] ?>" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded bg-blue-50 text-blue-700 border border-blue-200">Edit</a>
+                                        <a href="infografis-hapus.php?id=<?= $item['id'] ?>" onclick="return confirm('Hapus item?');" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded bg-rose-50 text-rose-700 border border-rose-200">Hapus</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <?php endforeach; endif; ?>
     </main>
+
 </body>
 </html>
