@@ -1,130 +1,180 @@
-# BUKU PANDUAN PENGGUNA (USER MANUAL) & SOP OPERASIONAL
-## SISTEM INFORMASI & PORTAL RESMI DESA KLEGO
+# BUKU PANDUAN PENGGUNA (USER MANUAL)
+## SISTEM WEBSITE DAN PORTAL RESMI DESA KLEGO
+**Kabupaten Boyolali, Jawa Tengah**
 
 ---
 
 **Informasi Dokumen**
-* **Judul Sistem**: Portal Keterbukaan Informasi & WebGIS Desa Klego, Kecamatan Klego, Kabupaten Boyolali.
-* **Versi Dokumen**: 2.0 (Edisi Pembaruan Terintegrasi APBDes & Peta WebGIS)
-* **Sasaran Pembaca**: Perangkat Desa, Admin CMS, Operator Balai Desa, dan Masyarakat Umum.
+* **Judul Sistem**: Website Resmi dan Portal Informasi Desa Klego
+* **Alamat Website**: `http://klego.dayoumu.my.id`
+* **Sasaran Pembaca**: Perangkat Desa, Operator Balai Desa, dan Masyarakat Umum
+* **Versi Dokumen**: 2.1 (Dilengkapi Langkah Detail & Keterangan Gambar)
 
 ---
 
-## 1. PENGANTAR SISTEM & TUJUAN PANDUAN
+## 1. PENDAHULUAN & KAMUS ISTILAH (GLOSARIUM)
 
-Sistem Website Desa Klego dirancang sebagai pusat informasi terpadu yang memadukan pelayanan publik, transparansi keuangan pemerintah desa (APBDes), pemetaan spasial fasilitas umum (WebGIS), direktori potensi ekonomi (UMKM), serta keterbukaan dokumen regulasi (JDIH).
+Buku panduan ini dibuat untuk membantu Perangkat Desa Klego dalam mengelola, mengubah, dan menambah informasi di website desa dengan mudah, tepat, dan cepat, tanpa perlu memahami pemrograman atau kode teknis.
 
-Tujuan dari buku panduan ini adalah:
-1. Memberikan pedoman langkah-demi-langkah (SOP) bagi Perangkat Desa dalam memvalidasi, menambah, memperbarui, dan mengelola seluruh konten website secara mandiri tanpa memerlukan pemrograman rumit.
-2. Memastikan seluruh data sektoral (Pertanian, Keuangan APBDes, Stunting, Sejarah, Peta, dan UMKM) tetap akurat dan akuntabel sesuai kueri dan file sumber data balai desa.
-
----
-
-## 2. KREDENSIAL AKSES & JALUR RAHASIA ADMINISTRATOR (CMS PERANGKAT DESA)
-
-> [!IMPORTANT]
-> **Kebijakan Keamanan Portal Admin (Stealth Mode)**
-> Sesuai standar keamanan sistem pemerintahan desa, tombol atau tautan untuk login ke **Portal Admin TIDAK DITAMPILKAN secara umum baik pada Header maupun Footer** di halaman beranda warga. Hal ini bertujuan untuk melindungi panel kontrol dari upaya pencurian kredensial atau penetrasi dari luar.
-
-### 2.1. Cara Mengakreditasi dan Masuk (Login) ke Panel Admin
-Hanya Perangkat Desa atau Operator Resmi yang mengetahui jalur akses rahasia menuju halaman otentikasi.
-
-* **Alamat URL Server Produksi**: `http://klego.dayoumu.my.id/login.php`
-* **Alamat URL Lokal / offline**: `http://localhost/desa-desa/login.php`
-
-#### Kredensial Bawaan (Default Login) untuk Perangkat Desa:
-| Parameter | Nilai Akses Resmi | Keterangan Sistem |
-| :--- | :--- | :--- |
-| **Username** | `admin` | Username administrator utama desa |
-| **Password** | `admin` | Password standar yang akan dienkripsi otomatis saat login |
-
-> [!TIP]
-> **Fitur Keamanan Enkripsi Otomatis (Bcrypt Hashing Upgrade)**
-> Ketika Anda login pertama kali menggunakan kata sandi bawaan (`admin`), sistem keamanan otentikasi kami akan secara otomatis mengubah sandi Anda di database menjadi sandi terenkripsi berlapis (Bcrypt Hash), sehingga terhindar dari pembacaan database ilegal. Sangat disarankan untuk segera mengganti password bawaan melalu menu profil setelah berhasil masuk.
+### Kamus Istilah Pengantar (Glosarium untuk Awam)
+Agar gampang dipahami, berikut arti dari kata-kata khusus yang sering muncul dalam panduan ini:
+* **Website / Situs Web**: Kumpulan halaman informasi di internet yang dapat dibuka melalui komputer atau HP (seperti Google Chrome atau Microsoft Edge).
+* **Browser (Peramban)**: Aplikasi untuk membuka internet di HP atau laptop, misalnya Google Chrome, Mozilla Firefox, Safari, atau Microsoft Edge.
+* **Link (Tautan / URL)**: Alamat teks yang diketik di bagian atas browser untuk membuka halaman tertentu (contoh: `klego.dayoumu.my.id`).
+* **Login (Masuk Akun)**: Proses memasukkan nama pengguna (*username*) dan kata sandi (*password*) agar perangkat desa bisa masuk ke ruang kendali website.
+* **CMS (Content Management System) / Portal Admin**: Ruang kerja khusus di website yang hanya bisa dibuka oleh perangkat desa untuk mengedit isi website (menulis berita, mengubah uang APBDes, dll).
+* **Database (Basis Data)**: Tempat penyimpanan rahasia di dalam server tempat seluruh catatan teks, angka APBDes, daftar warga, dan agenda disimpan dengan aman.
+* **Frontend (Tampilan Warga)**: Bagian depan website yang dilihat oleh seluruh masyarakat umum saat membuka situs desa.
+* **Upload (Unggah)**: Proses memasukkan file foto atau dokumen dari laptop/HP Anda ke dalam website desa.
+* **Refresh (Muat Ulang / F5)**: Memerintahkan browser untuk mengambil tampilan website terbaru setelah dilakukan perubahan.
+* **Dropdown (Menu Pilihan Drop)**: Kotak menu pada formulir yang jika diklik akan memunculkan ke bawah daftar pilihan yang bisa dipilih.
 
 ---
 
-## 3. PANDUAN PENGOPERASIAN FITUR CMS (KHUSUS PERANGKAT DESA)
+## 2. CARA LOGIN KE PORTAL ADMINISTRATOR DESA
 
-Setelah berhasil login, Perangkat Desa akan disuguhi Dasbor Admin interaktif bertema **Hijau Emerald & Emas (Emerald & Gold Theme)** yang melambangkan warna kemakmuran dan identitas resmi Kabupaten Boyolali.
+Sesuai aturan keamanan agar website desa tidak dibajak oleh pihak yang tidak bertanggung jawab, **tautan atau tombol untuk Login Admin sengaja TIDAK DITAMPILKAN di halaman depan website**. Hanya anda selaku Perangkat Desa yang boleh tahu cara membukanya.
 
-### 3.1. Manajemen Keuangan & APBDesa (Infografis Statistik)
-Fitur ini mengendalikan grafik lingkar, diagram batang, dan angka transparansi keuangan pada halaman depan web desa yang bersumber dari data verifikasi akuntansi desa (Folder Naila & Satria).
+### 2.1. Langkah Masuk (Login) ke Dalam Web
+1. Buka aplikasi **Browser** (Google Chrome / Edge / Firefox) di laptop atau HP Anda.
+2. Di bagian atas browser (kolom alamat), ketikkan alamat rahasia ini:
+   * **`http://klego.dayoumu.my.id/login.php`**
+   * (Atau jika sedang dicoba offline tanpa internet di laptop balai desa, ketik: `http://localhost/desa-desa/login.php`)
+3. Tekan tombol **Enter** pada keyboard. Layar Anda akan memunculkan kotak form login admin.
+4. Masukkan nama akun bawaan berikut ke kolom yang tersedia:
+   * **Username**: `admin`
+   * **Password**: `admin`
+5. Klik tombol **Masuk / Login**. Jika berhasil, Anda akan dibawa ke halaman utama (Dasbor) Portal Admin bertema Hijau Emerald dan Emas.
 
-1. **Akses Menu**: Pada dasbor admin, klik menu **"Keuangan & APBDesa"** (`infografis.php`).
-2. **Struktur Kelompok Data**: Data dibagi dalam 4 pilar utama:
-   * `Pendapatan APBDes 2026` (Pendapatan Asli Desa, Transfer, dll)
-   * `Belanja APBDes 2026` (Pemerintahan, Pembangunan, Pembinaan, Pemberdayaan, Darurat)
-   * `Pembiayaan APBDes 2026` (Penerimaan & Pengeluaran)
-   * `SILPA & Aset 2025` (Saldo SILPA, Nilai Buku Aset Tetap, dan Lahan Pertanian 312 Hektar).
-3. **Cara Menambah Data Baru**:
-   * Klik tombol hijau **"+ Tambah Data APBDes / Infografis"**.
-   * Pilih **Kategori Keuangan** yang tepat dari dropdown.
-   * Masukkan **Uraian / Label Parameter** (misal: *Pembangunan Infrastruktur Jalan*).
-   * Masukkan **Nilai Nominal / Angka** dalam bilangan utuh tanpa titik atau koma (misal untuk Rp 1.500.000.000 ketikan `1500000000`).
-   * Tentukan **Warna Grafik** (hex color picker) yang harmonis agar tabel visual terender indah di layar warga.
-   * Klik **Simpan Data APBDes**.
-4. **Cara Mengubah (Edit) atau Menghapus (Hapus)**:
-   * Pada tabel item di bawah kategori yang sesuai, klik tombol biru **Edit** untuk merevisi nominal saat ada Perubahan Anggaran (PAK), atau tombol merah **Hapus** untuk membatalkan item dari publikasi.
+> 🖼️ **[Tempat Gambar / Screenshot 1: Form Login Admin Desa]**
+> *Keterangan Gambar: Tampilan halaman login rahasia perangkat desa. Terdapat kolom input untuk mengisi username dan password, serta tombol hijau untuk masuk.*
 
 ---
 
-### 3.2. Manajemen Agenda & Kegiatan Resmi Desa
-Agenda desa berfungsi memberitahukan warga mengenai acara rapat bulanan, jadwal posyandu, kerja bakti, maupun penyaluran bantuan langsung.
+## 3. PANDUAN MENGELOLA ISI WEBSITE (PORTAL ADMIN)
 
-1. **Akses Menu**: Klik kartu **"Agenda Kegiatan Desa"** (`agenda.php`).
-2. **Kebijakan Data Nyata**: Sistem ini telah dirancang bebas dari data tiruan (dummy). Semua yang muncul di web adalah agenda akurat yang Anda isikan.
-3. **Menambah Agenda**:
-   * Klik **"+ Tambah Agenda Baru"**.
-   * Lengkapi **Judul Kegiatan**, **Tanggal**, **Waktu Execution**, dan **Lokasi** (misal: *Balai Desa Klego*).
-   * Tekan tombol **Simpan Agenda**. Beranda warga akan seketika memperbarui kalender informasinya.
+Di bagian atas atau tengah Dasbor Admin, Anda akan melihat kotak-kotak menu utama untuk mengatur berbagai jenis berita dan informasi di desa.
 
----
+### 3.1. Manajemen Angka Keuangan & APBDesa (Infografis)
+Menu ini dipakai untuk mengedit diagram batang, grafik lingkaran, dan angka transparansi keuangan (APBDes, SILPA, dan Aset) yang tayang di beranda warga.
 
-### 3.3. Manajemen Berita & Artikel Kegiatan Warga
-1. **Akses Menu**: Klik **"Berita & Artikel"** (`berita.php`).
-2. **Fitur Clean Preview Otomatis**: Ketika Anda menulis artikel berita dengan teks panjang atau menyertakan gambar, sistem frontend secara otomatis memotong ringkasan (*snippet*) untuk kartu beranda dengan memfilter tag HTML (membuang simbol acak seperti `&ndash;` atau tampilan layout rusak), menjaga estetika beranda tetap rapi.
-3. **Unggah Foto Berita**: Gunakan file berekstensi `.jpg`, `.png`, atau `.webp`. Sistem telah dibekali penampung jalur error tahan banting (*fallback resolver*) agar foto tetap tayang sempurna baik saat dijalankan di Windows Lokal maupun kontainer Docker Linux Server Produksi.
+#### A. Cara Menambah Data Anggaran Baru
+1. Di dasbor Admin, klik kartu menu **"Keuangan & APBDesa"**. Anda akan melihat daftar tabel uang APBDes yang sudah ada.
+2. Klik tombol hijau berbunyi **"+ Tambah Data APBDes / Infografis"** di bagian kiri atas tabel.
+3. Anda akan masuk ke halaman formulir isian data. Isi kolom sebagai berikut:
+   * **Kategori Keuangan**: Klik kotak dropdown lalu pilih kelompoknya. Apakah termasuk *Pendapatan APBDes 2026*, *Belanja APBDes 2026*, *Pembiayaan APBDes 2026*, atau *SILPA & Aset 2025*.
+   * **Uraian / Label Parameter**: Ketik nama kegiatannya (Contoh: `Dana Desa` atau `Pembangunan Jalan Dukuh Klego`).
+   * **Nilai Nominal / Angka**: Ketik uang rupiahnya **tanpa titik, tanpa koma, dan tanpa tulisan Rp**. Contoh: Jika angkanya Rp 150.000.000, maka Anda **cukup ketik 150000000**.
+   * **Satuan**: Biarkan berisi `Rp` (atau ganti dengan `Hektar` khusus untuk data ukuran tanah sawah).
+   * **Tahun Anggaran**: Biarkan terisi `2026` (atau sesuai tahun anggaran bersangkutan).
+   * **Urutan Tampil**: Isi angka urutan, misalnya `1` atau `2` untuk urutan muncul di tabel layar.
+   * **Warna Grafik**: Klik kotak warna kecil lalu pilih warna yang kontras agar grafik di depan kelihatan rapi dan indah dibaca warga.
+4. Klik tombol **"Simpan Data APBDes"**. System akan memberi tahu bahwa data sukses tersimpan.
 
----
+> 🖼️ **[Tempat Gambar / Screenshot 2: Formulir Tambah Data APBDesa]**
+> *Keterangan Gambar: Tampilan formulir untuk mengisikan parameter baru ke dalam infografis anggaran desa. Perhatikan pengisian nominal rupiah yang ditulis utuh tanpa titik atau koma.*
 
-### 3.4. Manajemen Dokumen Regulasi (JDIH & Pembendaharaan)
-Pusat data dokumen memberikan layanan unduh gratis kepada warga terhadap berkas Peraturan Desa (Perdes), RPJMDes, RKPDes, Laporan Realisasi, dan Buku Bantu Aset (Folder Satria & seluruh tim pendukung).
-
-1. **Akses Menu**: Klik menu Dokumen atau kelola dari sinkronisasi sistem.
-2. **Struktur Kategori Otomatis**: Dokumen diindeks berurutan sesuai kategori keilmuan: *Kesehatan & Stunting (Ayu)*, *APBDes 2026 (Naila)*, *Profil & Sejarah (Citra & Rheina)*, *Peta & Wilayah (Naura)*, *Potensi & UMKM (Rahma)*, serta *Potensi Pertanian (Shafa)*.
-
----
-
-### 3.5. Pengelola Bahasa & Sistem Terjemahan Otomatis (Indonesia - Inggris - Jepang)
-Website Desa Klego bertaraf internasional dengan dukungan 3 bahasa guna mempermudah pengenalan potensi desa kepada wisatawan maupun investor global.
-
-1. **Sinkronisasi Terjemahan**: Sistem membaca master kosakata dan kalimat dari `terjemahan_data.json` serta mengintegrasikannya langsung dengan tabel database `master_bahasa` dan `terjemahan_konten`.
-2. **Cara Kerja di Lapangan**: Seluruh navigasi, sub-navbar, legenda tabel APBDes, judul sejarah, dan statistik demografi beralih secara dinamis ketika pengguna memilih bendera bahasa di pojok atas website, tanpa merusak format tata letak utama.
+#### B. Cara Mengubah (Edit) Angka APBDes
+Jika ada revisi anggaran (misal setelah Rapat PAK / Perubahan APBDes):
+1. Masuk ke menu **"Keuangan & APBDesa"**.
+2. Cari nama anggaran yang ingin diganti nilainya pada tabel.
+3. Di kolom paling kanan (kolom Aksi), klik tombol biru bertuliskan **"Edit"**.
+4. Ganti nominal atau namanya sesuai kebutuhan baru.
+5. Klik tombol **"Perbarui Data APBDes"**. Angka di grafik halaman depan akan otomatis berubah saat itu juga.
 
 ---
 
-## 4. PANDUAN NAVIGASI PORTAL WARGA (FRONTEND PUBLIC)
+### 3.2. Manajemen Agenda Kegiatan Desa
+Agenda berfungsi sebagai papan pengingat jadwal kegiatan resmi balai desa (contoh: *Jadwal Posyandu Balita, Rapat RW, atau Kerja Bakti Desa*).
 
-### 4.1. Beranda & Peta Digital WebGIS Interaktif (Sumber Data Naura)
-* **Lokasi Peta**: Tepat setelah blok *Statistik Warga & Wilayah* dan sebelum blok *Keterbukaan Informasi / Unduh Dokumen*.
-* **Fitur Interaktif Warga**:
-  * **Polygon Batas Wilayah**: Garis lingkar biru/teal menandakan batas administratif formal Desa Klego.
-  * **Marker 18 Fasilitas Umum**: Warga dapat mengeklik simbol ikon spesifik untuk Masjid, Sekolah (SD/SMP/MIN), Puskesmas, Pasar Klego, Taman, Kantor Balai Desa, dan Lapangan.
-  * **Popup Spesifik**: Klik pada marker untuk melihat informasi kategori serta menekan tombol **"Buka Google Maps"** untuk navigasi GPS langsung dari HP warga.
-  * **Legenda Anti-Menumpuk**: Kontrol Layer (Peta Satelit Esri, Carto Light, OpenStreetMap) ditaruh terlipat (*collapsed*) di sudut **Kanan Atas**, sementara Legenda warna ikon berada di sudut **Kiri Bawah**, menjamin peta tetap jernih dan tak bertumpangan.
+#### Cara Menerbitkan Agenda Baru:
+1. Di halaman utama Admin, klik menu **"Agenda Kegiatan Desa"**.
+2. Klik tombol **"+ Tambah Agenda"**.
+3. Lengkapi 4 kolom penting berikut:
+   * **Judul Agenda**: Tulis nama acara, misal `Penyuluhan Pertanian Bersama Tim Shafa & Balai Desa`.
+   * **Tanggal Acara**: Pilih tanggal pelaksanaannya pada kalender yang muncul.
+   * **Waktu / Jam**: Ketikan jam kegiatan, misal `08.00 WIB - Selesai`.
+   * **Lokasi Acara**: Ketikan tempatnya, misal `Balai Desa Klego, Lantai 1`.
+4. Tekan tombol **"Simpan"**. Agenda tersebut kini resmi tampil di daftar acara beranda website.
 
-### 4.2. Eksplorasi Data APBDesa & Transparansi Keuangan
-* Warga dapat membuka halaman menu **"Infografis Keuangan & Demografi"** atau mengamati ringkasan langsung di Beranda.
-* Angka disajikan dengan format satuan nominal yang mudah dipahami (Rupiah murni, Juta Rupiah, atau satuan Hektar Lahan), menunjang kepercayaan masyarakat terhadap kepemimpinan desa yang akuntabel.
+> 🖼️ **[Tempat Gambar / Screenshot 3: Pengelolaan Agenda Desa]**
+> *Keterangan Gambar: Tampilan daftar agenda kegiatan desa yang akurat dan asli dari jadwal kegiatan resmi pemerintah desa.*
 
 ---
 
-## 5. PEMECAHAN MASALAH (TROUBLESHOOTING) & KENDALA UMUM
+### 3.3. Manajemen Berita & Artikel Desa
+Fitur ini berguna untuk meliput kegiatan desa, perkembangan UMKM, serta edukasi kesehatan agar website kelihatan aktif dan hidup.
 
-| Kendala yang Dialami | Kemungkinan Penyebab | Solusi & Langkah Penanganan |
-| :--- | :--- | :--- |
-| **Lupa letak link login admin** | Tautan disembunyikan untuk keamanan sistem dari ancaman hacker | Ketik manual di browser: `<alamat-server>/login.php` lalu ketikan username `admin`. |
-| **Data baru di tabel/Infografis tidak terupdate setelah git pull** | Kontainer Docker di server belum mensinggung (reseed) tabel MySQL baru | Minta admin IT menjalankan perintah reseed: `docker exec -it desaklego_web php sinkronisasi_data_sumber.php`. |
-| **Gambar berita tidak tampil / patah** | Perbedaan kapitalisasi ekstensi file (misal `.JPG` vs `.jpg`) di Server OS Linux | Sistem penstabil gambar otomatis (`resolve_uploaded_image`) kami akan mengarahkan ulang ke versi huruf kecil/fallback resmi secara transparan. |
-| **Teks berita berantakan / muncul simbol `&ndash;`** | Teks disalin langsung dari Microsoft Word beserta kode rahasia formatter | Fitur `clean_preview_text()` sudah kami aktifkan untuk menonaktifkan kode sampah Word secara instan pada ringkasan web. |
+#### Cara Menulis Berita:
+1. Klik kartu menu **"Berita & Artikel"** di dasbor Anda.
+2. Klik tombol **"Tambah Berita Baru"**.
+3. Ketikkan **Judul Berita** yang menarik di atas.
+4. Pada kotak **Isi Berita**, ketikkan atau salin teks berita Anda.
+   * **Catatan Rapi & Otomatis**: Jangan khawatir jika teksnya panjang! Website kita sudah dibekali teknologi pembersih ringkasan (*clean preview*). Website secara otomatis memotong ringkasan dengan rapi pada kartu beranda tanpa memunculkan simbol aneh.
+5. Pada bagian **Foto Utama / Thumbnail**, klik tombol **Pilih File / Browse** lalu pilih foto dokumentasi kegiatan dari laptop/HP Anda (format foto yang disarankan: `.jpg`, `.png`, atau `.webp`).
+6. Klik tombol **"Publikasikan Berita"**.
+
+> 🖼️ **[Tempat Gambar / Screenshot 4: Form Tulis Berita & Upload Gambar]**
+> *Keterangan Gambar: Proses penulisan artikel berita baru beserta pengunggahan foto pendukung liputan.*
+
+---
+
+### 3.4. Manajemen Dokumen Regulasi (Peraturan & Keterbukaan Publik)
+Menu ini memegang daftar dokumen penting (Perdes, RPJM Desa, Laporan SILPA, Data Pertanian Shafa, dan Data APBDes Naila) agar bisa didownload (diunduh) oleh masyarakat umum.
+
+1. Buka menu **"Dokumen / Keterbukaan Publik"**.
+2. Anda dapat melamar atau mendaftarkan file dokumen berformat `.pdf`, `.docx`, atau `.xlsx`.
+3. Sistem secara pintar dan otomatis mengukur ukuran file (misal: `245 KB` atau `1.2 MB`) serta memberi tombol "Unduh / Download" berwarna hijau pada layar pembaca umum di beranda.
+
+---
+
+### 3.5. Pengarah Bahasa & Terjemahan Otomatis (Indonesia, Inggris, Jepang)
+Website Desa Klego sudah mendukung 3 bahasa agar desa kita mudah dilestarikan dan dikenal baik oleh masyarakat lokal maupun calon investor asing.
+
+1. Di menu utama Admin, jika perlu memperbarui terjemahan, Anda cukup membuka modul **"Sinkronisasi Bahasa"** atau memeriksa tabel kosakata.
+2. Semua kata, mulai dari tombol navigasi, keterangan sebutan APBDes, hingga cerita sejarah, akan langsung berubah ke bahasa **Inggris** atau **Jepang** sesaat setelah pengunjung mengeklik lambang bendera di sudut atas website.
+
+> 🖼️ **[Tempat Gambar / Screenshot 5: Pengalih Tiga Bahasa di Website Desa]**
+> *Keterangan Gambar: Ikon tombol bendera Indonesia, Inggris, dan Jepang yang terletak di atas web untuk mengubah bahasa secara otomatis dan akurat.*
+
+---
+
+## 4. PANDUAN MENGGUNAKAN FITUR PETA WEBGIS (KHUSUS WARGA)
+
+Selain membaca berita, masyarakat umum juga bisa berinteraksi dengan **Peta Desa Klego Digital** yang berada di halaman depan (Beranda) tepat setelah blok Statistik Demografi.
+
+### Langkah Membaca dan Mengoperasikan Peta:
+1. Geser layar halaman depan website ke bawah sampai menemukan kotak **Peta Interaktif Wilayah & Fasilitas Desa Klego**.
+2. Anda akan melihat garis lingkar warna teal/biru kehitaman; itu adalah **Polygon Batas Administrasi Resmi Desa Klego**.
+3. Pada gambar peta, terdapat titik-titik ikon marker fasiltas umum:
+   * **Ikon Masjid / Mushola**: Lokasi sarana ibadah.
+   * **Ikon Sekolah / Toga**: Lokasi SD, SMP, dan madrasah.
+   * **Ikon Palang Merah / Puskesmas**: Lokasi pusat layanan kesehatan & posyandu.
+   * **Ikon Gedung / Kantor**: Lokasi Kantor Kepala Desa & Balai Desa Klego.
+   * **Ikon Pasar & Taman**: Lokasi pasar klego dan ruang terbuka hijau.
+4. **Cara Minta Petunjuk Arah (GPS)**:
+   * Klik salah satu ikon marker tersebut di layar Anda.
+   * Akan muncul kotak pesan (*popup*) bertuliskan nama fasilitas dan tombol **"Buka Google Maps"**.
+   * Klik tombol itu, maka HP Anda akan langsung membuka aplikasi navigasi Google Maps membimbing Anda ke lokasi tersebut.
+5. **Kontrol Tampilan Peta (Anti-Menumpuk)**:
+   * Di sudut **Kiri Bawah**, terdapat tabel Legenda Simbol (bisa distimulasikan agar menyusup kecil).
+   * Di sudut **Kanan Atas**, terdapat tombol lapis gambar (bisa diklik untuk mengubah latar peta menjadi Foto Satelit Asli dari luar angkasa atau Peta Jalan Klasik).
+
+> 🖼️ **[Tempat Gambar / Screenshot 6: Peta Digital WebGIS Desa Klego]**
+> *Keterangan Gambar: Tampilan peta interaktif Desa Klego di halaman utama dengan marka batas wilayah dan ikon fasillitas yang siap diklik.*
+
+---
+
+## 5. SOLUSI MENGATASImasalah (TANYA JAWAB CEPAT)
+
+**T: Saya mau mengelola website, tapi bingung cari tombol login admin di beranda web kok tidak ada?**
+* **J:** Memang tidak dipasang demi keamanan dari pencurian. Solusinya: Klik bagian atas browser, lalu ketik manual ujung alamatnya bertajuk `/login.php` di belakang alamat website (contoh: `klego.dayoumu.my.id/login.php`), lalu klik Enter.
+
+**T: Saya sudah merubah angka uang APBDes di Admin, kenapa pas buka halaman depan angkanya belum ganti?**
+* **J:** Itu terjadi karena browser HP/Laptop Anda masih menyimpan memori tampilan lama (disebut cache). Solusinya: Tekan tombol **Refresh (F5)** pada keyboard atau tekan lambang panah putar melingkar di atas browser Anda agar website memanggil data yang baru.
+
+**T: Apakah saya boleh asal menghapus item belanja desa di menu Infografis?**
+* **J:** Sebaiknya HANYA menghapus item jika memang terjadi salah ketik dobel. Bila memang angkanya berganti karena rapat evaluasi baru, gunakan tombol **Edit (Perbarui)** saja agar urutannya tidak terganggu.
+
+---
+*Demikian buku panduan resmi operasional Website Desa Klego ini disusun. Mari kelola informasi desa dengan transparansi, semangat pelayanan gotong-royong, dan kebanggaan bersama!*
