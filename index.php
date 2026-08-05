@@ -14,9 +14,10 @@ if (isset($conn) && $conn && !mysqli_connect_error()) {
             $statPenduduk = $r['total'];
             $rKK = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(DISTINCT NO_KK) as kk FROM penduduk"));
             $statKK = $rKK['kk'] ?? 0;
-            $rL = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as l FROM penduduk WHERE JENIS_KELAMIN='Laki-laki' OR JENIS_KELAMIN='L'"));
+            $rL = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as l FROM penduduk WHERE JENIS_KELAMIN IN ('LK', 'L', 'Laki-laki', 'LAKI-LAKI', 'Laki Laki')"));
             $statLaki = $rL['l'] ?? 0;
-            $statPerempuan = $statPenduduk - $statLaki;
+            $rP = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as p FROM penduduk WHERE JENIS_KELAMIN IN ('PR', 'P', 'Perempuan', 'PEREMPUAN')"));
+            $statPerempuan = ($rP && isset($rP['p']) && $rP['p'] > 0) ? $rP['p'] : ($statPenduduk - $statLaki);
         }
     }
     foreach (['wilayah_dusun' => 'statDusun', 'wilayah_rw' => 'statRW', 'wilayah_rt' => 'statRT'] as $table => $variable) {
