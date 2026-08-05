@@ -80,36 +80,36 @@ if (isset($_POST['import'])) {
 
         // Loop rows and insert
         foreach ($rows as $data) {
-            $nik = mysqli_real_escape_string($koneksi, $data[0] ?? '');
+            $nik = mysqli_real_escape_string($koneksi, trim((string)($data[0] ?? '')));
             
             // Lewati jika NIK kosong atau header
             if (empty($nik) || !is_numeric($nik)) {
                 continue;
             }
 
-            $no_kk        = mysqli_real_escape_string($koneksi, $data[1] ?? '');
-            $nama         = mysqli_real_escape_string($koneksi, $data[2] ?? '');
-            $jk           = mysqli_real_escape_string($koneksi, $data[3] ?? '');
+            $no_kk        = mysqli_real_escape_string($koneksi, trim((string)($data[1] ?? '')));
+            $nama         = mysqli_real_escape_string($koneksi, trim((string)($data[2] ?? '')));
+            $jk           = mysqli_real_escape_string($koneksi, trim((string)($data[3] ?? '')));
             $tgl_lahir    = mysqli_real_escape_string($koneksi, parseDate($data[4] ?? ''));
-            $usia         = mysqli_real_escape_string($koneksi, $data[5] ?? '');
-            $tempat_lahir = mysqli_real_escape_string($koneksi, $data[6] ?? '');
-            $dusun        = mysqli_real_escape_string($koneksi, $data[7] ?? '');
-            $rt           = mysqli_real_escape_string($koneksi, $data[8] ?? '');
-            $rw           = mysqli_real_escape_string($koneksi, $data[9] ?? '');
+            $usia         = mysqli_real_escape_string($koneksi, trim((string)($data[5] ?? '')));
+            $tempat_lahir = mysqli_real_escape_string($koneksi, trim((string)($data[6] ?? '')));
+            $dusun        = mysqli_real_escape_string($koneksi, trim((string)($data[7] ?? '')));
+            $rt           = mysqli_real_escape_string($koneksi, trim((string)($data[8] ?? '')));
+            $rw           = mysqli_real_escape_string($koneksi, trim((string)($data[9] ?? '')));
             // col 10 = KELURAHAN (skip)
-            $shdk         = mysqli_real_escape_string($koneksi, $data[11] ?? '');
-            $status_kawin = mysqli_real_escape_string($koneksi, $data[12] ?? '');
-            $pendidikan   = mysqli_real_escape_string($koneksi, $data[13] ?? '');
-            $agama        = mysqli_real_escape_string($koneksi, $data[14] ?? '');
-            $pekerjaan    = mysqli_real_escape_string($koneksi, $data[15] ?? '');
+            $shdk         = mysqli_real_escape_string($koneksi, trim((string)($data[11] ?? '')));
+            $status_kawin = mysqli_real_escape_string($koneksi, trim((string)($data[12] ?? '')));
+            $pendidikan   = mysqli_real_escape_string($koneksi, trim((string)($data[13] ?? '')));
+            $agama        = mysqli_real_escape_string($koneksi, trim((string)($data[14] ?? '')));
+            $pekerjaan    = mysqli_real_escape_string($koneksi, trim((string)($data[15] ?? '')));
             // col 16 = GOLONGAN_DARAH (skip), col 17 = AKTA_LAHIR (skip)
-            $no_akta_lahir  = mysqli_real_escape_string($koneksi, $data[18] ?? '');
+            $no_akta_lahir  = mysqli_real_escape_string($koneksi, trim((string)($data[18] ?? '')));
             // col 19 = AKTA_KAWIN (skip)
-            $no_akta_kawin  = mysqli_real_escape_string($koneksi, $data[20] ?? '');
+            $no_akta_kawin  = mysqli_real_escape_string($koneksi, trim((string)($data[20] ?? '')));
             // col 21 = AKTA_CERAI (skip)
-            $no_akta_cerai  = mysqli_real_escape_string($koneksi, $data[22] ?? '');
-            $nama_ayah      = mysqli_real_escape_string($koneksi, $data[23] ?? '');
-            $nama_ibu       = mysqli_real_escape_string($koneksi, $data[24] ?? '');
+            $no_akta_cerai  = mysqli_real_escape_string($koneksi, trim((string)($data[22] ?? '')));
+            $nama_ayah      = mysqli_real_escape_string($koneksi, trim((string)($data[23] ?? '')));
+            $nama_ibu       = mysqli_real_escape_string($koneksi, trim((string)($data[24] ?? '')));
 
             // Kalkulasi usia jika kosong
             if (empty($usia) && !empty($tgl_lahir)) {

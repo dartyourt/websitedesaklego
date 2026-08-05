@@ -1,12 +1,9 @@
-
-
-
 <?php
 session_start();
 include '../config/database.php';
 
 if (!isset($_SESSION['login'])) {
-    header("Location: ../index.html");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -161,30 +158,30 @@ $wilayahJson = json_encode($wilayahData);
         <!-- FORM INPUT -->
         <form method="POST" class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-white p-4 rounded shadow">
 
-            <input type="text" name="NIK" placeholder="NIK" maxlength="16" inputmode="numeric" pattern="[0-9]{16}" class="border rounded p-2 w-full" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-            <input type="text" name="NO_KK" placeholder="NO_KK" maxlength="16" inputmode="numeric" pattern="[0-9]{16}" class="border rounded p-2 w-full" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-            <input type="text" name="NAMA_LGKP" placeholder="NAMA LENGKAP" class="border rounded p-2 w-full" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+            <input type="text" name="NIK" placeholder="NIK" value="<?= $edit ? htmlspecialchars($data['NIK'] ?? '') : '' ?>" maxlength="16" inputmode="numeric" pattern="[0-9]{16}" class="border rounded p-2 w-full" oninput="this.value=this.value.replace(/[^0-9]/g,'')" <?= $edit ? 'readonly' : '' ?>>
+            <input type="text" name="NO_KK" placeholder="NO_KK" value="<?= $edit ? htmlspecialchars($data['NO_KK'] ?? '') : '' ?>" maxlength="16" inputmode="numeric" pattern="[0-9]{16}" class="border rounded p-2 w-full" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            <input type="text" name="NAMA_LGKP" placeholder="NAMA LENGKAP" value="<?= $edit ? htmlspecialchars($data['NAMA_LGKP'] ?? '') : '' ?>" class="border rounded p-2 w-full" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
             <select name="JENIS_KELAMIN" class="border rounded p-2 w-full" required>
             <option value="">Jenis Kelamin</option>
-            <option value="LK" <?= ($edit && $data['JENIS_KELAMIN']=='LK') ? 'selected' : '' ?>>LK</option>
-            <option value="PR" <?= ($edit && $data['JENIS_KELAMIN']=='PR') ? 'selected' : '' ?>>PR</option>
+            <option value="LK" <?= ($edit && ($data['JENIS_KELAMIN'] ?? '')=='LK') ? 'selected' : '' ?>>LK</option>
+            <option value="PR" <?= ($edit && ($data['JENIS_KELAMIN'] ?? '')=='PR') ? 'selected' : '' ?>>PR</option>
             </select>
 
             <input type="text"
             name="TEMPAT_LAHIR"
             placeholder="Tempat Lahir"
-            value="<?= $edit ? htmlspecialchars($data['TMPT_LAHIR']) : '' ?>"
+            value="<?= $edit ? htmlspecialchars($data['TMPT_LAHIR'] ?? '') : '' ?>"
             class="border p-2 rounded"
             style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
 
             <input type="date"
             name="TANGGAL_LAHIR"
             id="tanggal_lahir"
-            value="<?= $edit ? $data['TGL_LAHIR'] : '' ?>"
+            value="<?= $edit ? htmlspecialchars($data['TGL_LAHIR'] ?? '') : '' ?>"
             class="border p-2 rounded">
 
             <input type="number" name="USIA" id="usia" placeholder="Usia" 
-            value="<?= $edit ? $data['USIA'] : '' ?>" 
+            value="<?= $edit ? htmlspecialchars($data['USIA'] ?? '') : '' ?>" 
             class="border p-2 rounded" readonly>
             
             <select name="DUSUN" id="dusun" class="border p-2 rounded" required>
@@ -343,17 +340,17 @@ $wilayahJson = json_encode($wilayahData);
             <option value="LAINNYA" <?= $edit && $data['PEKERJAAN']=='LAINNYA'?'selected':'' ?>>LAINNYA</option>
             </select>
 
-            <input type="text" name="NO_AKTA_LAHIR" placeholder="No Akta Lahir" value="<?= $edit ? $data['NO_AKTA_LAHIR'] : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+            <input type="text" name="NO_AKTA_LAHIR" placeholder="No Akta Lahir" value="<?= $edit ? htmlspecialchars($data['NO_AKTA_LAHIR'] ?? '') : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
 
-            <input type="text" name="NO_AKTA_KAWIN" placeholder="No Akta Kawin" value="<?= $edit ? $data['NO_AKTA_KAWIN'] : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
-            <input type="text" name="NO_AKTA_CERAI" placeholder="No Akta Cerai" value="<?= $edit ? $data['NO_AKTA_CERAI'] : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
-            <input type="text" name="NAMA_AYAH" placeholder="Nama Ayah" value="<?= $edit ? $data['NAMA_AYAH'] : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+            <input type="text" name="NO_AKTA_KAWIN" placeholder="No Akta Kawin" value="<?= $edit ? htmlspecialchars($data['NO_AKTA_KAWIN'] ?? '') : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+            <input type="text" name="NO_AKTA_CERAI" placeholder="No Akta Cerai" value="<?= $edit ? htmlspecialchars($data['NO_AKTA_CERAI'] ?? '') : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+            <input type="text" name="NAMA_AYAH" placeholder="Nama Ayah" value="<?= $edit ? htmlspecialchars($data['NAMA_AYAH'] ?? '') : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
 
-            <input type="text" name="NAMA_IBU" placeholder="Nama Ibu" value="<?= $edit ? $data['NAMA_IBU'] : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+            <input type="text" name="NAMA_IBU" placeholder="Nama Ibu" value="<?= $edit ? htmlspecialchars($data['NAMA_IBU'] ?? '') : '' ?>" class="border p-2 rounded" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
             <select name="BANTUAN" class="border p-2 rounded">
                 <option value="">Bantuan</option>
-                <option value="Ya" <?= $edit && $data['BANTUAN']=='Ya'?'selected':'' ?>>YA</option>
-                <option value="Tidak" <?= $edit && $data['BANTUAN']=='Tidak'?'selected':'' ?>>TIDAK</option>
+                <option value="Ya" <?= ($edit && ($data['BANTUAN'] ?? '')=='Ya')?'selected':'' ?>>YA</option>
+                <option value="Tidak" <?= ($edit && ($data['BANTUAN'] ?? '')=='Tidak')?'selected':'' ?>>TIDAK</option>
             </select>
 
             <button name="<?= $edit ? 'update' : 'simpan' ?>" class="bg-green-600 text-white p-2 rounded col-span-full">

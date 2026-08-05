@@ -69,6 +69,18 @@ if (isset($_GET['hapus'])) {
 }
 
 /* ======================
+   PROSES RESET DATA
+====================== */
+if (isset($_GET['reset']) && $_GET['reset'] == 'true') {
+    mysqli_query($koneksi, "TRUNCATE TABLE penduduk");
+    echo "<script>
+            alert('Berhasil mengosongkan / me-reset seluruh data penduduk!');
+            window.location='penduduk.php';
+          </script>";
+    exit;
+}
+
+/* ======================
    PENCARIAN
 ====================== */
 
@@ -197,16 +209,18 @@ $wilayahJson = json_encode($wilayahData);
 
 <div class="bg-white p-3 rounded shadow">
 
-<h1 class="text-xl font-bold mb-2">Data Penduduk <?= htmlspecialchars($APP_PROFIL['nama_desa']) ?></h1>
+<h1 class="text-xl font-bold mb-2">Data Penduduk <?= htmlspecialchars($APP_PROFIL['nama_desa'] ?? 'Klego') ?></h1>
 
-<div class="flex gap-2 mb-3 items-center">
-    <a href="index.php" class="bg-gray-600 text-white px-3 py-2 rounded">Dashboard</a>
-    <a href="penduduk-input.php" class="bg-green-600 text-white px-3 py-2 rounded">Tambah</a>
+<div class="flex gap-2 mb-3 items-center flex-wrap">
+    <a href="index.php" class="bg-gray-600 text-white px-3 py-2 rounded text-sm font-medium">Dashboard</a>
+    <a href="penduduk-input.php" class="bg-green-600 text-white px-3 py-2 rounded text-sm font-medium">+ Tambah</a>
     
-    <form action="penduduk-import-proses.php" method="POST" enctype="multipart/form-data" class="flex gap-2 ml-4">
+    <form action="penduduk-import-proses.php" method="POST" enctype="multipart/form-data" class="flex gap-2 ml-2">
         <input type="file" name="file_csv" accept=".csv, .xlsx" class="border p-1 rounded bg-gray-50 text-sm" required>
-        <button type="submit" name="import" class="bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700">Import File</button>
+        <button type="submit" name="import" class="bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700 font-medium">Import File</button>
     </form>
+
+    <a href="penduduk.php?reset=true" onclick="return confirm('⚠️ PERHATIAN: Apakah Anda yakin ingin mengosongkan / mereset SELURUH data penduduk? Semua data akan dihapus dari tabel!')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded ml-auto text-sm font-semibold shadow flex items-center gap-1">🗑️ Reset / Kosongkan Data</a>
 </div>
 
 
@@ -572,26 +586,26 @@ while ($r = mysqli_fetch_assoc($query)) {
 ?>
 <tr class="hover:bg-gray-100">
             <td class="border border-gray-400 p-2"><?= $no++ ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NIK']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NO_KK']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NAMA_LGKP']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['JENIS_KELAMIN']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['TMPT_LAHIR']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['TGL_LAHIR']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['USIA']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['DUSUN']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['RT'].'/'.$r['RW']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['SHDK']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['AGAMA']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['PENDIDIKAN']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['PEKERJAAN']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NO_AKTA_LAHIR']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['STATUS_KAWIN']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NO_AKTA_KAWIN']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NO_AKTA_CERAI']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NAMA_AYAH']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NAMA_IBU']) ?></td>
-            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['BANTUAN']) ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NIK'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NO_KK'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NAMA_LGKP'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['JENIS_KELAMIN'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['TMPT_LAHIR'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($tgl ?? ($r['TGL_LAHIR'] ?? '')) ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($usia ?? ($r['USIA'] ?? '')) ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['DUSUN'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars(trim(($r['RT'] ?? '') . '/' . ($r['RW'] ?? ''))) ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['SHDK'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['AGAMA'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['PENDIDIKAN'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['PEKERJAAN'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NO_AKTA_LAHIR'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['STATUS_KAWIN'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NO_AKTA_KAWIN'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NO_AKTA_CERAI'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NAMA_AYAH'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['NAMA_IBU'] ?? '') ?></td>
+            <td class="border border-gray-400 p-2"><?= htmlspecialchars($r['BANTUAN'] ?? '') ?></td>
 
             <td class="border border-gray-400 p-2 text-center whitespace-nowrap">
             <a href="penduduk-input.php?edit=<?= urlencode($r['NIK']) ?>"
